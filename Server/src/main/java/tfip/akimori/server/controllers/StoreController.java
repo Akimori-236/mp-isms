@@ -102,11 +102,11 @@ public class StoreController {
     @PostMapping(path = "/invite/{storeID}")
     public ResponseEntity<String> sendEmailInviteManager(@RequestHeader(name = "Authorization") String token,
             @PathVariable String storeID,
-            @RequestParam String managerEmail) {
+            @RequestParam String inviteEmail) {
         String jwt = token.substring(7, token.length());
-        System.out.println("SENDING EMAIL TO: " + managerEmail);
+        System.out.println("SENDING EMAIL TO: " + inviteEmail);
         try {
-            emailSvc.sendManagerInvite(managerEmail, jwt, storeID);
+            emailSvc.sendManagerInvite(inviteEmail, jwt, storeID);
         } catch (MessagingException e) {
             e.printStackTrace();
             return ResponseEntity.internalServerError().build();

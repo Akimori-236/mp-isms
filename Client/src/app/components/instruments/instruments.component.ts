@@ -118,8 +118,13 @@ export class InstrumentsComponent implements OnChanges, AfterViewInit {
 
   openPopupStoreLogs() {
     const modalRef = this.modalService.open(TableStorelogsComponent);
-    modalRef.componentInstance.storeID = this.currentStoreID
     modalRef.componentInstance.storeName = this.currentStoreName
+    this.storeSvc.getStoreLogs(this.currentStoreID).then(
+      (response) => {
+        console.debug(response)
+        modalRef.componentInstance.logs = response
+      }
+    )
     modalRef.result
       .then((result) => {
         // Handle modal close event

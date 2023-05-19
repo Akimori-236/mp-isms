@@ -46,6 +46,7 @@ public class MongoLoggingService {
     }
 
     public JsonArray getStoreLogs(String storeID) {
+        System.out.println("GETTING LOGS FOR STORE: " + storeID);
         List<Document> docList = mongoRepo.getLogsByStoreID(storeID);
         JsonArrayBuilder jar = Json.createArrayBuilder();
         for (Document d : docList) {

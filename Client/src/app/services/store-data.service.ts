@@ -40,18 +40,20 @@ export class StoreDataService {
         )
     }
 
-    sendInviteManager(storeID: string, managerEmail: string): Promise<string> {
-        const headers = this.authSvc.JWTHeaders.set('Content-Type', 'application/json')
-        let params = new HttpParams().set("managerEmail", managerEmail)
+    sendInviteManager(storeID: string, inviteEmail: string): Promise<string> {
+        const headers = this.authSvc.JWTHeaders;
+        const params = new HttpParams().set("inviteEmail", inviteEmail);
         return firstValueFrom(
-            this.http.post<string>(`${this.STORE_URL}/invite/${storeID}`, { headers, params })
-        )
+            this.http.post<string>(`${this.STORE_URL}/invite/${storeID}`, null, { headers, params })
+        );
     }
 
+
     getStoreLogs(storeID: string): Promise<Log[]> {
+        console.debug("getting logs of store: " + storeID)
         const headers = this.authSvc.JWTHeaders.set('Content-Type', 'application/json')
         return firstValueFrom(
-            this.http.post<Log[]>(`${this.STORE_URL}/logs/${storeID}`, { headers })
+            this.http.get<Log[]>(`${this.STORE_URL}/logs/${storeID}`, { headers })
         )
     }
 }

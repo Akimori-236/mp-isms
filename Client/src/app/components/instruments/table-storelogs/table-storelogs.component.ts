@@ -1,5 +1,5 @@
 import { DecimalPipe } from '@angular/common';
-import { Component, Input, OnInit, PipeTransform } from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, map, startWith } from 'rxjs';
@@ -11,31 +11,20 @@ import { StoreDataService } from 'src/app/services/store-data.service';
   templateUrl: './table-storelogs.component.html',
   styleUrls: ['./table-storelogs.component.css']
 })
-export class TableStorelogsComponent implements OnInit {
-  @Input()
-  storeID!: string
+export class TableStorelogsComponent {
   @Input()
   storeName!: string
+  @Input()
   logs: Log[] = []
   logs$: Observable<Log[]>
   filter = new FormControl('', { nonNullable: true });
 
   constructor(
-    public activeModal: NgbActiveModal,
-    private storeSvc: StoreDataService,
-    pipe: DecimalPipe) {
+    public activeModal: NgbActiveModal) {
     this.logs$ = this.filter.valueChanges.pipe(
       startWith(''),
       map((text) => this.search(text)),
     );
-  }
-
-  ngOnInit(): void {
-    this.storeSvc.getStoreLogs(this.storeID).then(
-      (response) => {
-        this.logs = response
-      }
-    )
   }
 
   search(text: string): Log[] {

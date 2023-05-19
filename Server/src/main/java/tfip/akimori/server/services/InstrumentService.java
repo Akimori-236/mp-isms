@@ -53,7 +53,7 @@ public class InstrumentService {
                 .email(email)
                 .build();
         System.out.println(i);
-        logSvc.logInstrumentActivity("insert", i.getStore_id(), email, i.getInstrument_id(), i.getInstrument_type(),
+        logSvc.logInstrumentActivity(i.getStore_id(),"insert", email, i.getInstrument_id(), i.getInstrument_type(),
                 i.getSerial_number(), i.isRepairing(), i.getRemarks());
         return instruRepo.addInstrument(i);
     }

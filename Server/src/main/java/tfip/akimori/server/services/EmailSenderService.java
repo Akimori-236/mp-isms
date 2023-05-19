@@ -57,7 +57,7 @@ public class EmailSenderService {
         }
     }
 
-    public void sendManagerInvite(String managerEmail, String jwt, String storeName) throws MessagingException {
+    public void sendManagerInvite(String toEmail, String jwt, String storeName) throws MessagingException {
         // Generate confirmation link
         String confirmationLink = "https://mp-server-production.up.railway.app/#/";
         // TODO: need to store this request somehow
@@ -73,12 +73,12 @@ public class EmailSenderService {
 
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
         helper.setFrom(fromEmail);
-        helper.setTo(managerEmail);
+        helper.setTo(toEmail);
         helper.setSubject("Invitation to Manage Instrument Store");
         helper.setText(emailBody, true); // Set the email body as HTML
 
         mailSender.send(message);
-        System.out.println("Email sent to: " + managerEmail);
+        System.out.println("Email sent to: " + toEmail);
     }
 
     // public void sendEmailWithAttachment(String toEmail, String subject, String

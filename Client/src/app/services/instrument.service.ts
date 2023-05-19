@@ -8,6 +8,7 @@ import { Instrument } from '../models/instrument';
   providedIn: 'root'
 })
 export class InstrumentService {
+
   private INSTRUMENT_URL: string = "/api/instrument"
 
   constructor(private http: HttpClient, private authSvc: AuthService) { }
@@ -43,4 +44,7 @@ export class InstrumentService {
     )
   }
 
+  borrow(instrument_id: string) {
+    
+  }
 }
