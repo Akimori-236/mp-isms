@@ -51,8 +51,9 @@ public class InstrumentRepository implements SQLQueries {
             ps.setString(3, i.getBrand());
             ps.setString(4, i.getModel());
             ps.setString(5, i.getSerial_number());
-            ps.setString(6, i.getStore_id());
-            ps.setBoolean(7, i.isRepairing());
+            ps.setString(6, i.getRemarks());
+            ps.setString(7, i.getStore_id());
+            ps.setBoolean(8, i.isRepairing());
             return ps;
         });
         return rowsInserted > 0;

@@ -19,7 +19,7 @@ public interface SQLQueries {
             """; // email, store_id
     public static final String SQL_INSERT_INSTRUMENT = """
             INSERT INTO instruments(instrument_id, instrument_type, brand, model, serial_number, remarks, store_id, isRepairing)
-            VALUES(?, ?, ?, ?, ?, ?, ?)
+            VALUES(?, ?, ?, ?, ?, ?, ?, ?)
             """;
 
     public static final String SQL_INSERT_GOOGLEUSER = """
