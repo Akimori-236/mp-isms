@@ -1,6 +1,6 @@
 import { Component, Input, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalDismissReasons, NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 
 import { Observable, Subject } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -26,7 +26,11 @@ export class TableInstrumentsComponent {
   @Output()
   onUpdate = new Subject()
 
-  constructor(private modalService: NgbModal, private instruSvc: InstrumentService) {
+  constructor(
+    private modalService: NgbModal,
+    private modalConfig: NgbModalConfig,
+    private instruSvc: InstrumentService) {
+    this.modalConfig.centered = true
     this.instruments$ = this.filter.valueChanges.pipe(
       startWith(''),
       map((text) => this.search(text)),

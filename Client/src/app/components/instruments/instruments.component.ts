@@ -29,7 +29,10 @@ export class InstrumentsComponent implements OnChanges, AfterViewInit {
     private storeSvc: StoreDataService,
     private instruSvc: InstrumentService,
     private modalService: NgbModal,
-    private fb: FormBuilder,) { }
+    private modalConfig: NgbModalConfig,
+    private fb: FormBuilder,) {
+    this.modalConfig.centered = true
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     // console.log(changes)

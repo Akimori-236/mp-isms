@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalDismissReasons, NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from 'src/app/models/store';
 import { AuthService } from 'src/app/services/auth.service';
 import { StoreDataService } from 'src/app/services/store-data.service';
@@ -23,7 +23,10 @@ export class StoresComponent implements OnInit {
     private router: Router,
     private storeSvc: StoreDataService,
     private modalService: NgbModal,
-    private fb: FormBuilder,) { }
+    private modalConfig: NgbModalConfig,
+    private fb: FormBuilder,) {
+    this.modalConfig.centered = true
+  }
 
   ngOnInit(): void {
     this.createStoreForm = this.fb.group({
