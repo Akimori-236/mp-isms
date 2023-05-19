@@ -54,7 +54,7 @@ public class InstrumentService {
                 .build();
         System.out.println(i);
         logSvc.logInstrumentActivity("insert", i.getStore_id(), email, i.getInstrument_id(), i.getInstrument_type(),
-                i.getSerial_number());
+                i.getSerial_number(), i.isRepairing(), i.getRemarks());
         return instruRepo.addInstrument(i);
     }
 
@@ -85,5 +85,14 @@ public class InstrumentService {
             job.add("remarks", i.getRemarks());
         }
         return job.build();
+    }
+
+    public boolean updateInstrument(String jwt, Instrument i) {
+        // get email from JWT
+        String email = jwtSvc.extractUsername(jwt);
+        // TODO:
+        logSvc.logInstrumentActivity("update", i.getStore_id(), email, i.getInstrument_id(), i.getInstrument_type(),
+                i.getSerial_number(), i.isRepairing(), i.getRemarks());
+        return false;
     }
 }

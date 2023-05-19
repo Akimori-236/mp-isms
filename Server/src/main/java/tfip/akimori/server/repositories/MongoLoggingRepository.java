@@ -8,11 +8,13 @@ import java.util.List;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class MongoLoggingRepository {
-    public static final String COLLECTION_STORES = "storeactivity";
+    public static final String COLLECTION_STORE_ACTIVITY = "storeactivity";
     public static final String COLLECTION_USER_ACTIVITY = "useractivity";
 
     @Autowired
@@ -31,12 +33,14 @@ public class MongoLoggingRepository {
         activity.put("time",
                 LocalDateTime.now(ZoneId.of("Asia/Singapore")).format(getDTF("yyyy-LLL-dd HH:mm:ss")).toString()
                         + " SGT");
-        template.insert(activity, COLLECTION_STORES);
+        template.insert(activity, COLLECTION_STORE_ACTIVITY);
     }
 
+    // db.storeactivity.find({"email": "aki@gmail.com"})
     public List<Document> getLogsByStoreID(String StoreID) {
-        // template TODO:
-        return null;
+        Criteria criteria = Criteria.where("Store_id").is(StoreID);
+        Query query = new Query(criteria);
+        return template.find(query, Document.class, COLLECTION_STORE_ACTIVITY);
     }
 
     private DateTimeFormatter getDTF(String format) {

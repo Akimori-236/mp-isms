@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.json.Json;
+import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
 import jakarta.mail.MessagingException;
 import tfip.akimori.server.services.EmailSenderService;
+import tfip.akimori.server.services.MongoLoggingService;
 import tfip.akimori.server.services.StoreService;
 
 @RestController
@@ -31,6 +33,8 @@ public class StoreController {
     private StoreService storeSvc;
     @Autowired
     private EmailSenderService emailSvc;
+    @Autowired
+    private MongoLoggingService logSvc;
 
     @PostMapping(path = "/create")
     public ResponseEntity<String> createStore(@RequestHeader(name = "Authorization") String token,
@@ -113,6 +117,13 @@ public class StoreController {
                 .body("Email invite sent!");
     }
 
-
+    @GetMapping(path = "/logs/{storeID}")
+    public ResponseEntity<String> getStoreLogs(@PathVariable String storeID) {
+        JsonArray jArr = logSvc.getStoreLogs(storeID);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(jArr.toString());
+    }
 
 }
