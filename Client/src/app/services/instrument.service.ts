@@ -15,14 +15,13 @@ export class InstrumentService {
 
   getBorrowed(): Promise<Instrument[]> {
     const headers = this.authSvc.JWTHeaders
-    headers.set("Content-Type", "application/json")
     return firstValueFrom(
       this.http.get<Instrument[]>(`${this.INSTRUMENT_URL}/borrowed`, { headers })
     )
   }
 
   getInstrument(id: string): Promise<Instrument> {
-    const headers = this.authSvc.JWTHeaders.set('Content-Type', 'application/json')
+    const headers = this.authSvc.JWTHeaders
     return firstValueFrom(
       this.http.get<Instrument>(`${this.INSTRUMENT_URL}/${id}`, { headers })
     )
@@ -44,7 +43,10 @@ export class InstrumentService {
     )
   }
 
-  borrow(instrument_id: string) {
-    
+  borrow(instrument_id: string): Promise<boolean> {
+    const headers = this.authSvc.JWTHeaders
+    return firstValueFrom(
+      this.http.put<boolean>(`${this.INSTRUMENT_URL}/borrow/${instrument_id}`, { headers })
+    )
   }
 }

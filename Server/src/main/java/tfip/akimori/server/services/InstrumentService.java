@@ -53,7 +53,7 @@ public class InstrumentService {
                 .email(email)
                 .build();
         System.out.println(i);
-        logSvc.logInstrumentActivity(i.getStore_id(),"insert", email, i.getInstrument_id(), i.getInstrument_type(),
+        logSvc.logInstrumentActivity(i.getStore_id(), "insert", email, i.getInstrument_id(), i.getInstrument_type(),
                 i.getSerial_number(), i.isRepairing(), i.getRemarks());
         return instruRepo.addInstrument(i);
     }
@@ -93,6 +93,13 @@ public class InstrumentService {
         // TODO:
         logSvc.logInstrumentActivity("update", i.getStore_id(), email, i.getInstrument_id(), i.getInstrument_type(),
                 i.getSerial_number(), i.isRepairing(), i.getRemarks());
+        return false;
+    }
+
+    public Boolean borrow(String jwt, String instrument_id) {
+        // when generate qr, post token to mongo (with expiry)
+        // then here check if there is token
+        // if not qr can be reused
         return false;
     }
 }

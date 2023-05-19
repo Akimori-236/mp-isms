@@ -1,9 +1,11 @@
 package tfip.akimori.server.services;
 
+import java.time.LocalTime;
 import java.util.List;
 
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import jakarta.json.Json;
@@ -14,6 +16,8 @@ import tfip.akimori.server.repositories.MongoLoggingRepository;
 
 @Service
 public class MongoLoggingService {
+    private static Long QR_DURATION_MINUTES = 15L;
+
     @Autowired
     private MongoLoggingRepository mongoRepo;
 
@@ -66,5 +70,15 @@ public class MongoLoggingService {
                 .add("isRepairing", log.getBoolean("isRepairing"))
                 .add("time", log.getString("time"))
                 .add("remarks", log.getString("remarks"));
+    }
+
+    public void approveLoan(String instrumentID, String email) {
+        // db.loanapprovals.createIndex( { "expireAt": 1 }, { expireAfterSeconds: 0 } )
+        LocalTime expireAt = LocalTime.now().plusMinutes(QR_DURATION_MINUTES);
+        Document approval = new Document();
+        approval.put("instrumentID", instrumentID);
+        approval.put("approver", email);
+        approval.put("expireAt", expireAt);
+        mongoRepo.approveLoan(approval);
     }
 }

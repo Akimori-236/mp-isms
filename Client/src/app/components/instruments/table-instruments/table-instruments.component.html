@@ -10,7 +10,10 @@
   </div>
 </ng-template>
 
-<div class="bg-fog p-3" *ngIf="instrumentList && instrumentList.length > 0; else noInstruments">
+<div
+  class="bg-fog p-3"
+  *ngIf="instrumentList && instrumentList.length > 0; else noInstruments"
+>
   <form>
     <div class="mb-1 row">
       <label
@@ -50,15 +53,11 @@
             <!-- {{ i + 1 }} -->
             <button
               type="button"
-              class="btn btn-danger py-0"
+              class="btn btn-danger p-1"
               (click)="getQR(instru.instrument_id)"
               [disabled]="instru.isRepairing || !!instru.givenname"
             >
-              <span
-                class="my-auto"
-                style="font-size: xx-small; white-space: nowrap"
-                >Loan Out</span
-              >
+              <h6 class="my-auto">Loan<br />Out</h6>
             </button>
           </th>
           <td>
@@ -106,14 +105,10 @@
           <td>
             <button
               type="button"
-              class="btn btn-warning py-0"
+              class="btn btn-warning p-1"
               (click)="openPopupUpdateInstrument(instru)"
             >
-              <span
-                class="my-auto"
-                style="font-size: xx-small; white-space: nowrap"
-                >Edit</span
-              >
+              <h6 class="my-auto">Edit</h6>
             </button>
           </td>
         </tr>

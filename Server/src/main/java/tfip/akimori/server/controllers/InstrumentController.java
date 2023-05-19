@@ -52,7 +52,7 @@ public class InstrumentController {
     }
 
     @PostMapping(path = "/add/{storeID}")
-    public ResponseEntity<String> addInstrument(@RequestHeader(name = "Authorization") String token,
+    public ResponseEntity<Boolean> addInstrument(@RequestHeader(name = "Authorization") String token,
             @PathVariable String storeID,
             @RequestBody String dataString) {
         System.out.println(dataString);
@@ -63,20 +63,33 @@ public class InstrumentController {
 
         boolean isInserted = instruSvc.addInstrument(jwt, storeID, body);
         if (isInserted) {
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok(isInserted);
         } else {
-            return ResponseEntity.internalServerError().build();
+            return ResponseEntity.internalServerError().body(isInserted);
         }
     }
 
     @PutMapping("/update")
     public ResponseEntity<String> updateInstrument() {
         // check if owns instrument
-        
+        // TODO:
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body("");
+    }
+
+    @PutMapping("/borrow/{instrument_id}")
+    public ResponseEntity<Boolean> borrowInstrument(
+            @RequestHeader(name = "Authorization") String token,
+            @PathVariable String instrument_id) {
+        String jwt = token.substring(7, token.length());
+        Boolean isSuccess = instruSvc.borrow(jwt, instrument_id);
+        if (isSuccess) {
+            return ResponseEntity.ok(isSuccess);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }

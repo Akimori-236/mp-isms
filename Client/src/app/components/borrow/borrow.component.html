@@ -7,10 +7,12 @@
 </ng-template>
 
 <div
-  class="card position-absolute top-50 start-50 translate-middle border border-warning rounded-3"
+  class="card position-absolute top-50 start-50 translate-middle border border-danger rounded-3 w-75"
 >
   <div class="card-body">
-    <h2>Confirm Loaning of This {{ instrument.instrument_type }}</h2>
+    <h2 class="text-center">
+      Confirm Borrowing of This {{ instrument.instrument_type | titlecase }}
+    </h2>
     <div>
       <table class="table table-borderless" *ngIf="instrument; else Loading">
         <tbody>
@@ -21,7 +23,7 @@
                 readonly
                 type="text"
                 class="form-control"
-                [value]="instrument.brand"
+                [value]="instrument.brand | titlecase"
               />
             </td>
           </tr>
@@ -32,18 +34,18 @@
                 readonly
                 type="text"
                 class="form-control"
-                [value]="instrument.model"
+                [value]="instrument.model | titlecase"
               />
             </td>
           </tr>
           <tr>
             <td class="input-group">
-              <span class="input-group-text">Serial Number</span>
+              <span class="input-group-text">Serial No.</span>
               <input
                 readonly
                 type="text"
                 class="form-control"
-                [value]="instrument.serial_number"
+                [value]="instrument.serial_number | lowercase"
               />
             </td>
           </tr>
@@ -54,8 +56,18 @@
                 readonly
                 type="text"
                 class="form-control"
-                [value]="instrument.store_name"
+                [value]="instrument.store_name | titlecase"
               />
+            </td>
+          </tr>
+          <tr>
+            <td class="input-group">
+              <span class="input-group-text">Remarks</span>
+              <textarea
+                name="remarks"
+                class="form-control"
+                [value]="instrument.remarks"
+              ></textarea>
             </td>
           </tr>
         </tbody>
@@ -66,14 +78,14 @@
           class="btn btn-warning col-auto me-auto ms-5"
           (click)="borrow(instrument.instrument_id)"
         >
-          Loan
+          <h6 class="my-auto">Loan</h6>
         </button>
         <button
           type="button"
           class="btn btn-danger col-auto ms-auto me-5"
           [routerLink]="['/']"
         >
-          Cancel
+          <h6 class="my-auto">Cancel</h6>
         </button>
       </div>
     </div>

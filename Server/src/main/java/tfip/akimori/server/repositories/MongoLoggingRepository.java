@@ -14,8 +14,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class MongoLoggingRepository {
+
+
     public static final String COLLECTION_STORE_ACTIVITY = "storeactivity";
     public static final String COLLECTION_USER_ACTIVITY = "useractivity";
+    public static final String COLLECTION_LOAN_APPROVALS = "loanapprovals";
 
     @Autowired
     private MongoTemplate template;
@@ -45,5 +48,9 @@ public class MongoLoggingRepository {
 
     private DateTimeFormatter getDTF(String format) {
         return DateTimeFormatter.ofPattern(format);
+    }
+
+    public void approveLoan(Document doc) {
+        template.insert(doc, COLLECTION_LOAN_APPROVALS);
     }
 }

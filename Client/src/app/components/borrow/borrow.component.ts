@@ -38,7 +38,15 @@ export class BorrowComponent implements OnInit {
   }
 
   borrow(instrument_id: string) {
-    this.instruSvc.borrow(instrument_id)
+    this.instruSvc.borrow(instrument_id).then(
+      isSuccess => {
+        if (isSuccess) {
+
+        } else {
+          
+        }
+      }
+    )
   }
 
 }

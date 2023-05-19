@@ -1,6 +1,7 @@
 package tfip.akimori.server.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -14,22 +15,29 @@ import tfip.akimori.server.repositories.StoreRepository;
 
 @Service
 public class QrService {
-
     private static final String ANGULAR_BORROW_URL = "https://mp-server-production.up.railway.app/#/borrow/";
     private static final String GOQR_URL = "https://api.qrserver.com/v1/create-qr-code/";
     private static final String QR_COLOR_HEX = "00a";
+
     @Autowired
     private JwtService jwtSvc;
     @Autowired
     private StoreRepository storeRepo;
+    @Autowired
+    private MongoLoggingService logSvc;
+
+    private String buildURL(String data) {
+        return UriComponentsBuilder.fromUriString(GOQR_URL)
+                .queryParam("data", data)
+                .queryParam("color", QR_COLOR_HEX)
+                .build()
+                .toUriString();
+    }
 
     public ResponseEntity<byte[]> getQRResponse(String URLString) {
         RestTemplate template = new RestTemplate();
         // SET Headers
         final HttpHeaders headers = new HttpHeaders();
-        // String apiKey = System.getenv("${API_KEY}");
-        // headers.set("data", apiKey);
-        // headers.set("hosthost", "host-url");
 
         // GET request creation with headers
         final HttpEntity<String> entity = new HttpEntity<String>(headers);
@@ -44,8 +52,10 @@ public class QrService {
         // check manager clearance
         // verify store manager
         if (storeRepo.isManagerOfStore(email, storeID)) {
-            String loanURL = ANGULAR_BORROW_URL + instrumentID; // TODO: LINK BACK TO ANGULAR ROUTING
+            // record approval of loan in mongo (w expiry)
+            logSvc.approveLoan(instrumentID, email);
             // access external api
+            String loanURL = ANGULAR_BORROW_URL + instrumentID;
             ResponseEntity<byte[]> response = getQRResponse(buildURL(loanURL));
             // get body from GET response
             byte[] imageBytes = response.getBody();
@@ -56,24 +66,16 @@ public class QrService {
         }
     }
 
-    private String buildURL(String data) {
-        return UriComponentsBuilder.fromUriString(GOQR_URL)
-                .queryParam("data", data)
-                .queryParam("color", QR_COLOR_HEX)
-                .build()
-                .toUriString();
-    }
-
     // private String buildURL(String data, Integer pixelSize) throws Exception {
-    //     if (pixelSize <= 1000) {
-    //         return UriComponentsBuilder.fromUriString(GOQR_URL)
-    //                 .queryParam("data", data)
-    //                 .queryParam("size", pixelSize.toString() + "x" + pixelSize.toString())
-    //                 .build()
-    //                 .toUriString();
-    //     } else {
-    //         throw new Exception("Pixel size needs to be 1000 or below");
-    //     }
+    // if (pixelSize <= 1000) {
+    // return UriComponentsBuilder.fromUriString(GOQR_URL)
+    // .queryParam("data", data)
+    // .queryParam("size", pixelSize.toString() + "x" + pixelSize.toString())
+    // .build()
+    // .toUriString();
+    // } else {
+    // throw new Exception("Pixel size needs to be 1000 or below");
+    // }
     // }
 
 }
