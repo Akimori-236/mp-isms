@@ -128,7 +128,9 @@ public interface SQLQueries {
 
     // UPDATE
     public static final String SQL_LOANOUT_INSTRUMENT = """
-
+            UPDATE instruments
+            SET user_id = (SELECT user_id FROM users WHERE email = ?)
+            WHERE instrument_id = ?
             """;
     public static final String SQL_RETURN_INSTRUMENT = """
 

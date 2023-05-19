@@ -66,4 +66,13 @@ public class InstrumentRepository implements SQLQueries {
                 id);
     }
 
+    public Boolean borrow(String email, String id) {
+        int rowsUpdated = template.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(SQL_LOANOUT_INSTRUMENT);
+            ps.setString(1, email);
+            ps.setString(2, id);
+            return ps;
+        });
+        return rowsUpdated > 0;
+    }
 }

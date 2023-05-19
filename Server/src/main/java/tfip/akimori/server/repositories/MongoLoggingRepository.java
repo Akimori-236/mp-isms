@@ -15,7 +15,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class MongoLoggingRepository {
 
-
     public static final String COLLECTION_STORE_ACTIVITY = "storeactivity";
     public static final String COLLECTION_USER_ACTIVITY = "useractivity";
     public static final String COLLECTION_LOAN_APPROVALS = "loanapprovals";
@@ -52,5 +51,12 @@ public class MongoLoggingRepository {
 
     public void approveLoan(Document doc) {
         template.insert(doc, COLLECTION_LOAN_APPROVALS);
+    }
+
+    // db.loanapprovals.find({"instrument_id": "367377a1"}).count()
+    public Document checkApproval(String instrument_id) {
+        Criteria criteria = Criteria.where("instrument_id").is(instrument_id);
+        Query query = new Query(criteria);
+        return template.findOne(query, Document.class, COLLECTION_LOAN_APPROVALS);
     }
 }

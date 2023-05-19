@@ -43,7 +43,7 @@ export class BorrowComponent implements OnInit {
         if (isSuccess) {
 
         } else {
-          
+
         }
       }
     )

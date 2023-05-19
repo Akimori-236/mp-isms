@@ -58,8 +58,6 @@ public class InstrumentService {
         return instruRepo.addInstrument(i);
     }
 
-    // TODO: how to loan out to myself?
-
     private static String generateID(int length) {
         return UUID.randomUUID()
                 .toString()
@@ -97,9 +95,18 @@ public class InstrumentService {
     }
 
     public Boolean borrow(String jwt, String instrument_id) {
-        // when generate qr, post token to mongo (with expiry)
-        // then here check if there is token
-        // if not qr can be reused
-        return false;
+        // get email from JWT
+        String email = jwtSvc.extractUsername(jwt);
+        // check for approval if not qr can be reused
+        String approverEmail = logSvc.getApprover(instrument_id);
+        if (approverEmail.isBlank()) {
+            return false;
+        } else {
+            // send update to SQL
+            Boolean isUpdated = instruRepo.borrow(email, instrument_id);
+
+            logSvc.logInstrumentLoaned(email, instrument_id, approverEmail);
+            return true;
+        }
     }
 }

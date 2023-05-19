@@ -43,7 +43,7 @@ public class QrService {
         System.out.println(URLString);
         RestTemplate template = new RestTemplate();
         // SET Headers
-        final HttpHeaders headers = new HttpHeaders();
+        // final HttpHeaders headers = new HttpHeaders();
         // GET request creation with headers
         RequestEntity<Void> requestEntity = new RequestEntity<>(HttpMethod.GET, URI.create(URLString));
         // SEND GET REQUEST

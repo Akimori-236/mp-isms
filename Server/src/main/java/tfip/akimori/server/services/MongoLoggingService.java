@@ -11,6 +11,7 @@ import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObjectBuilder;
+import tfip.akimori.server.repositories.InstrumentRepository;
 import tfip.akimori.server.repositories.MongoLoggingRepository;
 
 @Service
@@ -19,6 +20,8 @@ public class MongoLoggingService {
 
     @Autowired
     private MongoLoggingRepository mongoRepo;
+    @Autowired
+    private InstrumentRepository instruRepo;
 
     public void logUserActivity(String activity, String email) {
         Document doc = new Document();
@@ -71,13 +74,28 @@ public class MongoLoggingService {
                 .add("remarks", log.getString("remarks"));
     }
 
-    public void approveLoan(String instrumentID, String email) {
-        // db.loanapprovals.createIndex( { "expireAt": 1 }, { expireAfterSeconds: 0 } )
+    // db.loanapprovals.createIndex( { "expireAt": 1 }, { expireAfterSeconds: 0 } )
+    public void approveLoan(String instrument_id, String email) {
         LocalTime expireAt = LocalTime.now().plusMinutes(QR_DURATION_MINUTES);
         Document approval = new Document();
-        approval.put("instrumentID", instrumentID);
+        approval.put("instrument_id", instrument_id);
         approval.put("approver", email);
         approval.put("expireAt", expireAt);
         mongoRepo.approveLoan(approval);
+    }
+
+    public String getApprover(String instrument_id) {
+        return mongoRepo.checkApproval(instrument_id)
+                .getString("approver");
+    }
+
+    public void logInstrumentLoaned(String borrowerEmail, String instrument_id, String approverEmail) {
+        String store_id = instruRepo.getInstrumentById(instrument_id).getStore_id();
+        Document doc = new Document();
+        doc.put("approver", approverEmail);
+        doc.put("instrument_id", instrument_id);
+        doc.put("borrower", borrowerEmail);
+        doc.put("store_id", store_id);
+        mongoRepo.insertInstrumentActivity(doc);
     }
 }
