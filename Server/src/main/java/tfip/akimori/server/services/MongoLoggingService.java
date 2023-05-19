@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonArrayBuilder;
-import jakarta.json.JsonObject;
 import jakarta.json.JsonObjectBuilder;
 import tfip.akimori.server.repositories.MongoLoggingRepository;
 
@@ -64,6 +63,7 @@ public class MongoLoggingService {
                 .add("instrument_type", log.getString("instrument_type"))
                 .add("serial_number", log.getString("serial_number"))
                 .add("isRepairing", log.getBoolean("isRepairing"))
+                .add("time", log.getString("time"))
                 .add("remarks", log.getString("remarks"));
     }
 }

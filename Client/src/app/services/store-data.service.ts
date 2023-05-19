@@ -4,6 +4,7 @@ import { firstValueFrom } from 'rxjs';
 import { Instrument } from '../models/instrument';
 import { Store } from '../models/store';
 import { AuthService } from './auth.service';
+import { Log } from '../models/log';
 
 @Injectable({
     providedIn: 'root'
@@ -47,4 +48,10 @@ export class StoreDataService {
         )
     }
 
+    getStoreLogs(storeID: string): Promise<Log[]> {
+        const headers = this.authSvc.JWTHeaders.set('Content-Type', 'application/json')
+        return firstValueFrom(
+            this.http.post<Log[]>(`${this.STORE_URL}/logs/${storeID}`, { headers })
+        )
+    }
 }

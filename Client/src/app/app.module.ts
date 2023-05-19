@@ -21,6 +21,7 @@ import { FormAddinstrumentComponent } from './components/instruments/form-addins
 import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 import { PopupQrComponent } from './components/instruments/popup-qr/popup-qr.component';
 import { BorrowComponent } from './components/borrow/borrow.component';
+import { TableStorelogsComponent } from './components/instruments/table-storelogs/table-storelogs.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { BorrowComponent } from './components/borrow/borrow.component';
     TableInstrumentsComponent,
     FormAddinstrumentComponent,
     PopupQrComponent,
-    BorrowComponent
+    BorrowComponent,
+    TableStorelogsComponent
   ],
   imports: [
     BrowserModule,

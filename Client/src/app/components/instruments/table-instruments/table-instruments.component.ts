@@ -5,8 +5,6 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subject } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { Instrument } from 'src/app/models/instrument';
-import { QrService } from 'src/app/services/qr.service';
-import { StoreDataService } from 'src/app/services/store-data.service';
 import { PopupQrComponent } from '../popup-qr/popup-qr.component';
 import { FormAddinstrumentComponent } from '../form-addinstrument/form-addinstrument.component';
 import { InstrumentService } from 'src/app/services/instrument.service';

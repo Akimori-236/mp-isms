@@ -6,6 +6,7 @@ import { StoreDataService } from 'src/app/services/store-data.service';
 import { FormAddinstrumentComponent } from './form-addinstrument/form-addinstrument.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { InstrumentService } from 'src/app/services/instrument.service';
+import { TableStorelogsComponent } from './table-storelogs/table-storelogs.component';
 
 @Component({
   selector: 'app-instruments',
@@ -115,10 +116,10 @@ export class InstrumentsComponent implements OnChanges, AfterViewInit {
       });
   }
 
-  openPopupStoreLogs(content: any) {
-    const modalRef = this.modalService.open(content, { ariaLabelledBy: 'modal-store-logs' });
-    // TODO: get logs
-
+  openPopupStoreLogs() {
+    const modalRef = this.modalService.open(TableStorelogsComponent);
+    modalRef.componentInstance.storeID = this.currentStoreID
+    modalRef.componentInstance.storeName = this.currentStoreName
     modalRef.result
       .then((result) => {
         // Handle modal close event
@@ -130,7 +131,4 @@ export class InstrumentsComponent implements OnChanges, AfterViewInit {
       });
   }
 
-  getStoreLogs() {
-    // TODO:
-  }
 }

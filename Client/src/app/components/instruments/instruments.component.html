@@ -48,32 +48,6 @@
   </div>
 </ng-template>
 
-<ng-template #storeLogs let-modal>
-  <!-- Create Store POPUP -->
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-store-logs">Store Logs</h4>
-    <button
-      type="button"
-      class="btn-close"
-      aria-label="Close"
-      (click)="modal.dismiss('Cross click')"
-    >
-      <!-- Close the popup -->
-    </button>
-  </div>
-  <div class="modal-body" (load)="getStoreLogs()">STORE LOGS HERE</div>
-  <div class="modal-footer">
-    <button
-      type="submit"
-      class="btn btn-warning"
-      [disabled]="addManagerForm.invalid"
-      (click)="modal.close('Save click')"
-    >
-      Save
-    </button>
-  </div>
-</ng-template>
-
 <div class="m-0 p-0" *ngIf="instrumentList; else Loading">
   <div class="row my-3">
     <button
@@ -93,7 +67,7 @@
     <button
       type="button"
       class="btn btn-warning col-auto m-1 ms-auto"
-      (click)="openPopupStoreLogs(storeLogs)"
+      (click)="openPopupStoreLogs()"
     >
       <h6 class="my-2">See Store Logs</h6>
     </button>
