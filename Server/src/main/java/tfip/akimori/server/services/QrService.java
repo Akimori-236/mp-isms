@@ -1,10 +1,13 @@
 package tfip.akimori.server.services;
 
+import java.net.URI;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -15,8 +18,8 @@ import tfip.akimori.server.repositories.StoreRepository;
 
 @Service
 public class QrService {
-    // https://quickchart.io/qr?text=https%3A%2F%2Fmp-server-production.up.railway.app%2F%23%2Fborrow&dark=704621&size=200
-    private static final String ANGULAR_BORROW_URL = "https://mp-server-production.up.railway.app/%23/borrow/";
+    // https://quickchart.io/qr?text=https%3A%2F%2Fmp-server-production.up.railway.app%2F%23%2Fborrow%2F367377a1&size=200
+    private static final String ANGULAR_BORROW_URL = "https%3A%2F%2Fmp-server-production.up.railway.app%2F%23%2Fborrow%2F";
     private static final String QR_API_URL = "https://quickchart.io/qr";
     @Autowired
     private JwtService jwtSvc;
@@ -32,18 +35,19 @@ public class QrService {
                 .queryParam("size", 200)
                 .build()
                 .toUriString();
-        System.out.println(url);
+        // System.out.println(url);
         return url;
     }
 
     public ResponseEntity<byte[]> getQRResponse(String URLString) {
+        System.out.println(URLString);
         RestTemplate template = new RestTemplate();
         // SET Headers
         final HttpHeaders headers = new HttpHeaders();
         // GET request creation with headers
-        final HttpEntity<String> entity = new HttpEntity<String>(headers);
+        RequestEntity<Void> requestEntity = new RequestEntity<>(HttpMethod.GET, URI.create(URLString));
         // SEND GET REQUEST
-        ResponseEntity<byte[]> response = template.exchange(URLString, HttpMethod.GET, entity, byte[].class);
+        ResponseEntity<byte[]> response = template.exchange(requestEntity, byte[].class);
         return response;
     }
 
@@ -56,10 +60,8 @@ public class QrService {
             String loanURL = ANGULAR_BORROW_URL + instrumentID;
             // access external api
             ResponseEntity<byte[]> response = getQRResponse(buildURL(loanURL));
-            // get body from GET response
-            byte[] imageBytes = response.getBody();
             logSvc.approveLoan(instrumentID, email);
-            return imageBytes;
+            return response.getBody();
         } else {
             // not a manager of the store
             throw new UnauthorizedException("Not a manager of store");
