@@ -1,0 +1,54 @@
+version: '3.9'
+services:
+  mysqldb:
+    image: mysql:5.7
+    environment:
+      - MYSQL_DATABASE=tfipproject
+      - MYSQL_USER=test
+      - MYSQL_PASSWORD=1234
+      - MYSQL_ROOT_PASSWORD=1234
+    networks:
+      - some-net
+    ports:
+      - "3306:3306"
+  mongodb:
+    image: mongo
+    container_name: "mongodb"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=1234
+      - MONGO_INITDB_DATABASE=musicstore
+    volumes:
+      - ./mongodata:/data/db
+    networks:
+      - some-net
+    ports:
+      - 27017:27017
+  springboot:
+    container_name: "spring-boot"
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    secrets:
+    environment:
+      - MONGO_URL=mongodb:27017/musicstore
+      - MONGOHOST=mongodb
+      - MONGOPORT=27017
+      - MONGODB=musicstore
+      - MONGOUSER=root
+      - MONGOPASSWORD=1234
+      - spring.datasource.url=jdbc:mysqldb:3306/tfipproject?useSSL=false
+    depends_on:
+      - mongodb
+      - mysqldb
+    links:
+      - mongodb
+      - mysqldb
+    networks:
+      - some-net
+
+networks:
+  some-net:
+    driver: bridge

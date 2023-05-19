@@ -1,0 +1,109 @@
+<ng-template #Loading>
+  <div class="d-flex justify-content-center">
+    <div class="spinner-border text-warning" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #addManager let-modal>
+  <!-- Add Manager POPUP -->
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-add-manager">Add New Manager</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <!-- Close the popup -->
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="addManagerForm">
+      <div class="mb-3">
+        <label for="managerEmailID">Send an invite to an email address</label>
+        <div class="input-group">
+          <input
+            id="managerEmailID"
+            class="form-control"
+            name="managerEmail"
+            type="email"
+            placeholder="fred@gmail.com"
+            formControlName="managerEmail"
+          />
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="submit"
+      class="btn btn-warning"
+      [disabled]="addManagerForm.invalid"
+      (click)="modal.close('Save click')"
+    >
+      Save
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #storeLogs let-modal>
+  <!-- Create Store POPUP -->
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-store-logs">Store Logs</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <!-- Close the popup -->
+    </button>
+  </div>
+  <div class="modal-body" (load)="getStoreLogs()">STORE LOGS HERE</div>
+  <div class="modal-footer">
+    <button
+      type="submit"
+      class="btn btn-warning"
+      [disabled]="addManagerForm.invalid"
+      (click)="modal.close('Save click')"
+    >
+      Save
+    </button>
+  </div>
+</ng-template>
+
+<div class="m-0 p-0" *ngIf="instrumentList; else Loading">
+  <div class="row my-3">
+    <button
+      type="button"
+      class="btn btn-warning col-auto m-1"
+      (click)="openPopupAddInstrument()"
+    >
+      <h6 class="my-2">Add Instrument</h6>
+    </button>
+    <button
+      type="button"
+      class="btn btn-warning col-auto m-1"
+      (click)="openPopupAddManager(addManager)"
+    >
+      <h6 class="my-2">Add Manager</h6>
+    </button>
+    <button
+      type="button"
+      class="btn btn-warning col-auto m-1 ms-auto"
+      (click)="openPopupStoreLogs(storeLogs)"
+    >
+      <h6 class="my-2">See Store Logs</h6>
+    </button>
+  </div>
+
+  <app-table-instruments
+    class="w-100"
+    [instrumentList]="instrumentList"
+    [storeID]="currentStoreID"
+    (onUpdate)="getStoreDetails()"
+  >
+  </app-table-instruments>
+</div>

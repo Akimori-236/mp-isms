@@ -1,0 +1,87 @@
+<div
+  class="card position-absolute top-50 start-50 translate-middle border border-warning rounded-3"
+>
+  <div class="card-body">
+    <!--LOGIN FORM-->
+    <form
+      class="form"
+      id="registerFormID"
+      [formGroup]="updateProfileForm"
+      (ngSubmit)="update()"
+    >
+      <table>
+        <tbody>
+          <tr>
+            <td class="form-group form-floating">
+              <input
+                type="email"
+                class="form-control my-1"
+                id="emailID"
+                name="email"
+                placeholder="Email"
+                formControlName="email"
+                readonly
+              />
+              <label for="emailID">Email</label>
+            </td>
+          </tr>
+          <tr>
+            <td class="form-group form-floating">
+              <input
+                type="text"
+                class="form-control my-1"
+                id="givennameID"
+                name="givenname"
+                formControlName="givenname"
+              />
+              <label for="givennameID">Given Name</label>
+            </td>
+          </tr>
+          <tr>
+            <td class="form-group form-floating">
+              <input
+                type="text"
+                class="form-control my-1"
+                id="familynameID"
+                name="familyname"
+                formControlName="familyname"
+              />
+              <label for="familynameID">Family Name</label>
+            </td>
+          </tr>
+          <tr>
+            <td class="form-group form-floating">
+              <input
+                type="number"
+                class="form-control my-1"
+                id="scheduleID"
+                name="schedule"
+                ngbTooltip="Time of day"
+                formControlName="schedule"
+              />
+              <label for="scheduleID">Schedule Email </label>
+            </td>
+          </tr>
+          <tr>
+            <td class="text-center">
+              <button
+                type="submit"
+                class="w-100 btn btn-warning mt-3"
+                [disabled]="updateProfileForm.invalid"
+              >
+                Update Profile
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td class="d-flex justify-content-center">
+              <div id="googleBtn" class="my-2">
+                <!-- google sign up button -->
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </div>
+</div>

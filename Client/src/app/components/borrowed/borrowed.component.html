@@ -1,0 +1,46 @@
+<ng-template #Loading>
+  <div class="d-flex justify-content-center">
+    <div class="spinner-border text-warning" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+</ng-template>
+
+<div class="container mw-100">
+  <h1 class="text-center">Your Instruments</h1>
+
+  <table
+    class="table table-striped mw-100"
+    *ngIf="instrumentList; else Loading"
+  >
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Type</th>
+        <th scope="col">Model</th>
+        <th scope="col">Serial No.</th>
+        <th scope="col">Loaned From</th>
+        <th scope="col">Return</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- TODO: ngIf no instruments, show something else -->
+      <tr *ngFor="let instr of instrumentList; index as i">
+        <th scope="row">{{ i + 1 }}</th>
+        <td class="text-wrap">{{ instr.instrument_type | titlecase }}</td>
+        <td class="text-wrap">{{ instr.model | titlecase }}</td>
+        <td class="text-wrap">{{ instr.serial_number | lowercase }}</td>
+        <td class="text-wrap">{{ instr.store_name | titlecase }}</td>
+        <td>
+          <button
+            type="button"
+            class="btn btn-warning"
+            (click)="returnInstrument(instr.instrument_id)"
+          >
+            Return
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

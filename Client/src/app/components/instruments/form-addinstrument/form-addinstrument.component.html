@@ -1,0 +1,103 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ modalTitle }}</h4>
+  <button
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  ></button>
+</div>
+
+<form [formGroup]="addInstrumentForm">
+  <div class="modal-body">
+    <input hidden type="text" formControlName="instrument_id" />
+    <div class="mb-2">
+      <div class="form-group form-floating">
+        <input
+          id="instrument_typeID"
+          class="form-control"
+          name="instrument_type"
+          type="text"
+          placeholder="Type"
+          ngbTooltip="Flute, Clarinet, Saxophone, ..."
+          formControlName="instrument_type"
+        />
+        <label for="instrument_typeID">Type</label>
+      </div>
+    </div>
+    <div class="mb-2">
+      <div class="form-group form-floating">
+        <input
+          id="brandID"
+          class="form-control"
+          name="brand"
+          type="text"
+          placeholder="Brand"
+          formControlName="brand"
+        />
+        <label for="brandID">Brand</label>
+      </div>
+    </div>
+    <div class="mb-2">
+      <div class="form-group form-floating">
+        <input
+          id="modelID"
+          class="form-control"
+          name="model"
+          type="text"
+          placeholder="Model"
+          formControlName="model"
+        />
+        <label for="modelID">Model</label>
+      </div>
+    </div>
+    <div class="mb-2">
+      <div class="form-group form-floating">
+        <input
+          id="serial_numberID"
+          class="form-control"
+          name="serial_number"
+          type="text"
+          placeholder="Serial Number"
+          formControlName="serial_number"
+        /><label for="serial_numberID">Serial Number</label>
+      </div>
+    </div>
+    <div class="mb-2">
+      <div class="form-check form-switch">
+        <input
+          id="isRepairingID"
+          class="form-check-input"
+          name="isRepairing"
+          type="checkbox"
+          role="switch"
+          formControlName="isRepairing"
+        /><label class="form-check-label" for="isRepairingID"
+          >Is this instrument under repair?</label
+        >
+      </div>
+    </div>
+    <div class="mb-2">
+      <div class="form-group form-floating">
+        <input
+          id="remarksID"
+          class="form-control"
+          name="remarks"
+          type="text"
+          placeholder="Remarks"
+          formControlName="remarks"
+        /><label for="remarksID">Remarks</label>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="submit"
+      class="btn btn-warning"
+      [disabled]="addInstrumentForm.invalid"
+      (click)="activeModal.close('Close click')"
+    >
+      Save
+    </button>
+  </div>
+</form>

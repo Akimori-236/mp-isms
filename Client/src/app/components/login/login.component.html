@@ -1,0 +1,78 @@
+<div
+  class="card position-absolute top-50 start-50 translate-middle border border-warning rounded-3"
+>
+  <div class="card-body ">
+    <!--LOGIN FORM-->
+    <form
+      class="form"
+      id="loginFormID"
+      [formGroup]="loginForm"
+      (ngSubmit)="login()"
+    >
+      <table>
+        <tbody>
+          <tr>
+            <td class="form-group form-floating">
+              <input
+                type="email"
+                class="form-control my-1"
+                id="emailID"
+                name="email"
+                aria-describedby="emailHelp"
+                placeholder="Email"
+                autofocus
+                formControlName="email"
+              />
+              <label for="emailID">Email</label>
+              <!-- <small id="emailHelp" class="form-text text-muted"
+            >email</small
+          > -->
+            </td>
+          </tr>
+          <tr>
+            <td class="form-group form-floating">
+              <input
+                type="password"
+                class="form-control my-1"
+                id="passwordID"
+                name="password"
+                placeholder="Password"
+                formControlName="password"
+              />
+              <label for="passwordID">Password</label>
+            </td>
+          </tr>
+          <tr>
+            <td class="text-center">
+              <button
+                type="submit"
+                class="w-100 btn btn-warning mt-3"
+                [disabled]="loginForm.invalid"
+              >
+                Log In
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td class="text-center">
+              <button
+                type="button"
+                class="w-100 btn btn-outline-warning mt-3"
+                (click)="register()"
+              >
+                Register
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td class="d-flex justify-content-center">
+              <div id="googleBtn" class="my-2">
+                <!-- google sign up button -->
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </div>
+</div>

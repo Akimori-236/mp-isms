@@ -1,0 +1,83 @@
+<div class="container-fluid mb-1 w-100">
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <tr>
+      <td>
+        <a class="navbar-brand" href="#" [routerLink]="['/']">
+          <img class="w-25 h-25" src="assets/logo.png" alt="Logo" />
+        </a>
+      </td>
+      <td>
+        <button
+          class="navbar-toggler"
+          type="button"
+          (click)="isCollapsed = !isCollapsed"
+          [attr.aria-expanded]="!isCollapsed"
+          aria-controls="navbarSupportedContent"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </td>
+    </tr>
+
+    <div class="collapse navbar-collapse" [ngbCollapse]="isCollapsed">
+      <ul class="navbar-nav col-auto ms-auto text-end">
+        <li class="nav-item mx-3">
+          <a class="nav-link" href="#" [routerLink]="['/about']">
+            <h4 class="my-auto text-light">About</h4>
+          </a>
+        </li>
+        <li class="nav-item mx-3">
+          <a class="nav-link" href="#" [routerLink]="['/borrowed']">
+            <h4 class="my-auto text-light">Borrowed Instruments</h4>
+          </a>
+        </li>
+        <li class="nav-item mx-3">
+          <a class="nav-link" href="#" [routerLink]="['/stores']">
+            <h4 class="my-auto text-light">Managed Stores</h4>
+          </a>
+        </li>
+
+        <li *ngIf="isLoggedIn; else Login">
+          <div ngbDropdown class="ms-auto">
+            <button
+              type="button"
+              class="btn btn-warning"
+              id="dropdownBasic1"
+              ngbDropdownToggle
+            >
+              <h4 class="my-auto">{{ givenname | titlecase }}</h4>
+            </button>
+            <div
+              ngbDropdownMenu
+              aria-labelledby="dropdownBasic1"
+              class="text-end dropdown-menu-end"
+            >
+              <button ngbDropdownItem [routerLink]="['/profile']">
+                <h4 class="my-auto">Profile</h4>
+              </button>
+              <!-- <button ngbDropdownItem [routerLink]="['/borrowed']">Borrowed Instruments</button>
+              <button ngbDropdownItem [routerLink]="['/stores']">Managed Stores</button> -->
+              <button
+                ngbDropdownItem
+                class="bg-danger text-light me-3"
+                (click)="logout()"
+              >
+                <h4 class="my-auto">Logout</h4>
+              </button>
+            </div>
+          </div>
+        </li>
+      </ul>
+
+      <ng-template #Login>
+        <button
+          class="btn btn-warning col ms-auto text-end me-3"
+          type="button"
+          [routerLink]="['/login']"
+        >
+          <h4 class="my-auto" class="my-auto">Login</h4>
+        </button>
+      </ng-template>
+    </div>
+  </nav>
+</div>

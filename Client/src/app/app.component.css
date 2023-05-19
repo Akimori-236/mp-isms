@@ -1,0 +1,24 @@
+.bg-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("src/assets/bg.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  z-index: -2;
+  filter: blur(3px);
+}
+
+/* .bg-blur {
+    backdrop-filter: blur(3px);
+  } */
+
+.container-fluid {
+  background-color: rgba(0, 0, 0, 0.25);
+}
+.container {
+  background-color: rgba(0, 0, 0, 0.25);
+}

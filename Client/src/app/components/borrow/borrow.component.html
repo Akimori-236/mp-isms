@@ -1,0 +1,91 @@
+<ng-template #Loading>
+  <div class="d-flex justify-content-center mt-5">
+    <div class="spinner-border text-warning" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+</ng-template>
+
+<div
+  class="card position-absolute top-50 start-50 translate-middle border border-warning rounded-3"
+>
+  <div class="card-body">
+    <h2>Confirm Loaning of This {{ instrument.instrument_type }}</h2>
+    <div>
+      <table class="table table-borderless" *ngIf="instrument; else Loading">
+        <tbody>
+          <!-- <tr>
+            <td>
+              <input
+                readonly
+                type="text"
+                class="form-control my-1"
+                [value]="instrument.instrument_type"
+              />
+            </td>
+          </tr> -->
+          <tr>
+            <td class="input-group">
+              <span class="input-group-text">Brand</span>
+              <input
+                readonly
+                type="text"
+                class="form-control"
+                [value]="instrument.brand"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td class="input-group">
+              <span class="input-group-text">Model</span>
+              <input
+                readonly
+                type="text"
+                class="form-control"
+                [value]="instrument.model"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td class="input-group">
+              <span class="input-group-text">Serial Number</span>
+              <input
+                readonly
+                type="text"
+                class="form-control"
+                [value]="instrument.serial_number"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td class="input-group">
+              <span class="input-group-text">From</span>
+              <input
+                readonly
+                type="text"
+                class="form-control"
+                [value]="instrument.store_name"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="row">
+        <button
+          type="button"
+          class="btn btn-warning col-auto me-auto ms-5"
+          (click)="borrow(instrument.instrument_id)"
+        >
+          Loan
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger col-auto ms-auto me-5"
+          [routerLink]="['/']"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

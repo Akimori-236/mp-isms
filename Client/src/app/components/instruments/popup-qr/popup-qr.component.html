@@ -1,0 +1,35 @@
+<div class="modal-header">
+  <h4 class="modal-title">Person receiving instrument to scan this</h4>
+  <button
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  ></button>
+</div>
+<div class="modal-body">
+  <div
+    class="mx-auto"
+    style="width: 252px"
+    *ngIf="qr; else Loading"
+  >
+    <img [src]="qr" alt="QR Code" srcset="" />
+  </div>
+</div>
+<div class="modal-footer">
+  <button
+    type="button"
+    class="btn btn-outline-dark"
+    (click)="activeModal.close('Close click')"
+  >
+    Close
+  </button>
+</div>
+
+<ng-template #Loading>
+  <div class="d-flex justify-content-center">
+    <div class="spinner-border text-warning" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+</ng-template>

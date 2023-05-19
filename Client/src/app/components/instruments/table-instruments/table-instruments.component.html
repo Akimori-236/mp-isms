@@ -1,0 +1,123 @@
+<ng-template #noInstruments>
+  <div
+    class="card position-absolute top-50 start-50 translate-middle border border-danger rounded-3 w-75"
+  >
+    <p class="card-body text-center">
+      There are no instruments in this store.
+      <br />
+      Add some with the [Add Instrument] button!
+    </p>
+  </div>
+</ng-template>
+
+<div class="bg-fog p-3" *ngIf="instrumentList && instrumentList.length > 0; else noInstruments">
+  <form>
+    <div class="mb-1 row">
+      <label
+        for="table-filtering-search"
+        class="col-xs-3 col-sm-auto col-form-label"
+        >Full text search:</label
+      >
+      <div class="col-xs-3 col-sm-auto">
+        <input
+          id="table-filtering-search"
+          class="form-control"
+          type="text"
+          [formControl]="filter"
+        />
+      </div>
+    </div>
+  </form>
+
+  <div class="component-container" style="overflow-x: auto">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Type</th>
+          <th scope="col">Brand</th>
+          <th scope="col">Model</th>
+          <th scope="col">Serial Number</th>
+          <th scope="col">Repairing</th>
+          <th scope="col">Remarks</th>
+          <th scope="col">Loaned To</th>
+          <th scope="col">Edit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let instru of instruments$ | async; index as i">
+          <th scope="row">
+            <!-- {{ i + 1 }} -->
+            <button
+              type="button"
+              class="btn btn-danger py-0"
+              (click)="getQR(instru.instrument_id)"
+              [disabled]="instru.isRepairing || !!instru.givenname"
+            >
+              <span
+                class="my-auto"
+                style="font-size: xx-small; white-space: nowrap"
+                >Loan Out</span
+              >
+            </button>
+          </th>
+          <td>
+            <ngb-highlight
+              [result]="instru.instrument_type"
+              [term]="filter.value"
+            ></ngb-highlight>
+          </td>
+          <td>
+            <ngb-highlight
+              [result]="instru.brand"
+              [term]="filter.value"
+            ></ngb-highlight>
+          </td>
+          <td>
+            <ngb-highlight
+              [result]="instru.model"
+              [term]="filter.value"
+            ></ngb-highlight>
+          </td>
+          <td>
+            <ngb-highlight
+              [result]="instru.serial_number"
+              [term]="filter.value"
+            ></ngb-highlight>
+          </td>
+          <td>
+            <ngb-highlight
+              [result]="instru.isRepairing ? 'Yes' : 'No'"
+              [term]="filter.value"
+            ></ngb-highlight>
+          </td>
+          <td>
+            <ngb-highlight
+              [result]="instru.remarks"
+              [term]="filter.value"
+            ></ngb-highlight>
+          </td>
+          <td>
+            <ngb-highlight
+              [result]="instru.givenname | titlecase"
+              [term]="filter.value"
+            ></ngb-highlight>
+          </td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-warning py-0"
+              (click)="openPopupUpdateInstrument(instru)"
+            >
+              <span
+                class="my-auto"
+                style="font-size: xx-small; white-space: nowrap"
+                >Edit</span
+              >
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

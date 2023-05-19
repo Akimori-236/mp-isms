@@ -1,0 +1,91 @@
+<ng-template #noStores>
+  <div
+    class="card position-absolute top-100 start-50 translate-middle border border-danger rounded-3 w-50"
+  >
+    <span class="card-body text-center"> You are not managing any store. </span>
+  </div>
+</ng-template>
+
+<ng-template #createStore let-modal>
+  <!-- Create Store POPUP -->
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-create-store">Create New Store</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <!-- Close the popup -->
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="createStoreForm">
+      <div class="mb-3">
+        <label for="storeNameID">Store Name</label>
+        <div class="input-group">
+          <input
+            id="storeNameID"
+            class="form-control"
+            name="storeName"
+            type="text"
+            formControlName="storeName"
+          />
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="submit"
+      class="btn btn-warning"
+      [disabled]="createStoreForm.invalid"
+      (click)="modal.close('Save click')"
+    >
+      Save
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #Loading>
+  <div class="d-flex justify-content-center mt-5">
+    <div class="spinner-border text-warning" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+</ng-template>
+
+<div class="container">
+  <div class="row">
+    <h1 class="col-auto text-center text-white">Managed Stores</h1>
+    <button
+      type="button"
+      class="col-auto ms-auto btn btn-warning me-1"
+      (click)="openPopup(createStore)"
+    >
+      <h6 class="my-auto">Create Store</h6>
+    </button>
+  </div>
+  <div class="row mt-3" *ngIf="storeList; else Loading">
+    <ul class="nav nav-tabs" style="overflow-x: auto">
+      <li class="nav-item" *ngFor="let store of storeList; let i = index">
+        <button
+          class="nav-link bg-dark"
+          href="#"
+          (click)="getStoreDetails(store.store_id, store.store_name)"
+        >
+          <h6 class="mt-auto text-light">{{ store.store_name }}</h6>
+        </button>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="currentStoreID">
+    <app-instruments
+      class="m-0 p-0"
+      [currentStoreID]="currentStoreID"
+      [currentStoreName]="currentStoreName"
+    >
+      <!-- use input to pass in storeid -->
+    </app-instruments>
+  </div>
+</div>
