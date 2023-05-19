@@ -1,10 +1,10 @@
 package tfip.akimori.server.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -15,10 +15,9 @@ import tfip.akimori.server.repositories.StoreRepository;
 
 @Service
 public class QrService {
-    private static final String ANGULAR_BORROW_URL = "https://mp-server-production.up.railway.app/#/borrow/";
-    private static final String GOQR_URL = "https://api.qrserver.com/v1/create-qr-code/";
-    private static final String QR_COLOR_HEX = "00a";
-
+    // https://quickchart.io/qr?text=https%3A%2F%2Fmp-server-production.up.railway.app%2F%23%2Fborrow&dark=704621&size=200
+    private static final String ANGULAR_BORROW_URL = "https://mp-server-production.up.railway.app/%23/borrow/";
+    private static final String QR_API_URL = "https://quickchart.io/qr";
     @Autowired
     private JwtService jwtSvc;
     @Autowired
@@ -27,18 +26,20 @@ public class QrService {
     private MongoLoggingService logSvc;
 
     private String buildURL(String data) {
-        return UriComponentsBuilder.fromUriString(GOQR_URL)
-                .queryParam("data", data)
-                .queryParam("color", QR_COLOR_HEX)
+        String url = UriComponentsBuilder.fromUriString(QR_API_URL)
+                .queryParam("text", data)
+                .queryParam("dark", 704621)
+                .queryParam("size", 200)
                 .build()
                 .toUriString();
+        System.out.println(url);
+        return url;
     }
 
     public ResponseEntity<byte[]> getQRResponse(String URLString) {
         RestTemplate template = new RestTemplate();
         // SET Headers
         final HttpHeaders headers = new HttpHeaders();
-
         // GET request creation with headers
         final HttpEntity<String> entity = new HttpEntity<String>(headers);
         // SEND GET REQUEST
@@ -52,13 +53,12 @@ public class QrService {
         // check manager clearance
         // verify store manager
         if (storeRepo.isManagerOfStore(email, storeID)) {
-            // record approval of loan in mongo (w expiry)
-            logSvc.approveLoan(instrumentID, email);
-            // access external api
             String loanURL = ANGULAR_BORROW_URL + instrumentID;
+            // access external api
             ResponseEntity<byte[]> response = getQRResponse(buildURL(loanURL));
             // get body from GET response
             byte[] imageBytes = response.getBody();
+            logSvc.approveLoan(instrumentID, email);
             return imageBytes;
         } else {
             // not a manager of the store
