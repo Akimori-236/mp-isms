@@ -1,7 +1,6 @@
 package tfip.akimori.server.repositories;
 
 import java.sql.PreparedStatement;
-import java.sql.Statement;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;

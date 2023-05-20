@@ -2,7 +2,6 @@ package tfip.akimori.server.controllers;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.NoSuchElementException;
 
 import org.glassfish.json.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;

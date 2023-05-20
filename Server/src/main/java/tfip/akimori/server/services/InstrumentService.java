@@ -104,9 +104,12 @@ public class InstrumentService {
         } else {
             // send update to SQL
             Boolean isUpdated = instruRepo.borrow(email, instrument_id);
-
-            logSvc.logInstrumentLoaned(email, instrument_id, approverEmail);
-            return true;
+            if (isUpdated) {
+                logSvc.logInstrumentLoaned(email, instrument_id, approverEmail);
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 }
