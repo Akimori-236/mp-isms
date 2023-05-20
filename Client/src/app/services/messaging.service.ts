@@ -8,7 +8,7 @@ import { AngularFireMessaging } from '@angular/fire/compat/messaging';
 export class MessagingService {
   currentMessage = new BehaviorSubject<any>(null)
 
-  constructor(private angularFireMessaging: AngularFireMessaging) { }
+  constructor(private angularFireMessaging: AngularFireMessaging) {  }
 
   requestPermission() {
     this.angularFireMessaging.requestToken.subscribe(
@@ -16,7 +16,7 @@ export class MessagingService {
         console.log(token)
       },
       (err) => {
-        console.warn("Unable to get permissino for push notification:", err)
+        console.warn("Unable to get permission for push notification:", err)
       }
     )
   }
