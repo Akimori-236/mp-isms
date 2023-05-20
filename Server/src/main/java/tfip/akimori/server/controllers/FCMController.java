@@ -1,5 +1,7 @@
 package tfip.akimori.server.controllers;
 
+import java.io.StringReader;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -8,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.json.Json;
+import jakarta.json.JsonReader;
 import tfip.akimori.server.services.MongoService;
 
 @RestController
@@ -17,11 +21,14 @@ public class FCMController {
     @Autowired
     private MongoService mongoSvc;
 
-    @PostMapping(path = "/keep", consumes = MediaType.TEXT_PLAIN_VALUE)
+    @PostMapping(path = "/keep", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void receiveFCMToken(
             @RequestHeader(name = "Authorization") String token,
-            @RequestBody String fcmToken) {
+            @RequestBody String body) {
         String jwt = token.substring(7, token.length());
+        JsonReader jr = Json.createReader(new StringReader(body));
+        String fcmToken = jr.readObject().get("body").toString();
+        System.out.println("RECEIVED FCM TOKEN: " + fcmToken);
         // save the fcm token
         mongoSvc.upsertFCMToken(jwt, fcmToken);
     }

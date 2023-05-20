@@ -8,6 +8,7 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class MessagingService {
+  private FCM_KEEP_URL: string = "/api/fcm/keep";
   currentMessage = new BehaviorSubject<any>(null)
 
   constructor(
@@ -20,10 +21,10 @@ export class MessagingService {
       (token) => {
         console.log(token)
         // send token to server to use
-
-        // firstValueFrom(
-        //   this.http.post()
-        // )
+        const headers = this.authSvc.JWTHeaders;
+        firstValueFrom(
+          this.http.post(this.FCM_KEEP_URL, { body: token }, { headers })
+        )
       },
       (err) => {
         console.warn("Unable to get permission for push notification:", err)
@@ -39,5 +40,6 @@ export class MessagingService {
       }
     )
   }
+
 
 }
