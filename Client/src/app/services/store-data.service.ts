@@ -1,7 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
-import { Instrument } from '../models/instrument';
 import { Store } from '../models/store';
 import { AuthService } from './auth.service';
 import { Log } from '../models/log';
