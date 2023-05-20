@@ -4,6 +4,7 @@ public interface MongoVariables {
     public static final String COLLECTION_STORE_ACTIVITY = "storeactivity";
     public static final String COLLECTION_USER_ACTIVITY = "useractivity";
     public static final String COLLECTION_LOAN_APPROVALS = "loanapprovals";
+    public static final String COLLECTION_FCM_TOKENS = "fcmtokens";
 
     public static final String ZONE_SG = "Asia/Singapore";
     public static final String TIME_FORMAT = "yyyy-LLL-dd HH:mm:ss";
@@ -20,4 +21,5 @@ public interface MongoVariables {
     public static final String FIELD_APPROVER = "approver";
     public static final String FIELD_BORROWER = "borrower";
     public static final String FIELD_EXPIREAT = "expireAt";
+    public static final String FIELD_FCM_TOKEN = "fcm_token";
 }

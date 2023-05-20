@@ -2,6 +2,7 @@ package tfip.akimori.server.services;
 
 import java.net.URI;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -21,7 +22,12 @@ public class MessagingService {
     @Value("${fcm.server.key}")
     private static String SERVER_KEY;
 
-    public ResponseEntity<JsonObject> sendNotification(String toToken, String title, String message) {
+    @Autowired
+    private MongoService mongoSvc;
+    @Autowired
+    private InstrumentService instruSvc;
+
+    private ResponseEntity<JsonObject> sendNotification(String toToken, String title, String message) {
         RestTemplate template = new RestTemplate();
         // SET Headers
         HttpHeaders headers = new HttpHeaders();
@@ -41,4 +47,21 @@ public class MessagingService {
         return response;
     }
 
+    public void borrowNotification(String borrowerEmail, String instrument_id, String approverEmail) {
+        // get fcm token with email
+        String toToken = mongoSvc.getFCMToken(approverEmail);
+        if (null == toToken) {
+            System.err.println("No FCM token found for: " + approverEmail);
+            return;
+        }
+        // get instrument details
+        JsonObject instrument = instruSvc.getInstrumentByID(instrument_id);
+        String title = "ISMS:";// + store_name;
+        String message = instrument.getString("instrument_type") + " borrowed by " + borrowerEmail;
+        sendNotification(toToken, title, message);
+    }
+
+    public void returnNotification(String instrument_id) {
+        // TODO:
+    }
 }

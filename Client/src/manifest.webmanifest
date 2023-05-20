@@ -1,9 +1,10 @@
 {
   "name": "isms",
   "short_name": "isms",
-  "theme_color": "#1976d2",
-  "background_color": "#fafafa",
+  "theme_color": "#c6813e",
+  "background_color": "#643817",
   "display": "standalone",
+  "orientation": "portrait",
   "scope": "./",
   "start_url": "./",
   "icons": [

@@ -10,10 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class MongoLoggingRepository implements MongoVariables {
+public class MongoRepository implements MongoVariables {
 
     @Autowired
     private MongoTemplate template;
@@ -54,5 +55,18 @@ public class MongoLoggingRepository implements MongoVariables {
         Criteria criteria = Criteria.where(FIELD_INSTRUMENT_ID).is(instrument_id);
         Query query = new Query(criteria);
         return template.findOne(query, Document.class, COLLECTION_LOAN_APPROVALS);
+    }
+
+    public Document getFCMToken(String email) {
+        Criteria criteria = Criteria.where(FIELD_EMAIL).is(email);
+        Query query = new Query(criteria);
+        return template.findOne(query, Document.class, COLLECTION_FCM_TOKENS);
+    }
+
+    public void upsertFCMToken(Document doc) {
+        Criteria criteria = Criteria.where(FIELD_EMAIL).is(doc.getString(FIELD_EMAIL));
+        Query query = new Query(criteria);
+        Update update = Update.fromDocument(doc);
+        template.upsert(query, update, COLLECTION_FCM_TOKENS);
     }
 }

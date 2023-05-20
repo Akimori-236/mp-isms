@@ -19,7 +19,7 @@ import tfip.akimori.server.exceptions.DuplicateEmailException;
 import tfip.akimori.server.services.AuthService;
 
 @RestController
-@CrossOrigin(origins = "*") // DANGEROUS
+// @CrossOrigin(origins = "*") // DANGEROUS
 @RequestMapping(path = "/api/auth", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AuthController {
 

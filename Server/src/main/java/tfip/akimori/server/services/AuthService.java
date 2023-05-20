@@ -35,7 +35,7 @@ public class AuthService {
         @Autowired
         private AuthenticationManager authManager;
         @Autowired
-        private MongoLoggingService logSvc;
+        private MongoService logSvc;
         @Autowired
         private GoogleRepository googleRepo;
 
