@@ -8,5 +8,4 @@ export interface Log {
     serial_number: string
     isRepairing: boolean
     remarks?: string
-
 }

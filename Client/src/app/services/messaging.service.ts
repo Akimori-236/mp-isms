@@ -3,13 +3,16 @@ import { BehaviorSubject, firstValueFrom } from 'rxjs';
 import { AngularFireMessaging } from '@angular/fire/compat/messaging';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from './auth.service';
+import { Toast } from '../models/toast';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MessagingService {
   private FCM_KEEP_URL: string = "/api/fcm/keep";
+
   currentMessage = new BehaviorSubject<any>(null)
+  toastList: Toast[] = []
 
   constructor(
     private angularFireMessaging: AngularFireMessaging,
@@ -35,7 +38,13 @@ export class MessagingService {
     this.angularFireMessaging.messages.subscribe(
       (payload) => {
         console.log("New message received", payload)
-        this.currentMessage.next(payload)
+        this.currentMessage.next(payload['notification'])
+        if (payload['notification'] != undefined) {
+          this.showToast({
+            title: payload['notification']['title'],
+            body: payload['notification']['body']
+          })
+        }
       }
     )
   }
@@ -48,5 +57,13 @@ export class MessagingService {
         this.http.post(this.FCM_KEEP_URL, { body: token }, { headers })
       )
     }
+  }
+
+  showToast(toast: Toast) {
+    this.toastList.push(toast)
+  }
+
+  removeToast(toast: Toast) {
+    this.toastList = this.toastList.filter(t => t != toast);
   }
 }

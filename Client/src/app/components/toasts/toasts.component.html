@@ -1,1 +1,9 @@
-<p>toasts works!</p>
+<ngb-toast
+  *ngFor="let toast of msgSvc.toastList"
+  [title]="toast.title"
+  [autohide]="true"
+  [delay]="5000"
+  (hiddden)="msgSvc.removeToast(toast)"
+>
+  {{ toast.body }}
+</ngb-toast>
