@@ -23,7 +23,7 @@ public class QrService {
     @Autowired
     private StoreRepository storeRepo;
     @Autowired
-    private MongoLoggingService logSvc;
+    private MongoService logSvc;
 
     private String buildURL(String data) {
         String url = UriComponentsBuilder.fromUriString(QR_API_URL)

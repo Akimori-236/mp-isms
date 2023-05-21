@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CredentialResponse, PromptMomentNotification } from 'google-one-tap';
 import { AuthService } from 'src/app/services/auth.service';
+import { MessagingService } from 'src/app/services/messaging.service';
 // import { FirebaseService } from 'src/app/services/firebase.service';
 // Google gives you back CredentialResponses
 
@@ -23,7 +24,8 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private authSvc: AuthService,
     private _ngZone: NgZone,
-    private activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute,
+    private fcm: MessagingService) { }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -88,6 +90,7 @@ export class LoginComponent implements OnInit {
         console.log(response)
         localStorage.setItem("jwt", response['jwt'])
         // this.firebaseSvc.requestPermission()
+        this.fcm.sendFCMToken()
         const origPath = this.activatedRoute.snapshot.queryParams['fullPath'];
         if (origPath) {
           const pathArray = origPath.split(',');

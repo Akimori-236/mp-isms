@@ -21,11 +21,11 @@ import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
 import jakarta.mail.MessagingException;
 import tfip.akimori.server.services.EmailSenderService;
-import tfip.akimori.server.services.MongoLoggingService;
+import tfip.akimori.server.services.MongoService;
 import tfip.akimori.server.services.StoreService;
 
 @RestController
-@CrossOrigin(origins = "*")
+// @CrossOrigin(origins = "*")
 @RequestMapping(path = "/api/store", produces = MediaType.APPLICATION_JSON_VALUE)
 public class StoreController {
 
@@ -34,7 +34,7 @@ public class StoreController {
     @Autowired
     private EmailSenderService emailSvc;
     @Autowired
-    private MongoLoggingService logSvc;
+    private MongoService logSvc;
 
     @PostMapping(path = "/create")
     public ResponseEntity<String> createStore(@RequestHeader(name = "Authorization") String token,

@@ -22,6 +22,12 @@ import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 import { PopupQrComponent } from './components/instruments/popup-qr/popup-qr.component';
 import { BorrowComponent } from './components/borrow/borrow.component';
 import { TableStorelogsComponent } from './components/instruments/table-storelogs/table-storelogs.component';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFireMessagingModule } from '@angular/fire/compat/messaging';
+import { AngularFireModule } from '@angular/fire/compat';
+import { environment } from 'src/environments/environment';
+import { MessagingService } from './services/messaging.service';
+import { AsyncPipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -47,6 +53,9 @@ import { TableStorelogsComponent } from './components/instruments/table-storelog
     NgbModule,
     ReactiveFormsModule,
     HttpClientModule,
+    AngularFireAuthModule,
+    AngularFireMessagingModule,
+    AngularFireModule.initializeApp(environment.firebase),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable
@@ -62,7 +71,9 @@ import { TableStorelogsComponent } from './components/instruments/table-storelog
     })
   ],
   providers: [
-    JwtHelperService
+    JwtHelperService,
+    MessagingService,
+    AsyncPipe
   ],
   bootstrap: [AppComponent]
 })

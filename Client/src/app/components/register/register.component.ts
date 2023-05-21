@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CredentialResponse } from 'google-one-tap';
 import { timeout } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
+import { MessagingService } from 'src/app/services/messaging.service';
 
 @Component({
   selector: 'app-register',
@@ -21,7 +22,8 @@ export class RegisterComponent implements OnInit {
     private router: Router,
     private authSvc: AuthService,
     private _ngZone: NgZone,
-    private activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute,
+    private fcm: MessagingService) { }
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({

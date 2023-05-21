@@ -23,7 +23,9 @@ public class InstrumentService {
     @Autowired
     private JwtService jwtSvc;
     @Autowired
-    private MongoLoggingService logSvc;
+    private MongoService logSvc;
+    @Autowired
+    private MessagingService msgSvc;
 
     public List<JsonObject> getBorrowedByJWT(String jwt) {
         // get email from JWT
@@ -106,6 +108,8 @@ public class InstrumentService {
             Boolean isUpdated = instruRepo.borrow(email, instrument_id);
             if (isUpdated) {
                 logSvc.logInstrumentLoaned(email, instrument_id, approverEmail);
+                // trigger notification
+                msgSvc.borrowNotification(email, instrument_id, approverEmail);
                 return true;
             } else {
                 return false;
