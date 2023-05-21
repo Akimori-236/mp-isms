@@ -36,7 +36,7 @@ export class BorrowedComponent implements OnInit {
 
   returnInstrument(id: string) {
     console.debug(id)
-    // call server for qr-url for accepter to scan
+    // TODO: call server for qr-url for accepter to scan
 
     // redirect? closable popup for qr image?
   }

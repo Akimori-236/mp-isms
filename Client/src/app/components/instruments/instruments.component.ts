@@ -69,12 +69,12 @@ export class InstrumentsComponent implements OnChanges, AfterViewInit {
         // call SB
         this.instruSvc.addNewInstrument(this.currentStoreID, newInstrument)
           .then(response => {
-            console.log(response)
             this.getStoreDetails()
+            console.log(response)
           })
           .catch(error => {
-            console.error(error)
             this.getStoreDetails()
+            console.error(error)
           })
       },
         (reason) => {
@@ -125,6 +125,7 @@ export class InstrumentsComponent implements OnChanges, AfterViewInit {
     this.storeSvc.getStoreLogs(this.currentStoreID).then(
       (response) => {
         console.debug(response)
+        // TODO: data not showing up on modal
         modalRef.componentInstance.logs = response
       }
     )

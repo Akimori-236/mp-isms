@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
+import { MessagingService } from 'src/app/services/messaging.service';
 
 @Component({
   selector: 'app-navbar',
@@ -13,11 +14,13 @@ export class NavbarComponent implements OnInit {
   isCollapsed: boolean = true
   isLoggedIn: boolean = false
   givenname!: string
+  // currentMsg$!: Subscription
+
 
   constructor(
-    private fb: FormBuilder,
     private router: Router,
-    private authSvc: AuthService,) { }
+    private authSvc: AuthService,
+    private msgSvc: MessagingService) { }
 
   ngOnInit(): void {
     this.router.events.subscribe((event) => {
@@ -27,11 +30,17 @@ export class NavbarComponent implements OnInit {
       this.isLoggedIn = this.authSvc.isLoggedIn
       this.givenname = this.authSvc.givenname
     })
+    // this.msgSvc.currentMessage.subscribe((message) => {
+    //   console.log(message['notification'])
+    //   // TODO: migrate to toast service
+
+    // })
   }
 
   logout() {
     this.authSvc.logout()
   }
 
-  search() { }
+
+
 }
