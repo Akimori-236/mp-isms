@@ -27,7 +27,7 @@ public class FCMController {
             @RequestBody String body) {
         String jwt = token.substring(7, token.length());
         JsonReader jr = Json.createReader(new StringReader(body));
-        String fcmToken = jr.readObject().get("body").toString();
+        String fcmToken = jr.readObject().getString("body");
         System.out.println("RECEIVED FCM TOKEN: " + fcmToken);
         // save the fcm token
         mongoSvc.upsertFCMToken(jwt, fcmToken);

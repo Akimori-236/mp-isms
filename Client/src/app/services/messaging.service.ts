@@ -20,11 +20,10 @@ export class MessagingService {
     this.angularFireMessaging.requestToken.subscribe(
       (token) => {
         console.log(token)
-        // send token to server to use
-        const headers = this.authSvc.JWTHeaders;
-        firstValueFrom(
-          this.http.post(this.FCM_KEEP_URL, { body: token }, { headers })
-        )
+        if (token != null) {
+          sessionStorage.setItem("fcmToken", token)
+          this.sendFCMToken()
+        }
       },
       (err) => {
         console.warn("Unable to get permission for push notification:", err)
@@ -41,5 +40,13 @@ export class MessagingService {
     )
   }
 
-
+  sendFCMToken() {
+    let token = sessionStorage.getItem("fcmToken")
+    if (this.authSvc.isLoggedIn) {
+      const headers = this.authSvc.JWTHeaders;
+      firstValueFrom(
+        this.http.post(this.FCM_KEEP_URL, { body: token }, { headers })
+      )
+    }
+  }
 }

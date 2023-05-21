@@ -14,6 +14,8 @@ import org.springframework.web.client.RestTemplate;
 
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
+import tfip.akimori.server.models.Instrument;
+import tfip.akimori.server.repositories.InstrumentRepository;
 
 @Service
 public class MessagingService {
@@ -25,7 +27,7 @@ public class MessagingService {
     @Autowired
     private MongoService mongoSvc;
     @Autowired
-    private InstrumentService instruSvc;
+    private InstrumentRepository instruRepo;
 
     private ResponseEntity<JsonObject> sendNotification(String toToken, String title, String message) {
         RestTemplate template = new RestTemplate();
@@ -55,9 +57,10 @@ public class MessagingService {
             return;
         }
         // get instrument details
-        JsonObject instrument = instruSvc.getInstrumentByID(instrument_id);
+        Instrument instrument = instruRepo.getInstrumentById(instrument_id);
         String title = "ISMS:";// + store_name;
-        String message = instrument.getString("instrument_type") + " borrowed by " + borrowerEmail;
+        String message = "%s (S/N: %s) borrowed by: %s".formatted(instrument.getInstrument_type(),
+                instrument.getSerial_number(), borrowerEmail);
         sendNotification(toToken, title, message);
     }
 

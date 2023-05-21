@@ -37,13 +37,13 @@ export class BorrowComponent implements OnInit {
     }
   }
 
-  borrow(instrument_id: string) {
-    this.instruSvc.borrow(instrument_id).then(
+  borrow() {
+    this.instruSvc.borrow(this.instrumentID).then(
       isSuccess => {
         if (isSuccess) {
-
+          this.router.navigate(['/borrowed'])
         } else {
-
+          
         }
       }
     )
