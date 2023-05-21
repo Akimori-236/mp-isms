@@ -1,10 +1,9 @@
-import { DecimalPipe } from '@angular/common';
-import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+
+import { Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, map, startWith } from 'rxjs';
 import { Log } from 'src/app/models/log';
-import { StoreDataService } from 'src/app/services/store-data.service';
 
 @Component({
   selector: 'app-table-storelogs',
