@@ -28,7 +28,8 @@ public class TestController {
 
     @PostMapping("/sendfcm")
     public void sendFCM() {
-        fcmSvc.borrowNotification("odelia@gmail.com", "bd1d95bc", "fred@gmail.com");
+        fcmSvc.borrowNotification("odelia@gmail.com", "bd1d95bc", "aki@gmail.com");
     }
+
 
 }

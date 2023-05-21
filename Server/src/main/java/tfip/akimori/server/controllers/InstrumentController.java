@@ -79,13 +79,13 @@ public class InstrumentController {
     }
 
     @PutMapping("/borrow/{instrument_id}")
-    public ResponseEntity<Boolean> borrowInstrument(
+    public ResponseEntity<Void> borrowInstrument(
             @RequestHeader(name = "Authorization") String token,
             @PathVariable String instrument_id) {
         String jwt = token.substring(7, token.length());
         Boolean isSuccess = instruSvc.borrow(jwt, instrument_id);
         if (isSuccess) {
-            return ResponseEntity.ok(isSuccess);
+            return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.notFound().build();
         }
