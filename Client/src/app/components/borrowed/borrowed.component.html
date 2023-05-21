@@ -28,7 +28,7 @@
       <tr *ngFor="let instr of instrumentList; index as i">
         <th scope="row">{{ i + 1 }}</th>
         <td class="text-wrap">{{ instr.instrument_type | titlecase }}</td>
-        <td class="text-wrap">{{ instr.model | titlecase }}</td>
+        <td class="text-wrap">{{ instr.model | uppercase }}</td>
         <td class="text-wrap">{{ instr.serial_number | lowercase }}</td>
         <td class="text-wrap">{{ instr.store_name | titlecase }}</td>
         <td>
