@@ -9,20 +9,26 @@ import org.springframework.web.bind.annotation.RestController;
 
 import tfip.akimori.server.models.EmailRequest;
 import tfip.akimori.server.services.EmailSenderService;
+import tfip.akimori.server.services.MessagingService;
 
 @RestController
-@RequestMapping(path = "/api/email")
-public class EmailController {
+@RequestMapping(path = "/api/test")
+public class TestController {
 
     @Autowired
     private EmailSenderService emailSvc;
+    @Autowired
+    private MessagingService fcmSvc;
 
-    @PostMapping("/send")
+    @PostMapping("/sendemail")
     public ResponseEntity<String> sendEmail(@RequestBody EmailRequest emailRequest) {
         emailSvc.sendEmail(emailRequest.getToEmail(), emailRequest.getSubject(), emailRequest.getBody());
         return ResponseEntity.ok("Email sent successfully.");
     }
 
-    
+    @PostMapping("/sendfcm")
+    public void sendFCM() {
+        fcmSvc.borrowNotification("odelia@gmail.com", "bd1d95bc", "fred@gmail.com");
+    }
 
 }
