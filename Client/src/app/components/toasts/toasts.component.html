@@ -1,6 +1,6 @@
 <ngb-toast
   *ngFor="let toast of msgSvc.toastList"
-  [title]="toast.title"
+  [header]="toast.title || ''"
   [autohide]="true"
   [delay]="5000"
   (hiddden)="msgSvc.removeToast(toast)"
