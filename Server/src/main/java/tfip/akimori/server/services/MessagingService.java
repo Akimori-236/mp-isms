@@ -22,7 +22,7 @@ public class MessagingService {
     private static final String FCM_URL = "https://fcm.googleapis.com/fcm/send";
 
     @Value("${fcm.server.key}")
-    private static String SERVER_KEY;
+    private String SERVER_KEY;
 
     @Autowired
     private MongoService mongoSvc;
@@ -35,6 +35,7 @@ public class MessagingService {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "key=%s".formatted(SERVER_KEY));
         headers.setContentType(MediaType.APPLICATION_JSON);
+        System.out.println(headers);
         // POST request creation
         String body = Json.createObjectBuilder()
                 .add("to", toToken)
@@ -45,7 +46,7 @@ public class MessagingService {
                 .toString();
         RequestEntity<String> requestEntity = new RequestEntity<>(body, headers, HttpMethod.POST, URI.create(FCM_URL));
         // SEND GET REQUEST
-        ResponseEntity<JsonObject> response = template.exchange(requestEntity, JsonObject.class);
+        ResponseEntity<JsonObject> response = template.exchange(requestEntity, JsonObject.class); // ERROR 12392
         return response;
     }
 
