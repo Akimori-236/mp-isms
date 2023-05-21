@@ -37,15 +37,14 @@ export class BorrowComponent implements OnInit {
   }
 
   borrow() {
-    this.instruSvc.borrow(this.instrumentID).then(
-      isSuccess => {
-        if (isSuccess) {
-          this.router.navigate(['/borrowed'])
+    this.instruSvc.borrow(this.instrumentID).then(response => this.router.navigate(['/borrowed']))
+      .catch((error) => {
+        if (error.status == 404) {
+          console.warn("QR code might have expired")
         } else {
-
+          console.error(error)
         }
-      }
-    )
+      })
   }
 
 }
