@@ -28,6 +28,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from 'src/environments/environment';
 import { MessagingService } from './services/messaging.service';
 import { AsyncPipe } from '@angular/common';
+import { ToastsComponent } from './components/toasts/toasts.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { AsyncPipe } from '@angular/common';
     FormAddinstrumentComponent,
     PopupQrComponent,
     BorrowComponent,
-    TableStorelogsComponent
+    TableStorelogsComponent,
+    ToastsComponent
   ],
   imports: [
     BrowserModule,
