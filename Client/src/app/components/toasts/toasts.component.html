@@ -1,9 +1,9 @@
 <ngb-toast
   *ngFor="let toast of msgSvc.toastList"
-  [header]="toast.title || ''"
+  [header]="toast.title || '' | titlecase"
   [autohide]="true"
   [delay]="5000"
   (hiddden)="msgSvc.removeToast(toast)"
 >
-  {{ toast.body }}
+  {{ toast.body | titlecase }}
 </ngb-toast>
