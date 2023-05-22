@@ -30,7 +30,9 @@
         <td class="text-wrap">{{ instr.instrument_type | titlecase }}</td>
         <td class="text-wrap">{{ instr.model | uppercase }}</td>
         <td class="text-wrap">{{ instr.serial_number | lowercase }}</td>
-        <td class="text-wrap">{{ instr.store_name | titlecase }}</td>
+        <td class="text-wrap" (click)="showMap()">
+          {{ instr.store_name | titlecase }}
+        </td>
         <td>
           <button
             type="button"

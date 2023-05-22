@@ -1,0 +1,25 @@
+<div class="modal-header">
+  <h4 class="modal-title">Map</h4>
+  <button
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  ></button>
+</div>
+
+<div class="modal-body vw-75">
+  <google-map [options]="mapOptions">
+    <map-marker [options]="markerOptions"></map-marker>
+  </google-map>
+</div>
+
+<div class="modal-footer">
+  <button
+    type="submit"
+    class="btn btn-warning"
+    (click)="activeModal.close('Close click')"
+  >
+    Close
+  </button>
+</div>
