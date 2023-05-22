@@ -7,7 +7,7 @@ import { maps } from 'google-one-tap';
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
 })
-export class MapComponent implements OnInit {
+export class MapComponent {
   map!: google.maps.Map;
   lat = 1.3596865
   lng = 103.818
@@ -23,12 +23,12 @@ export class MapComponent implements OnInit {
 
   constructor(public activeModal: NgbActiveModal) { }
 
-  ngOnInit() {
-    navigator.geolocation.getCurrentPosition(
-      (success) => {
-        this.lat = success.coords.latitude
-        this.lng = success.coords.longitude
-      }
-    )
-  }
+  // ngOnInit() {
+  //   navigator.geolocation.getCurrentPosition(
+  //     (success) => {
+  //       this.lat = success.coords.latitude
+  //       this.lng = success.coords.longitude
+  //     }
+  //   )
+  // }
 }
