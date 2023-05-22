@@ -5,3 +5,7 @@
 .z-2000 {
   z-index: 2000;
 }
+
+.activeNav {
+  border-bottom: 2px white solid;
+}
