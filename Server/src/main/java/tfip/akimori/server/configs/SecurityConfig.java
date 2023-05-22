@@ -25,13 +25,14 @@ public class SecurityConfig {
         http.csrf().disable()
                 // whitelist account creation and logging in (no token yet)
                 .authorizeHttpRequests()
+                .requestMatchers("/**").permitAll() // ANGULAR
+                .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/api/store/**").authenticated()
                 .requestMatchers("/api/qr/**").authenticated()
                 .requestMatchers("/api/profile/**").authenticated()
                 .requestMatchers("/api/instrument/**").authenticated()
                 .requestMatchers("/api/fcm/**").authenticated()
-                // .requestMatchers("/api/auth/**").permitAll()
-                .anyRequest().permitAll()
+                // .anyRequest().permitAll()
                 .and()
                 // set session creation policy to stateless
                 .sessionManagement()
