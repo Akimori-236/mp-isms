@@ -12,7 +12,8 @@
           "/manifest.webmanifest",
           "/*.css",
           "/*.js",
-          "/assets/*.png"
+          "/*.png",
+          "/*.jpg"
         ]
       }
     },
