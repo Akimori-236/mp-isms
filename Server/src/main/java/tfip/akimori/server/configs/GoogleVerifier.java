@@ -13,9 +13,9 @@ public class GoogleVerifier {
     public static final String CLIENT_ID = "869245493728-jcr4ussoue4u3eu7e020s37gvee8kp05.apps.googleusercontent.com";
 
     public static GoogleIdTokenVerifier getVerifier() throws GeneralSecurityException, IOException {
-        return new GoogleIdTokenVerifier.Builder(GoogleNetHttpTransport.newTrustedTransport(), GsonFactory.getDefaultInstance())
-                .setAudience(Collections
-                        .singletonList(CLIENT_ID))
+        return new GoogleIdTokenVerifier.Builder(GoogleNetHttpTransport.newTrustedTransport(),
+                GsonFactory.getDefaultInstance())
+                .setAudience(Collections.singletonList(CLIENT_ID))
                 .build();
     }
 }
