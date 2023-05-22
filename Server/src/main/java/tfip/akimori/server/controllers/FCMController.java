@@ -4,6 +4,7 @@ import java.io.StringReader;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -15,6 +16,7 @@ import jakarta.json.JsonReader;
 import tfip.akimori.server.services.MongoService;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping(path = "/api/fcm")
 public class FCMController {
 

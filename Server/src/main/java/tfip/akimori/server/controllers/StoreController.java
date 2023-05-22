@@ -25,7 +25,7 @@ import tfip.akimori.server.services.MongoService;
 import tfip.akimori.server.services.StoreService;
 
 @RestController
-// @CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*")
 @RequestMapping(path = "/api/store", produces = MediaType.APPLICATION_JSON_VALUE)
 public class StoreController {
 
@@ -104,6 +104,8 @@ public class StoreController {
             @PathVariable String storeID,
             @RequestParam String inviteEmail) {
         String jwt = token.substring(7, token.length());
+        // add email to managers
+        storeSvc.addManager(jwt, storeID, inviteEmail);
         System.out.println("SENDING EMAIL TO: " + inviteEmail);
         try {
             emailSvc.sendManagerInvite(inviteEmail, jwt, storeID);

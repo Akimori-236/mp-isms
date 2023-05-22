@@ -32,7 +32,7 @@ export class NavbarComponent implements OnInit {
     })
     // this.msgSvc.currentMessage.subscribe((message) => {
     //   console.log(message['notification'])
-    //   // TODO: migrate to toast service
+    // TODO: migrate to toast service
 
     // })
   }

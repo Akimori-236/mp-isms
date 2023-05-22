@@ -17,6 +17,7 @@ import tfip.akimori.server.exceptions.UnauthorizedException;
 import tfip.akimori.server.services.QrService;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping(path = "/api/qr")
 public class QrController {
     @Autowired
