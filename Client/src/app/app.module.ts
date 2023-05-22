@@ -29,6 +29,8 @@ import { environment } from 'src/environments/environment';
 import { MessagingService } from './services/messaging.service';
 import { AsyncPipe } from '@angular/common';
 import { ToastsComponent } from './components/toasts/toasts.component';
+import { GoogleMapsModule } from '@angular/google-maps';
+import { MapComponent } from './components/map/map.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +49,8 @@ import { ToastsComponent } from './components/toasts/toasts.component';
     PopupQrComponent,
     BorrowComponent,
     TableStorelogsComponent,
-    ToastsComponent
+    ToastsComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
@@ -70,7 +73,8 @@ import { ToastsComponent } from './components/toasts/toasts.component';
           return localStorage.getItem("jwt")
         }
       }
-    })
+    }),
+    GoogleMapsModule
   ],
   providers: [
     JwtHelperService,
