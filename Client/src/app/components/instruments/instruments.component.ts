@@ -71,6 +71,7 @@ export class InstrumentsComponent implements OnChanges, AfterViewInit {
           .then(response => {
             this.getStoreDetails()
             console.log(response)
+            window.location.reload() // just in case
           })
           .catch(error => {
             this.getStoreDetails()
