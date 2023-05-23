@@ -94,20 +94,11 @@ public class AuthService {
 
         public JsonObject loginGoogleUser(Payload payload) throws NoSuchElementException,EmptyResultDataAccessException {
                 System.out.println("LOGGING IN GOOGLE USER: " + payload.getEmail());
-                JsonObject googleUser = Json.createObjectBuilder()
-                                .add("googleUserId", payload.getSubject())
-                                .add("email", payload.getEmail())
-                                .add("emailVerified", Boolean.valueOf(payload.getEmailVerified()))
-                                .add("name", (String) payload.get("name"))
-                                .add("picture", (String) payload.get("picture"))
-                                .add("familyname", (String) payload.get("family_name"))
-                                .add("givenname", (String) payload.get("given_name"))
-                                .build();
-                System.out.println(googleUser);
                 // authenticated by google already
-                User user = userRepo.getUserByEmail(googleUser.getString("email"));
+                userRepo.updateGoogleUser(payload);
+                User user = userRepo.getUserByEmail(payload.getEmail());
                 // LOGGING
-                logSvc.logUserActivity("google login", googleUser.getString("email"));
+                logSvc.logUserActivity("google login", payload.getEmail());
                 return jwtSvc.generateJWT(user);
         }
 

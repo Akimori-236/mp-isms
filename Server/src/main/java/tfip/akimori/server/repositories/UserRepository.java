@@ -13,6 +13,8 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
+
 import tfip.akimori.server.exceptions.DuplicateEmailException;
 import tfip.akimori.server.models.EmailSchedule;
 import tfip.akimori.server.models.User;
@@ -52,5 +54,20 @@ public class UserRepository implements SQLQueries {
 
     public List<EmailSchedule> getAllSchedules() {
         return template.query(SQL_GETALLSCHEDULES, new BeanPropertyRowMapper<>(EmailSchedule.class));
+    }
+
+    public boolean updateGoogleUser(Payload payload) {
+        int rowsUpdated = template.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(SQL_UPDATE_GOOGLEUSER);
+            ps.setString(1, payload.getEmail());
+            ps.setBoolean(2, Boolean.valueOf(payload.getEmailVerified()));
+            ps.setString(3, (String) payload.get("name"));
+            ps.setString(4, (String) payload.get("picture"));
+            ps.setString(5, (String) payload.get("family_name"));
+            ps.setString(6, (String) payload.get("given_name"));
+            ps.setString(7, payload.getSubject());
+            return ps;
+        });
+        return rowsUpdated > 0;
     }
 }
