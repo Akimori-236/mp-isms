@@ -3,7 +3,8 @@
     <tr>
       <td>
         <a class="navbar-brand" href="#" [routerLink]="['/']">
-          <img class="w-25 h-25" src="assets/logo.png" alt="Logo" />
+          <img class="w-25 h-25" src="assets/logo2.png" alt="Logo" />
+          <span class="my-auto fw-bold">ISMS</span>
         </a>
       </td>
       <td>
@@ -20,11 +21,10 @@
     </tr>
 
     <div class="collapse navbar-collapse" [ngbCollapse]="isCollapsed">
-      <ul class="navbar-nav col-auto text-end text-md-center">
+      <ul class="navbar-nav w-100 text-end">
         <li class="nav-item mx-3">
           <a
             class="nav-link"
-            href="#"
             [routerLink]="['/about']"
             routerLinkActive="activeNav"
           >
@@ -34,7 +34,6 @@
         <li class="nav-item mx-3">
           <a
             class="nav-link"
-            href="#"
             [routerLink]="['/borrowed']"
             routerLinkActive="activeNav"
           >
@@ -44,30 +43,32 @@
         <li class="nav-item mx-3">
           <a
             class="nav-link"
-            href="#"
             [routerLink]="['/stores']"
             routerLinkActive="activeNav"
           >
             <h4 class="my-auto text-light">Managed Stores</h4>
           </a>
         </li>
-      </ul>
-      <ul class="navbar-nav col-auto text-end ms-auto">
-        <li *ngIf="isLoggedIn; else Login">
-          <div ngbDropdown class="d-inline-block">
+        <li *ngIf="isLoggedIn; else Login" class="ms-auto">
+          <div ngbDropdown>
             <button
               type="button"
-              class="btn btn-outline-warning rounded-pill"
+              class="btn text-light col-auto ms-auto text-end me-3"
               id="dropdownBasic1"
               ngbDropdownToggle
             >
-              <img class="w-50 rounded-circle" src="{{ profilePic }}" alt="" />
-              <span class="mx-3">{{ givenname | titlecase }}</span>
+              <img
+              *ngIf="profilePic != undefined; else defaultPFP"
+              class="rounded-circle border border-light me-2"
+              src="{{ profilePic }}"
+              height="50px"
+              />
+              <!-- <span class="mx-3 my-auto fw-bold">{{ givenname | titlecase }}</span> -->
             </button>
             <div
               ngbDropdownMenu
               aria-labelledby="dropdownBasic1"
-              class="dropdown-menu-end"
+              class="dropdown-menu-end text-end"
             >
               <button ngbDropdownItem [routerLink]="['/profile']">
                 <h4 class="my-auto text-end">Profile</h4>
@@ -83,17 +84,34 @@
           </div>
         </li>
       </ul>
-      <ng-template #Login>
-        <li>
-          <button
-            class="btn btn-warning col ms-auto text-end me-3"
-            type="button"
-            [routerLink]="['/login']"
-          >
-            <h4 class="my-auto">Login</h4>
-          </button>
-        </li>
-      </ng-template>
     </div>
   </nav>
 </div>
+
+<ng-template #defaultPFP>
+  <img
+    class="rounded-circle border border-light me-2"
+    src="assets/Default_pfp.png"
+    height="50px"
+  />
+</ng-template>
+
+<ng-template #Login>
+  <li class="ms-auto">
+    <button
+      class="btn btn-outline-light rounded-pill col-auto ms-auto text-end me-3"
+      type="button"
+      [routerLink]="['/login']"
+    >
+      <h4 class="my-auto">Login</h4>
+    </button>
+
+    <button
+      class="btn btn-light rounded-pill col-auto ms-auto text-end me-3"
+      type="button"
+      [routerLink]="['/register']"
+    >
+      <h4 class="my-auto">Sign Up</h4>
+    </button>
+  </li>
+</ng-template>
