@@ -4,7 +4,7 @@ importScripts(
 );
 
 firebase.initializeApp({
-  apiKey: "AIzaSyBhpm2-3x92nywW9vxqpGAj1qMsedVy4eQ",
+  apiKey: "AIzaSyCO5ueF6ep4lS3zYwaZBJUiFb5MGZNSJK4",
   authDomain: "tfip-project-382915.firebaseapp.com",
   projectId: "tfip-project-382915",
   storageBucket: "tfip-project-382915.appspot.com",
