@@ -30,7 +30,10 @@ public interface SQLQueries {
 
     // READ
     public static final String SQL_GETUSERBYEMAIL = """
-            SELECT * FROM users WHERE email = ?
+            SELECT u.email, u.givenname, u.familyname, u.role, g.picture
+            FROM users u INNER JOIN google_users g
+            ON u.email = g.email
+            WHERE u.email = ?
             """;
     public static final String SQL_GETMANAGEDINSTRUMENTSBYEMAIL = """
             SELECT instrument_id, instrument_type, brand, model, serial_number, store_id, store_name, isRepairing, u2.givenname, u2.familyname, u2.email
