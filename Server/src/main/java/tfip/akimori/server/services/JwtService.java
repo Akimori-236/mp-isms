@@ -35,6 +35,7 @@ public class JwtService {
                 .setSubject(user.getEmail())
                 .claim("givenname", user.getGivenname())
                 .claim("familyname", user.getFamilyname())
+                .claim("picture", user.getPicture())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(new Date().getTime() + expDuration))
                 .signWith(Keys.hmacShaKeyFor(sha256Secret.getBytes()), SignatureAlgorithm.HS256) // sign with secret key

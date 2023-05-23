@@ -25,6 +25,8 @@ public class User implements UserDetails {
     private String password;
     private Role role;
     private Boolean isGoogleLogin;
+    @Builder.Default
+    private String picture = "";
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

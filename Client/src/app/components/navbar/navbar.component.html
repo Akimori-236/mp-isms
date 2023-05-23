@@ -20,32 +20,59 @@
     </tr>
 
     <div class="collapse navbar-collapse" [ngbCollapse]="isCollapsed">
-      <ul class="navbar-nav col-auto ms-auto text-end">
+      <ul class="navbar-nav col-auto text-end text-md-center">
         <li class="nav-item mx-3">
-          <a class="nav-link" href="#" [routerLink]="['/about']" routerLinkActive="activeNav">
+          <a
+            class="nav-link"
+            href="#"
+            [routerLink]="['/about']"
+            routerLinkActive="activeNav"
+          >
             <h4 class="my-auto text-light">About</h4>
           </a>
         </li>
         <li class="nav-item mx-3">
-          <a class="nav-link" href="#" [routerLink]="['/borrowed']" routerLinkActive="activeNav">
+          <a
+            class="nav-link"
+            href="#"
+            [routerLink]="['/borrowed']"
+            routerLinkActive="activeNav"
+          >
             <h4 class="my-auto text-light">Borrowed Instruments</h4>
           </a>
         </li>
         <li class="nav-item mx-3">
-          <a class="nav-link" href="#" [routerLink]="['/stores']" routerLinkActive="activeNav">
+          <a
+            class="nav-link"
+            href="#"
+            [routerLink]="['/stores']"
+            routerLinkActive="activeNav"
+          >
             <h4 class="my-auto text-light">Managed Stores</h4>
           </a>
         </li>
-
+      </ul>
+      <ul class="navbar-nav col-auto text-end ms-auto">
         <li *ngIf="isLoggedIn; else Login">
-          <div ngbDropdown class="ms-auto">
+          <div ngbDropdown class="ms-auto d-inline-block">
             <button
               type="button"
               class="btn btn-warning"
               id="dropdownBasic1"
               ngbDropdownToggle
             >
-              <h4 class="my-auto">{{ givenname | titlecase }}</h4>
+              <tr>
+                <td>
+                  <img
+                    class="w-50 rounded-circle"
+                    src="{{ profilePic }}"
+                    alt=""
+                  />
+                </td>
+                <td>
+                  <h4 class="my-auto">{{ givenname | titlecase }}</h4>
+                </td>
+              </tr>
             </button>
             <div
               ngbDropdownMenu
@@ -68,15 +95,16 @@
           </div>
         </li>
       </ul>
-
       <ng-template #Login>
-        <button
-          class="btn btn-warning col ms-auto text-end me-3"
-          type="button"
-          [routerLink]="['/login']"
-        >
-          <h4 class="my-auto" class="my-auto">Login</h4>
-        </button>
+        <li>
+          <button
+            class="btn btn-warning col ms-auto text-end me-3"
+            type="button"
+            [routerLink]="['/login']"
+          >
+            <h4 class="my-auto" class="my-auto">Login</h4>
+          </button>
+        </li>
       </ng-template>
     </div>
   </nav>
