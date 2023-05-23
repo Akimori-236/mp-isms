@@ -1,17 +1,27 @@
 <ng-template #Loading>
   <div class="d-flex justify-content-center">
-    <div class="spinner-border text-warning" role="status">
+    <div class="spinner-border text-light" role="status">
       <span class="visually-hidden">Loading...</span>
     </div>
   </div>
 </ng-template>
 
-<div class="container mw-100">
-  <h1 class="text-center text-light">Your Instruments</h1>
+<ng-template #noInstruments>
+  <div
+    class="card position-absolute top-50 start-50 translate-middle rounded-3 w-75"
+  >
+    <p class="card-body text-center">
+      You do not have any borrowed instruments.
+    </p>
+  </div>
+</ng-template>
+
+<div class="container mw-100" *ngIf="instrumentList; else Loading">
+  <h1 class="text-center text-light">Instruments You Borrowed</h1>
 
   <table
     class="table table-light table-striped mw-100"
-    *ngIf="instrumentList; else Loading"
+    *ngIf="instrumentList.length == 0; else noInstruments"
   >
     <thead>
       <tr>

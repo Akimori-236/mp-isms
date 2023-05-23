@@ -38,18 +38,18 @@
   <div class="modal-footer">
     <button
       type="submit"
-      class="btn btn-warning"
+      class="btn btn-primary"
       [disabled]="createStoreForm.invalid"
       (click)="modal.close('Save click')"
     >
-      Save
+      Create
     </button>
   </div>
 </ng-template>
 
 <ng-template #Loading>
   <div class="d-flex justify-content-center mt-5">
-    <div class="spinner-border text-warning" role="status">
+    <div class="spinner-border text-light" role="status">
       <span class="visually-hidden">Loading...</span>
     </div>
   </div>
@@ -60,7 +60,7 @@
     <h1 class="col-auto text-center text-white">Managed Stores</h1>
     <button
       type="button"
-      class="col-auto ms-auto btn btn-warning me-1"
+      class="col-auto ms-auto btn btn-primary me-1"
       (click)="openPopup(createStore)"
     >
       <h6 class="my-auto">Create Store</h6>
