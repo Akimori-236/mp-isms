@@ -5,7 +5,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CredentialResponse, PromptMomentNotification } from 'google-one-tap';
 import { AuthService } from 'src/app/services/auth.service';
 import { MessagingService } from 'src/app/services/messaging.service';
-// import { FirebaseService } from 'src/app/services/firebase.service';
 // Google gives you back CredentialResponses
 
 @Component({
@@ -89,7 +88,6 @@ export class LoginComponent implements OnInit {
       .then(response => {
         console.log(response)
         localStorage.setItem("jwt", response['jwt'])
-        // this.firebaseSvc.requestPermission()
         this.fcm.sendFCMToken()
         const origPath = this.activatedRoute.snapshot.queryParams['fullPath'];
         if (origPath) {

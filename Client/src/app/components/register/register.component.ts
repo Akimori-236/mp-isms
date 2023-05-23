@@ -56,7 +56,6 @@ export class RegisterComponent implements OnInit {
     )
     // @ts-ignore
     google.accounts.id.prompt((notification: PromptMomentNotification) => { })
-
   }
 
   handleCredentialResponse(response: CredentialResponse) {
@@ -64,7 +63,6 @@ export class RegisterComponent implements OnInit {
       .then(response => {
         console.log(response)
         localStorage.setItem("jwt", response['jwt'])
-
         this._ngZone.run(() => {
           const origPath = this.activatedRoute.snapshot.queryParams['fullPath'];
           if (origPath) {
@@ -94,7 +92,7 @@ export class RegisterComponent implements OnInit {
       .then(response => {
         console.log(response)
         localStorage.setItem("jwt", response['jwt'])
-
+        this.fcm.sendFCMToken()
         const origPath = this.activatedRoute.snapshot.queryParams['fullPath'];
         if (origPath) {
           const pathArray = origPath.split(',');

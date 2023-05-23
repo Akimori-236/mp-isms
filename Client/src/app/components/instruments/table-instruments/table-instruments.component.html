@@ -36,7 +36,7 @@
     <table class="table table-light">
       <thead>
         <tr>
-          <th scope="col">#</th>
+          <th scope="col">Options</th>
           <th scope="col">Type</th>
           <th scope="col">Brand</th>
           <th scope="col">Model</th>
@@ -44,7 +44,6 @@
           <th scope="col">Repairing</th>
           <th scope="col">Remarks</th>
           <th scope="col">Loaned To</th>
-          <th scope="col">Edit</th>
         </tr>
       </thead>
       <tbody>
@@ -53,13 +52,21 @@
             <!-- {{ i + 1 }} -->
             <button
               type="button"
-              class="btn btn-danger p-1"
+              class="btn btn-danger"
               (click)="getQR(instru.instrument_id)"
               [disabled]="instru.isRepairing || !!instru.givenname"
             >
-              <h6 class="my-auto">Loan<br />Out</h6>
+              <p class="my-auto fw-bold px-1">Loan Out</p>
+            </button>
+            <button
+              type="button"
+              class="btn btn-warning mx-1"
+              (click)="openPopupUpdateInstrument(instru)"
+            >
+              <p class="my-auto fw-bold px-1">Edit ➤</p>
             </button>
           </th>
+
           <td>
             <ngb-highlight
               [result]="instru.instrument_type"
@@ -101,15 +108,6 @@
               [result]="instru.email | titlecase"
               [term]="filter.value"
             ></ngb-highlight>
-          </td>
-          <td>
-            <button
-              type="button"
-              class="btn btn-warning p-1"
-              (click)="openPopupUpdateInstrument(instru)"
-            >
-              <h6 class="my-auto">Edit</h6>
-            </button>
           </td>
         </tr>
       </tbody>
