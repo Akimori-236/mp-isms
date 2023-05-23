@@ -54,42 +54,30 @@
       </ul>
       <ul class="navbar-nav col-auto text-end ms-auto">
         <li *ngIf="isLoggedIn; else Login">
-          <div ngbDropdown class="ms-auto d-inline-block">
+          <div ngbDropdown class="d-inline-block">
             <button
               type="button"
-              class="btn btn-warning"
+              class="btn btn-outline-warning rounded-pill"
               id="dropdownBasic1"
               ngbDropdownToggle
             >
-              <tr>
-                <td>
-                  <img
-                    class="w-50 rounded-circle"
-                    src="{{ profilePic }}"
-                    alt=""
-                  />
-                </td>
-                <td>
-                  <h4 class="my-auto">{{ givenname | titlecase }}</h4>
-                </td>
-              </tr>
+              <img class="w-50 rounded-circle" src="{{ profilePic }}" alt="" />
+              <span class="mx-3">{{ givenname | titlecase }}</span>
             </button>
             <div
               ngbDropdownMenu
               aria-labelledby="dropdownBasic1"
-              class="text-end dropdown-menu-end"
+              class="dropdown-menu-end"
             >
               <button ngbDropdownItem [routerLink]="['/profile']">
-                <h4 class="my-auto">Profile</h4>
+                <h4 class="my-auto text-end">Profile</h4>
               </button>
-              <!-- <button ngbDropdownItem [routerLink]="['/borrowed']">Borrowed Instruments</button>
-              <button ngbDropdownItem [routerLink]="['/stores']">Managed Stores</button> -->
               <button
                 ngbDropdownItem
                 class="bg-danger text-light me-3"
                 (click)="logout()"
               >
-                <h4 class="my-auto">Logout</h4>
+                <h4 class="my-auto text-end">Logout</h4>
               </button>
             </div>
           </div>
@@ -102,7 +90,7 @@
             type="button"
             [routerLink]="['/login']"
           >
-            <h4 class="my-auto" class="my-auto">Login</h4>
+            <h4 class="my-auto">Login</h4>
           </button>
         </li>
       </ng-template>
