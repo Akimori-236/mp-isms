@@ -23,12 +23,4 @@ export class MapComponent {
 
   constructor(public activeModal: NgbActiveModal) { }
 
-  // ngOnInit() {
-  //   navigator.geolocation.getCurrentPosition(
-  //     (success) => {
-  //       this.lat = success.coords.latitude
-  //       this.lng = success.coords.longitude
-  //     }
-  //   )
-  // }
 }
