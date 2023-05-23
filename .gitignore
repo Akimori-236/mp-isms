@@ -1,2 +1,81 @@
-Client/src/environments/environment.ts
-Client/src/environments/environment.development.ts
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# Compiled output
+Client/dist
+Client/tmp
+Client/out-tsc
+Client/bazel-out
+
+# Node
+Client/node_modules
+Client/npm-debug.log
+Client/yarn-error.log
+
+# IDEs and editors
+Client/.idea/
+Client/.project
+Client/.classpath
+Client/.c9/
+Client/*.launch
+Client/.settings/
+Client/*.sublime-workspace
+
+# Visual Studio Code
+Client/.vscode/*
+Client/!.vscode/settings.json
+Client/!.vscode/tasks.json
+Client/!.vscode/launch.json
+Client/!.vscode/extensions.json
+Client/.history/*
+
+# Miscellaneous
+Client/.angular/cache
+Client/.sass-cache/
+Client/connect.lock
+Client/coverage
+Client/libpeerconnection.log
+Client/testem.log
+Client/typings
+
+# System files
+Client/.DS_Store
+Client/Thumbs.db
+
+Client/.vercel
+Client/vercel.json
+
+Server/HELP.md
+Server/target/
+Server/!.mvn/wrapper/maven-wrapper.jar
+Server/!**/src/main/**/target/
+Server/!**/src/test/**/target/
+
+### STS ###
+Server/.apt_generated
+Server/.classpath
+Server/.factorypath
+Server/.project
+Server/.settings
+Server/.springBeans
+Server/.sts4-cache
+
+### IntelliJ IDEA ###
+Server/.idea
+Server/*.iws
+Server/*.iml
+Server/*.ipr
+
+### NetBeans ###
+Server/nbproject/private/
+Server/nbbuild/
+Server/dist/
+Server/nbdist/
+Server/.nb-gradle/
+Server/build/
+Server!**/src/main/**/build/
+Server!**/src/test/**/build/
+
+### VS Code ###
+Server.vscode/
+
+Client/src/environments/**
