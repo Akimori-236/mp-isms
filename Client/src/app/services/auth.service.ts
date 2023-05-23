@@ -44,6 +44,15 @@ export class AuthService {
     }
   }
 
+  get profilePic() {
+    if (null != this.JWT) {
+      const decodedJWT: any = this.jwtHelper.decodeToken(this.JWT)
+      return decodedJWT['picture']
+    } else {
+      return ""
+    }
+  }
+
   get JWTHeaders() {
     return new HttpHeaders().set("Authorization", `Bearer ${this.JWT}`)
   }
@@ -73,7 +82,7 @@ export class AuthService {
 
   // check if google token is real in backend
   googleLogin(credentials: string): Promise<any> {
-    console.info(credentials)
+    // console.debug(credentials)
     const headers = new HttpHeaders()
       .set("Content-type", "application/json")
     // send google idToken to springboot
