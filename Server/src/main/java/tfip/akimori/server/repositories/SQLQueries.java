@@ -135,6 +135,16 @@ public interface SQLQueries {
     public static final String SQL_RETURN_INSTRUMENT = """
 
             """;
+    public static final String SQL_UPDATE_GOOGLEUSER = """
+            UPDATE google_users
+            SET `email` = ?,
+            `email_verified` = ?,
+            `name` = ?,
+            `picture` = ?,
+            `family_name` = ?,
+            `given_name` = ?
+            WHERE `google_user_id` = ?
+            """;
     public static final String SQL_ISSUE_CONSUMABLE = """
 
             """;
