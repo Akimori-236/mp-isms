@@ -30,8 +30,8 @@ public interface SQLQueries {
 
     // READ
     public static final String SQL_GETUSERBYEMAIL = """
-            SELECT u.email, u.givenname, u.familyname, u.role, g.picture
-            FROM users u INNER JOIN google_users g
+            SELECT u.email, u.givenname, u.familyname, u.password, u.role, g.picture
+            FROM users u LEFT JOIN google_users g
             ON u.email = g.email
             WHERE u.email = ?
             """;
