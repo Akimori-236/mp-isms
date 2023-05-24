@@ -1,5 +1,6 @@
 package tfip.akimori.server.services;
 
+import java.sql.SQLWarning;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
@@ -12,6 +13,7 @@ import jakarta.json.JsonObject;
 import jakarta.json.JsonObjectBuilder;
 import tfip.akimori.server.models.Instrument;
 import tfip.akimori.server.repositories.InstrumentRepository;
+import tfip.akimori.server.repositories.StoreRepository;
 import tfip.akimori.server.utils.MyUtils;
 
 @Service
@@ -26,6 +28,8 @@ public class InstrumentService {
     private MongoService logSvc;
     @Autowired
     private MessagingService msgSvc;
+    @Autowired
+    private StoreRepository storeRepo;
 
     public List<JsonObject> getBorrowedByJWT(String jwt) {
         // get email from JWT
@@ -115,5 +119,25 @@ public class InstrumentService {
                 return false;
             }
         }
+    }
+
+    public Boolean returnInstrument(String jwt, String storeID, String instrument_id) {
+        // get email from JWT
+        String receiverEmail = jwtSvc.extractUsername(jwt);
+        if (storeRepo.isManagerOfStore(receiverEmail, storeID)) {
+            // send update to SQL
+            String returnerEmail;
+            try {
+                returnerEmail = instruRepo.returnInstrument(instrument_id);
+            } catch (SQLWarning e) {
+                System.err.println(e);
+                return false;
+            }
+            logSvc.logInstrumentReturned(storeID, returnerEmail, instrument_id, receiverEmail);
+            // trigger notification
+            msgSvc.returnedNotification(returnerEmail, instrument_id, receiverEmail);
+            return true;
+        }
+        return false;
     }
 }

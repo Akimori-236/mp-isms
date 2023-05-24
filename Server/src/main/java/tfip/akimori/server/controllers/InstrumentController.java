@@ -80,13 +80,27 @@ public class InstrumentController {
     }
 
     @PutMapping("/borrow/{instrument_id}")
-    public ResponseEntity<Void> borrowInstrument(
+    public ResponseEntity<Boolean> borrowInstrument(
             @RequestHeader(name = "Authorization") String token,
             @PathVariable String instrument_id) {
         String jwt = token.substring(7, token.length());
         Boolean isSuccess = instruSvc.borrow(jwt, instrument_id);
         if (isSuccess) {
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok(isSuccess);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/return/{store_id}/{instrument_id}")
+    public ResponseEntity<Boolean> returnInstrument(
+            @RequestHeader(name = "Authorization") String token,
+            @PathVariable String store_id,
+            @PathVariable String instrument_id) {
+        String jwt = token.substring(7, token.length());
+        Boolean isSuccess = instruSvc.returnInstrument(jwt, store_id, instrument_id);
+        if (isSuccess) {
+            return ResponseEntity.ok(isSuccess);
         } else {
             return ResponseEntity.notFound().build();
         }

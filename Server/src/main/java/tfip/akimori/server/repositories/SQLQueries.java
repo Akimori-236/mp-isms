@@ -129,6 +129,12 @@ public interface SQLQueries {
             WHERE m.store_id = ?
             """;
 
+    public static final String SQL_GETBORROWER = """
+            SELECT email from instruments i
+            INNER JOIN users u ON i.user_id = u.user_id
+            WHERE instrument_id = ?
+            """;
+
     // UPDATE
     public static final String SQL_LOANOUT_INSTRUMENT = """
             UPDATE instruments
@@ -136,7 +142,9 @@ public interface SQLQueries {
             WHERE instrument_id = ?
             """;
     public static final String SQL_RETURN_INSTRUMENT = """
-
+            UPDATE instruments
+            SET user_id = null
+            WHERE instrument_id = ?
             """;
     public static final String SQL_UPDATE_GOOGLEUSER = """
             UPDATE google_users

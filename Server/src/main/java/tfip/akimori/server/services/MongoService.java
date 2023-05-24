@@ -92,9 +92,13 @@ public class MongoService implements MongoVariables {
                 .getString(FIELD_APPROVER);
     }
 
-    public void logInstrumentLoaned(String borrowerEmail, String instrument_id, String approverEmail) {
+    public void logInstrumentLoaned(
+            String borrowerEmail,
+            String instrument_id,
+            String approverEmail) {
         String store_id = instruRepo.getInstrumentById(instrument_id).getStore_id();
         Document doc = new Document();
+        doc.put(FIELD_ACTIVITY, "loaned out");
         doc.put(FIELD_APPROVER, approverEmail);
         doc.put(FIELD_INSTRUMENT_ID, instrument_id);
         doc.put(FIELD_BORROWER, borrowerEmail);
@@ -117,5 +121,19 @@ public class MongoService implements MongoVariables {
         doc.put(FIELD_FCM_TOKEN, token);
         doc.put(FIELD_EXPIREAT, expireAt);
         mongoRepo.upsertFCMToken(doc);
+    }
+
+    public void logInstrumentReturned(
+            String store_id,
+            String returnerEmail,
+            String instrument_id,
+            String approverEmail) {
+        Document doc = new Document();
+        doc.put(FIELD_ACTIVITY, "returned");
+        doc.put(FIELD_APPROVER, approverEmail);
+        doc.put(FIELD_INSTRUMENT_ID, instrument_id);
+        doc.put(FIELD_RETURNER, returnerEmail);
+        doc.put(FIELD_STORE_ID, store_id);
+        mongoRepo.insertInstrumentActivity(doc);
     }
 }

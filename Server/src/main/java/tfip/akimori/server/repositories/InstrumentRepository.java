@@ -1,6 +1,7 @@
 package tfip.akimori.server.repositories;
 
 import java.sql.PreparedStatement;
+import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.List;
 
@@ -74,5 +75,16 @@ public class InstrumentRepository implements SQLQueries {
             return ps;
         });
         return rowsUpdated > 0;
+    }
+
+    public String returnInstrument(String instrument_id) throws SQLWarning {
+        String borrowerEmail = template.queryForObject(SQL_GETBORROWER, BeanPropertyRowMapper.newInstance(String.class),
+                instrument_id);
+        int rowsUpdated = template.update(SQL_RETURN_INSTRUMENT, instrument_id);
+        if (rowsUpdated > 0) {
+            return borrowerEmail;
+        } else {
+            throw new SQLWarning("Return not updated");
+        }
     }
 }

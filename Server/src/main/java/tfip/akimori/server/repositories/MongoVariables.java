@@ -19,6 +19,7 @@ public interface MongoVariables {
     public static final String FIELD_ISREPAIRING = "isRepairing";
     public static final String FIELD_REMARKS = "remarks";
     public static final String FIELD_APPROVER = "approver";
+    public static final String FIELD_RETURNER = "returner";
     public static final String FIELD_BORROWER = "borrower";
     public static final String FIELD_EXPIREAT = "expireAt";
     public static final String FIELD_FCM_TOKEN = "fcm_token";

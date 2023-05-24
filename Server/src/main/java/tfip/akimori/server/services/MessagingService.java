@@ -65,7 +65,18 @@ public class MessagingService {
         sendNotification(toToken, title, message);
     }
 
-    public void returnNotification(String instrument_id) {
-        // TODO:
+    public void returnedNotification(String returnerEmail, String instrument_id, String receiverEmail) {
+        // get fcm token with email
+        String toToken = mongoSvc.getFCMToken(returnerEmail);
+        if (null == toToken) {
+            System.err.println("No FCM token found for: " + returnerEmail);
+            return;
+        }
+        // get instrument details
+        Instrument instrument = instruRepo.getInstrumentById(instrument_id);
+        String title = "ISMS:";// + store_name;
+        String message = "%s (S/N: %s) return received by: %s".formatted(instrument.getInstrument_type(),
+                instrument.getSerial_number(), receiverEmail);
+        sendNotification(toToken, title, message);
     }
 }
