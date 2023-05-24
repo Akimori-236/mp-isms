@@ -94,7 +94,7 @@ export class LoginComponent implements OnInit {
           const pathArray = origPath.split(',');
           this.router.navigate(pathArray);
         } else {
-          this.router.navigate(['/']);
+          this.router.navigate(['/borrowed']);
         }
       })
       .catch((error: HttpErrorResponse) => {
