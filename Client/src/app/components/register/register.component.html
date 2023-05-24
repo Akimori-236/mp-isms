@@ -20,7 +20,7 @@
                 class="form-control my-1"
                 id="givennameID"
                 name="givenname"
-                placeholder="FirstName"
+                placeholder="Given Name"
                 formControlName="givenname"
               />
               <label for="givennameID">Given Name</label>
@@ -33,7 +33,7 @@
                 class="form-control my-1"
                 id="familynameID"
                 name="familyname"
-                placeholder="LastName"
+                placeholder="Family Name"
                 formControlName="familyname"
               />
               <label for="familynameID">Family Name</label>
@@ -68,15 +68,28 @@
                 formControlName="password"
               />
               <label for="passwordID">Password</label>
-              <sub>minimum of 8 characters</sub>
-              <!-- TODO: CHECK -->
+              <!-- ERROR MSGS -->
             </td>
           </tr>
           <tr>
             <td>
-              <a [routerLink]="['/login']"
-                ><span>Already have an account? Log in</span></a
-              >
+              <div *ngIf="registerForm.touched">
+                <div *ngIf="registerForm.controls['givenname'].errors">
+                  <span class="text-danger" style="font-size: smaller">
+                    Given Name of at least 2 characters
+                  </span>
+                </div>
+                <div *ngIf="registerForm.controls['email'].errors">
+                  <span class="text-danger" style="font-size: smaller">
+                    Please enter a valid email
+                  </span>
+                </div>
+                <div *ngIf="registerForm.controls['password'].errors">
+                  <span class="text-danger" style="font-size: smaller">
+                    Password of at least 8 characters
+                  </span>
+                </div>
+              </div>
             </td>
           </tr>
           <tr>
@@ -88,6 +101,13 @@
               >
                 Register
               </button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a [routerLink]="['/login']"
+                ><span>Already have an account? Log in</span></a
+              >
             </td>
           </tr>
           <tr>
