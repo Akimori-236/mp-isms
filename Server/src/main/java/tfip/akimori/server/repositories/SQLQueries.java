@@ -130,7 +130,7 @@ public interface SQLQueries {
             """;
 
     public static final String SQL_GETBORROWER = """
-            SELECT email from instruments i
+            SELECT email FROM instruments i
             INNER JOIN users u ON i.user_id = u.user_id
             WHERE instrument_id = ?
             """;
