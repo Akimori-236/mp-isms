@@ -52,18 +52,29 @@
             <!-- {{ i + 1 }} -->
             <button
               type="button"
-              class="btn btn-danger"
+              class="btn btn-danger m-1"
               (click)="getQR(instru.instrument_id)"
               [disabled]="instru.isRepairing || !!instru.givenname"
             >
-              <p class="my-auto fw-bold px-1">Loan Out</p>
+              <span class="my-auto fw-bold">Loan Out</span>
             </button>
+
             <button
               type="button"
-              class="btn btn-primary mx-1"
-              (click)="openPopupUpdateInstrument(instru)"
+              class="btn btn-warning m-1"
+              (click)="return(instru.instrument_id, instru.instrument_type, instru.serial_number)"
+              [disabled]="!instru.givenname"
             >
-              <p class="my-auto fw-bold px-1">Edit ➤</p>
+              <span class="my-auto fw-bold">Return</span>
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-primary m-1"
+              (click)="openPopupUpdateInstrument(instru)"
+              [disabled]="instru.isRepairing || !!instru.givenname"
+            >
+              <span class="my-auto fw-bold">Edit ➤</span>
             </button>
           </th>
 

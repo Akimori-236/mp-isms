@@ -8,6 +8,7 @@ import { Instrument } from 'src/app/models/instrument';
 import { PopupQrComponent } from '../popup-qr/popup-qr.component';
 import { FormAddinstrumentComponent } from '../form-addinstrument/form-addinstrument.component';
 import { InstrumentService } from 'src/app/services/instrument.service';
+import { BorrowComponent } from '../../borrow/borrow.component';
 
 
 
@@ -60,6 +61,15 @@ export class TableInstrumentsComponent {
     const modalRef = this.modalService.open(PopupQrComponent)
     modalRef.componentInstance.instrument_id = instrument_id
     modalRef.componentInstance.storeID = this.storeID
+  }
+
+  return(instrument_id: string, instrument_type: string, serial_number: string) {
+    let confirmText: string = `Confirm returning of ${instrument_type} (S/N: ${serial_number})`
+    if (window.confirm(confirmText) == true) {
+      this.instruSvc.returnInstrument(this.storeID, instrument_id)
+        .then(response => window.alert(response))
+        .catch(error => window.alert(error))
+    } else { window.alert("Transaction cancelled") }
   }
 
   openPopupUpdateInstrument(instrument: Instrument) {
