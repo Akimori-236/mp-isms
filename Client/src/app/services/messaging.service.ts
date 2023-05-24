@@ -21,15 +21,16 @@ export class MessagingService {
 
   requestPermission() {
     this.angularFireMessaging.requestToken.subscribe(
-      (token) => {
-        // console.debug(token)
-        if (token != null) {
-          sessionStorage.setItem("fcmToken", token)
-          this.sendFCMToken()
-        }
-      },
-      (err) => {
-        console.warn("Unable to get permission for push notification:", err)
+      {
+        next: (token) => {
+          console.debug(token)
+          if (token != null) {
+            sessionStorage.setItem("fcmToken", token)
+            this.sendFCMToken()
+          }
+        },
+        error: (err) => console.warn("Unable to get permission for push notification:", err),
+        complete: () => { }
       }
     )
   }
