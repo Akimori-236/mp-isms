@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { MessagingService } from 'src/app/services/messaging.service';
 
@@ -8,19 +9,24 @@ import { MessagingService } from 'src/app/services/messaging.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
 
   isCollapsed: boolean = true
   isLoggedIn: boolean = false
   givenname!: string
   profilePic!: string
+  routerEvents$!: Subscription
 
   constructor(
     private router: Router,
     private authSvc: AuthService) { }
+    
+  ngOnDestroy(): void {
+    this.routerEvents$.unsubscribe()
+  }
 
   ngOnInit(): void {
-    this.router.events.subscribe((event) => {
+    this.routerEvents$ = this.router.events.subscribe((event) => {
       // console.log(event)
       // close the nav on url change
       this.isCollapsed = true
