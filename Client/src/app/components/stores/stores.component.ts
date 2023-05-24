@@ -30,7 +30,7 @@ export class StoresComponent implements OnInit {
 
   ngOnInit(): void {
     this.createStoreForm = this.fb.group({
-      storeName: this.fb.control<string>('', [Validators.required]),
+      storeName: this.fb.control<string>('', [Validators.required, Validators.maxLength(50)]),
     })
     this.isLoggedIn = this.authSvc.isLoggedIn
     // go login if not logged in
