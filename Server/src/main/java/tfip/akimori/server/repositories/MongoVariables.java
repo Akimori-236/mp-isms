@@ -13,6 +13,7 @@ public interface MongoVariables {
     public static final String FIELD_STORE_ID = "store_id";
     public static final String FIELD_ACTIVITY = "activity";
     public static final String FIELD_EMAIL = "email";
+    public static final String FIELD_MESSAGE = "message";
     public static final String FIELD_INSTRUMENT_ID = "instrument_id";
     public static final String FIELD_INSTRUMENT_TYPE = "instrument_type";
     public static final String FIELD_SERIAL_NUMBER = "serial_number";

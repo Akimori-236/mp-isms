@@ -34,10 +34,7 @@
           <th scope="col">Time</th>
           <th scope="col">Activity</th>
           <th scope="col">By</th>
-          <th scope="col">Instrument</th>
-          <th scope="col">Serial Number</th>
-          <th scope="col">Repairing</th>
-          <th scope="col">Remarks</th>
+          <th scope="col">Log Message</th>
         </tr>
       </thead>
       <tbody>
@@ -57,25 +54,7 @@
           </td>
           <td>
             <ngb-highlight
-              [result]="log.instrument_type"
-              [term]="filter.value"
-            ></ngb-highlight>
-          </td>
-          <td>
-            <ngb-highlight
-              [result]="log.serial_number"
-              [term]="filter.value"
-            ></ngb-highlight>
-          </td>
-          <td>
-            <ngb-highlight
-              [result]="log.isRepairing.toString()"
-              [term]="filter.value"
-            ></ngb-highlight>
-          </td>
-          <td>
-            <ngb-highlight
-              [result]="log.remarks"
+              [result]="log.message"
               [term]="filter.value"
             ></ngb-highlight>
           </td>

@@ -122,6 +122,7 @@ public class StoreController {
     @GetMapping(path = "/logs/{storeID}")
     public ResponseEntity<String> getStoreLogs(@PathVariable String storeID) {
         JsonArray jArr = logSvc.getStoreLogs(storeID);
+        System.out.println(jArr.toString());
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .contentType(MediaType.APPLICATION_JSON)

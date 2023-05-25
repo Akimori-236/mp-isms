@@ -11,7 +11,6 @@ import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObjectBuilder;
-import tfip.akimori.server.repositories.InstrumentRepository;
 import tfip.akimori.server.repositories.MongoRepository;
 import tfip.akimori.server.repositories.MongoVariables;
 
@@ -21,8 +20,6 @@ public class MongoService implements MongoVariables {
 
     @Autowired
     private MongoRepository mongoRepo;
-    @Autowired
-    private InstrumentRepository instruRepo;
     @Autowired
     private JwtService jwtSvc;
 
@@ -38,25 +35,20 @@ public class MongoService implements MongoVariables {
             String activity,
             String email,
             String instrument_id,
-            String instrument_type,
-            String serial_number,
-            Boolean isRepairing,
-            String remarks) {
+            String message) {
         Document doc = new Document();
         doc.put(FIELD_STORE_ID, store_id);
         doc.put(FIELD_ACTIVITY, activity);
         doc.put(FIELD_EMAIL, email);
         doc.put(FIELD_INSTRUMENT_ID, instrument_id);
-        doc.put(FIELD_INSTRUMENT_TYPE, instrument_type);
-        doc.put(FIELD_SERIAL_NUMBER, serial_number);
-        doc.put(FIELD_ISREPAIRING, isRepairing);
-        doc.put(FIELD_REMARKS, remarks);
+        doc.put(FIELD_MESSAGE, message);
         mongoRepo.insertInstrumentActivity(doc);
     }
 
     public JsonArray getStoreLogs(String storeID) {
         System.out.println("GETTING LOGS FOR STORE: " + storeID);
         List<Document> docList = mongoRepo.getLogsByStoreID(storeID);
+        System.out.println(docList);
         JsonArrayBuilder jar = Json.createArrayBuilder();
         for (Document d : docList) {
             jar.add(LogToJOB(d));
@@ -70,11 +62,7 @@ public class MongoService implements MongoVariables {
                 .add(FIELD_ACTIVITY, log.getString(FIELD_ACTIVITY))
                 .add(FIELD_EMAIL, log.getString(FIELD_EMAIL))
                 .add(FIELD_INSTRUMENT_ID, log.getString(FIELD_INSTRUMENT_ID))
-                .add(FIELD_INSTRUMENT_TYPE, log.getString(FIELD_INSTRUMENT_TYPE))
-                .add(FIELD_SERIAL_NUMBER, log.getString(FIELD_SERIAL_NUMBER))
-                .add(FIELD_ISREPAIRING, log.getBoolean(FIELD_ISREPAIRING))
-                .add(FIELD_TIME, log.getString(FIELD_TIME))
-                .add(FIELD_REMARKS, log.getString(FIELD_REMARKS));
+                .add(FIELD_MESSAGE, log.getString(FIELD_MESSAGE));
     }
 
     // db.loanapprovals.createIndex( { "expireAt": 1 }, { expireAfterSeconds: 0 } )
@@ -90,20 +78,6 @@ public class MongoService implements MongoVariables {
     public String getApprover(String instrument_id) {
         return mongoRepo.checkApproval(instrument_id)
                 .getString(FIELD_APPROVER);
-    }
-
-    public void logInstrumentLoaned(
-            String borrowerEmail,
-            String instrument_id,
-            String approverEmail) {
-        String store_id = instruRepo.getInstrumentById(instrument_id).getStore_id();
-        Document doc = new Document();
-        doc.put(FIELD_ACTIVITY, "loaned out");
-        doc.put(FIELD_APPROVER, approverEmail);
-        doc.put(FIELD_INSTRUMENT_ID, instrument_id);
-        doc.put(FIELD_BORROWER, borrowerEmail);
-        doc.put(FIELD_STORE_ID, store_id);
-        mongoRepo.insertInstrumentActivity(doc);
     }
 
     public String getFCMToken(String approverEmail) {
@@ -123,17 +97,4 @@ public class MongoService implements MongoVariables {
         mongoRepo.upsertFCMToken(doc);
     }
 
-    public void logInstrumentReturned(
-            String store_id,
-            String returnerEmail,
-            String instrument_id,
-            String approverEmail) {
-        Document doc = new Document();
-        doc.put(FIELD_ACTIVITY, "returned");
-        doc.put(FIELD_APPROVER, approverEmail);
-        doc.put(FIELD_INSTRUMENT_ID, instrument_id);
-        doc.put(FIELD_RETURNER, returnerEmail);
-        doc.put(FIELD_STORE_ID, store_id);
-        mongoRepo.insertInstrumentActivity(doc);
-    }
 }

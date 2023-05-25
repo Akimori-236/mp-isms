@@ -59,9 +59,10 @@ public class InstrumentService {
                 .email(email)
                 .build();
         System.out.println(i);
-        logSvc.logInstrumentActivity(i.getStore_id(), "insert", email, i.getInstrument_id(), i.getInstrument_type(),
-                i.getSerial_number(), i.isRepairing(), i.getRemarks());
-        return instruRepo.addInstrument(i);
+        Boolean isInserted = instruRepo.addInstrument(i);
+        String logMsg = "%s Inserted %s (S/N: %s) ".formatted(email, i.getInstrument_type(), i.getSerial_number());
+        logSvc.logInstrumentActivity(i.getStore_id(), "insert", email, i.getInstrument_id(), logMsg);
+        return isInserted;
     }
 
     private static String generateID(int length) {
@@ -95,8 +96,8 @@ public class InstrumentService {
         // get email from JWT
         String email = jwtSvc.extractUsername(jwt);
         // TODO:
-        logSvc.logInstrumentActivity("update", i.getStore_id(), email, i.getInstrument_id(), i.getInstrument_type(),
-                i.getSerial_number(), i.isRepairing(), i.getRemarks());
+        String logMsg = "%s Updated %s (S/N: %s) ".formatted(email, i.getInstrument_type(), i.getSerial_number());
+        logSvc.logInstrumentActivity(i.getStore_id(), "update", email, i.getInstrument_id(), logMsg);
         return false;
     }
 
@@ -110,13 +111,20 @@ public class InstrumentService {
         } else {
             // send update to SQL
             Boolean isUpdated = instruRepo.borrow(email, instrument_id);
-            if (isUpdated) {
-                logSvc.logInstrumentLoaned(email, instrument_id, approverEmail);
+            if (!isUpdated) {
+                return false;
+            } else {
+                Instrument i = instruRepo.getInstrumentById(instrument_id);
+                String logMsg = "%s Loaned out %s (S/N: %s) to %s".formatted(
+                        approverEmail,
+                        i.getInstrument_type(),
+                        i.getSerial_number(),
+                        email);
+                logSvc.logInstrumentActivity(i.getStore_id(), "loaned out", approverEmail, i.getInstrument_id(),
+                        logMsg);
                 // trigger notification
                 msgSvc.borrowNotification(email, instrument_id, approverEmail);
                 return true;
-            } else {
-                return false;
             }
         }
     }
@@ -124,7 +132,9 @@ public class InstrumentService {
     public Boolean returnInstrument(String jwt, String storeID, String instrument_id) {
         // get email from JWT
         String receiverEmail = jwtSvc.extractUsername(jwt);
-        if (storeRepo.isManagerOfStore(receiverEmail, storeID)) {
+        if (!storeRepo.isManagerOfStore(receiverEmail, storeID)) {
+            return false;
+        } else {
             // send update to SQL
             String returnerEmail;
             try {
@@ -133,11 +143,16 @@ public class InstrumentService {
                 System.err.println(e);
                 return false;
             }
-            logSvc.logInstrumentReturned(storeID, returnerEmail, instrument_id, receiverEmail);
+            Instrument i = instruRepo.getInstrumentById(instrument_id);
+            String logMsg = "%s Returned %s (S/N: %s) to %s".formatted(
+                    returnerEmail,
+                    i.getInstrument_type(),
+                    i.getSerial_number(),
+                    receiverEmail);
+            logSvc.logInstrumentActivity(i.getStore_id(), "returned", receiverEmail, instrument_id, logMsg);
             // trigger notification
             msgSvc.returnedNotification(returnerEmail, instrument_id, receiverEmail);
             return true;
         }
-        return false;
     }
 }

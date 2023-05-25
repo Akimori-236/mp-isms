@@ -32,10 +32,8 @@ export class TableStorelogsComponent {
       return (
         log.activity.toLowerCase().includes(term) ||
         log.email.toLowerCase().includes(term) ||
-        log.instrument_type.toLowerCase().includes(term) ||
-        log.serial_number.toLowerCase().includes(term) ||
-        log.isRepairing.toString().toLowerCase().includes(term) ||
-        log.remarks?.toLowerCase().includes(term)
+        log.instrument_id.toLowerCase().includes(term) ||
+        log.message.toLowerCase().includes(term)
         // pipe.transform(log.area).includes(term) ||
         // pipe.transform(log.population).includes(term)
       );

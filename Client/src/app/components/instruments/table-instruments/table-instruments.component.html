@@ -11,14 +11,14 @@
 </ng-template>
 
 <div
-  class="bg-fog p-3"
+  class="bg-smoke p-3"
   *ngIf="instrumentList && instrumentList.length > 0; else noInstruments"
 >
   <form>
     <div class="mb-1 row">
       <label
         for="table-filtering-search"
-        class="col-xs-3 col-sm-auto col-form-label"
+        class="col-xs-3 col-sm-auto col-form-label text-light"
         >Full text search:</label
       >
       <div class="col-xs-3 col-sm-auto">
@@ -33,7 +33,7 @@
   </form>
 
   <div class="component-container" style="overflow-x: auto">
-    <table class="table table-light">
+    <table class="table table-dark table-striped">
       <thead>
         <tr>
           <th scope="col">Options</th>
@@ -52,7 +52,7 @@
             <!-- {{ i + 1 }} -->
             <button
               type="button"
-              class="btn btn-danger m-1"
+              class="btn btn-primary m-1"
               (click)="getQR(instru.instrument_id)"
               [disabled]="instru.isRepairing || !!instru.givenname"
             >
@@ -61,7 +61,7 @@
 
             <button
               type="button"
-              class="btn btn-warning m-1"
+              class="btn btn-danger m-1"
               (click)="return(instru.instrument_id, instru.instrument_type, instru.serial_number)"
               [disabled]="!instru.givenname"
             >
@@ -70,7 +70,7 @@
 
             <button
               type="button"
-              class="btn btn-primary m-1"
+              class="btn btn-dark m-1"
               (click)="openPopupUpdateInstrument(instru)"
               [disabled]="instru.isRepairing || !!instru.givenname"
             >
