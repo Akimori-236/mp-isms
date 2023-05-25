@@ -1,6 +1,5 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { maps } from 'google-one-tap';
 
 @Component({
   selector: 'app-map',
@@ -8,8 +7,8 @@ import { maps } from 'google-one-tap';
   styleUrls: ['./map.component.css']
 })
 export class MapComponent implements OnInit {
-  mapWidth = 465
-  mapHeight = 465
+  mapWidth = 375
+  mapHeight = 375
   zoom = 15
   center!: google.maps.LatLngLiteral
   mapOptions: google.maps.MapOptions = {
@@ -27,7 +26,6 @@ export class MapComponent implements OnInit {
   ngOnInit(): void {
     let lat = 1.3596865
     let lng = 103.818
-    // get center
     this.center = { lat, lng }
     this.markerOptions = {
       position: { lat, lng },
