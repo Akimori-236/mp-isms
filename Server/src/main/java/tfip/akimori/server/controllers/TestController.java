@@ -1,7 +1,10 @@
 package tfip.akimori.server.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +23,11 @@ public class TestController {
     @Autowired
     private MessagingService fcmSvc;
 
+    @GetMapping(path = "/health")
+    public ResponseEntity<String> functionName() {
+        return ResponseEntity.ok("Running...");
+    }
+
     @PostMapping("/sendemail")
     public ResponseEntity<String> sendEmail(@RequestBody EmailRequest emailRequest) {
         emailSvc.sendEmail(emailRequest.getToEmail(), emailRequest.getSubject(), emailRequest.getBody());
@@ -30,6 +38,5 @@ public class TestController {
     public void sendFCM() {
         fcmSvc.borrowNotification("odelia@gmail.com", "bd1d95bc", "aki@gmail.com");
     }
-
 
 }

@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { MessagingService } from './messaging.service';
 
 @Injectable({
   providedIn: 'root'

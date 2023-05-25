@@ -31,6 +31,7 @@ import { AsyncPipe } from '@angular/common';
 import { ToastsComponent } from './components/toasts/toasts.component';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { MapComponent } from './components/map/map.component';
+import { StoreSettingsComponent } from './components/stores/store-settings/store-settings.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { MapComponent } from './components/map/map.component';
     BorrowComponent,
     TableStorelogsComponent,
     ToastsComponent,
-    MapComponent
+    MapComponent,
+    StoreSettingsComponent
   ],
   imports: [
     BrowserModule,

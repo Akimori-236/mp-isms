@@ -18,8 +18,7 @@ export class TableStorelogsComponent {
   logs$: Observable<Log[]>
   filter = new FormControl('', { nonNullable: true });
 
-  constructor(
-    public activeModal: NgbActiveModal) {
+  constructor(public activeModal: NgbActiveModal) {
     this.logs$ = this.filter.valueChanges.pipe(
       startWith(''),
       map((text) => this.search(text)),

@@ -58,7 +58,7 @@ public class EmailSenderService {
 
     public void sendManagerInvite(String toEmail, String jwt, String storeName) throws MessagingException {
         // Generate confirmation link
-        String confirmationLink = "https://mp-server-production.up.railway.app/#/";
+        String confirmationLink = "https://isms.up.railway.app/#/";
         // TODO: need to store this request somehow
 
         String inviterEmail = jwtSvc.extractUsername(jwt);

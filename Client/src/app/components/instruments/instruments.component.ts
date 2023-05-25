@@ -7,6 +7,7 @@ import { FormAddinstrumentComponent } from './form-addinstrument/form-addinstrum
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { InstrumentService } from 'src/app/services/instrument.service';
 import { TableStorelogsComponent } from './table-storelogs/table-storelogs.component';
+import { StoreSettingsComponent } from '../stores/store-settings/store-settings.component';
 
 @Component({
   selector: 'app-instruments',
@@ -126,7 +127,6 @@ export class InstrumentsComponent implements OnChanges, AfterViewInit {
     this.storeSvc.getStoreLogs(this.currentStoreID).then(
       (response) => {
         console.debug(response)
-        // TODO: data not showing up on modal
         modalRef.componentInstance.logs = response
       }
     )
@@ -139,6 +139,12 @@ export class InstrumentsComponent implements OnChanges, AfterViewInit {
         // Handle modal dismiss event
         console.log(`Dismissed ${this.getDismissReason(reason)}`)
       });
+  }
+
+  openStoreSettings() {
+    const modalRef = this.modalService.open(StoreSettingsComponent);
+    modalRef.componentInstance.storeID = this.currentStoreID
+    modalRef.componentInstance.storeName = this.currentStoreName
   }
 
 }

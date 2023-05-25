@@ -19,7 +19,7 @@ import tfip.akimori.server.exceptions.DuplicateEmailException;
 import tfip.akimori.server.services.AuthService;
 
 @RestController
-@CrossOrigin(origins = "https://isms-fawn.vercel.app")
+@CrossOrigin(origins = "*")
 @RequestMapping(path = "/api/auth", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AuthController {
 
