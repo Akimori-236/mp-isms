@@ -37,13 +37,6 @@ export class BorrowedComponent implements OnInit {
       })
   }
 
-  returnInstrument(id: string) {
-    console.debug(id)
-    // TODO: call server for qr-url for accepter to scan
-
-    // redirect? closable popup for qr image?
-  }
-
   showMap() {
     const modalRef = this.modalService.open(MapComponent);
     modalRef.result

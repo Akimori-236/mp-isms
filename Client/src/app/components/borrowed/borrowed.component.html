@@ -16,12 +16,11 @@
   </div>
 </ng-template>
 
-<div class="container mw-100" *ngIf="instrumentList; else Loading">
+<div class="container" *ngIf="instrumentList; else Loading">
   <h1 class="text-center text-light">Instruments You Borrowed</h1>
 
   <table
     class="table table-light table-striped mw-100"
-    *ngIf="instrumentList.length == 0; else noInstruments"
   >
     <thead>
       <tr>
