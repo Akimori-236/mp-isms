@@ -7,20 +7,32 @@ import { maps } from 'google-one-tap';
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
 })
-export class MapComponent {
-  map!: google.maps.Map;
-  lat = 1.3596865
-  lng = 103.818
+export class MapComponent implements OnInit {
+  mapWidth = 465
+  mapHeight = 465
+  zoom = 15
+  center!: google.maps.LatLngLiteral
   mapOptions: google.maps.MapOptions = {
-    center: { lat: this.lat, lng: this.lng },
-    zoom: 15,
-    mapTypeId: google.maps.MapTypeId.ROADMAP
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    zoomControl: true,
+    scrollwheel: true,
+    disableDoubleClickZoom: true,
+    maxZoom: 20,
+    minZoom: 8
   }
-  markerOptions: google.maps.MarkerOptions = {
-    position: { lat: this.lat, lng: this.lng },
-    animation: google.maps.Animation.BOUNCE
-  }
+  markerOptions!: google.maps.MarkerOptions
 
   constructor(public activeModal: NgbActiveModal) { }
+
+  ngOnInit(): void {
+    let lat = 1.3596865
+    let lng = 103.818
+    // get center
+    this.center = { lat, lng }
+    this.markerOptions = {
+      position: { lat, lng },
+      animation: google.maps.Animation.BOUNCE,
+    }
+  }
 
 }

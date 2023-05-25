@@ -8,10 +8,18 @@
   ></button>
 </div>
 
-<div class="modal-body vw-75">
-  <google-map [options]="mapOptions">
-    <map-marker [options]="markerOptions"></map-marker>
-  </google-map>
+<div class="modal-body">
+  <div class="d-flex justify-content-center">
+    <google-map
+      [width]="mapWidth"
+      [height]="mapHeight"
+      [zoom]="zoom"
+      [center]="center"
+      [options]="mapOptions"
+    >
+      <map-marker [options]="markerOptions"></map-marker>
+    </google-map>
+  </div>
 </div>
 
 <div class="modal-footer">
