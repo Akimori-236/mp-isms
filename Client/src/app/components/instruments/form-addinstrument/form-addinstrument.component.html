@@ -10,7 +10,13 @@
 
 <form [formGroup]="addInstrumentForm">
   <div class="modal-body">
-    <input hidden type="text" formControlName="instrument_id" />
+    <input
+      hidden
+      type="text"
+      name="instrument_id"
+      formControlName="instrument_id"
+    />
+    <input hidden type="text" name="store_id" formControlName="store_id" />
     <div class="mb-2">
       <div class="form-group form-floating">
         <input

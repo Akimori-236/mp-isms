@@ -76,6 +76,7 @@ export class TableInstrumentsComponent {
     const modalRef = this.modalService.open(FormAddinstrumentComponent);
     modalRef.componentInstance.modalTitle = "Edit Instrument"
     modalRef.componentInstance.currentInstrument = instrument
+    modalRef.componentInstance.currentStoreID = this.storeID
     modalRef.result
       .then((result) => {
         // access formgroup in FormAddinstrumentComponent

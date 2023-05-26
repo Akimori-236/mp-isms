@@ -104,6 +104,7 @@ public class InstrumentService {
                 String logMsg = "%s Updated %s (S/N: %s) ".formatted(email, i.getInstrument_type(),
                         i.getSerial_number());
                 logSvc.logInstrumentActivity(i.getStore_id(), "update", email, i.getInstrument_id(), logMsg);
+                System.out.println("UPDATED INSTRUMENT: " + i.getInstrument_id());
             }
             return isUpdated;
         }
@@ -172,7 +173,6 @@ public class InstrumentService {
                 .model(jObj.getString("model"))
                 .serial_number(jObj.getString("serial_number"))
                 .store_id(jObj.getString("store_id"))
-                .store_name(jObj.getString("store_name"))
                 .isRepairing(jObj.getBoolean("isRepairing"))
                 .remarks(jObj.getString("remarks"))
                 .build();

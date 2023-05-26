@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterContentChecked, Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Instrument } from 'src/app/models/instrument';
@@ -27,6 +27,8 @@ export class FormAddinstrumentComponent implements OnInit {
   ngOnInit(): void {
     this.addInstrumentForm = this.fb.group({
       instrument_id: this.fb.control<string>(''),
+      store_id: this.fb.control<string>(this.currentStoreID),
+      
       instrument_type: this.fb.control<string>('', [Validators.required]),
       brand: this.fb.control<string>('', [Validators.required]),
       model: this.fb.control<string>('', [Validators.required]),
