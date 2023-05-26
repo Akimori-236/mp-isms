@@ -1,5 +1,6 @@
 <ngb-toast
   *ngFor="let toast of msgSvc.toastList"
+  [class]="toast.classes"
   [header]="toast.title || '' | titlecase"
   [autohide]="true"
   [delay]="5000"

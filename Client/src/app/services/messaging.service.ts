@@ -62,6 +62,7 @@ export class MessagingService {
   }
 
   showToast(toast: Toast) {
+    toast.title = toast.title
     this.toastList.push(toast)
   }
 

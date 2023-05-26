@@ -100,9 +100,9 @@ export class LoginComponent implements OnInit {
       .catch((error: HttpErrorResponse) => {
         if (error.status === 401) {
           window.alert("Incorrect login details")
-          this.fcm.showToast({ body: "Incorrect login details" })
+          this.fcm.showToast({ classes: "bg-danger text-light", body: "Incorrect login details" })
         }
-        this.fcm.showToast({ body: "Server Error" })
+        this.fcm.showToast({ classes: "bg-danger text-light", body: "Server Error" })
         console.error(error)
       })
   }
