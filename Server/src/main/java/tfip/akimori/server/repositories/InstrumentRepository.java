@@ -87,4 +87,25 @@ public class InstrumentRepository implements SQLQueries {
             throw new SQLWarning("Return not updated");
         }
     }
+
+    public Boolean updateInstrument(Instrument i) {
+        int rowsUpdated = template.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(SQL_UPDATE_INSTRUMENT);
+            ps.setString(1, i.getInstrument_type());
+            ps.setString(2, i.getBrand());
+            ps.setString(3, i.getModel());
+            ps.setString(4, i.getSerial_number());
+            ps.setBoolean(5, i.isRepairing());
+            ps.setString(6, i.getRemarks());
+            ps.setString(7, i.getInstrument_id());
+            return ps;
+        });
+        return rowsUpdated > 0;
+    }
+
+    public String getStoreNameByInstrumentId(String instrument_id) {
+        return template.queryForObject(SQL_GETSTORENAME_BYINSTRUMENTID,
+                BeanPropertyRowMapper.newInstance(String.class),
+                instrument_id);
+    }
 }

@@ -96,9 +96,12 @@ public class InstrumentService {
         // get email from JWT
         String email = jwtSvc.extractUsername(jwt);
         // TODO:
-        String logMsg = "%s Updated %s (S/N: %s) ".formatted(email, i.getInstrument_type(), i.getSerial_number());
-        logSvc.logInstrumentActivity(i.getStore_id(), "update", email, i.getInstrument_id(), logMsg);
-        return false;
+        Boolean isUpdated = instruRepo.updateInstrument(i);
+        if (isUpdated) {
+            String logMsg = "%s Updated %s (S/N: %s) ".formatted(email, i.getInstrument_type(), i.getSerial_number());
+            logSvc.logInstrumentActivity(i.getStore_id(), "update", email, i.getInstrument_id(), logMsg);
+        }
+        return isUpdated;
     }
 
     public Boolean borrow(String jwt, String instrument_id) {

@@ -140,6 +140,12 @@ public interface SQLQueries {
             WHERE instrument_id = ?
             """;
 
+    public static final String SQL_GETSTORENAME_BYINSTRUMENTID = """
+            SELECT store_name FROM instruments i
+            INNER JOIN stores s ON i.store_id = s.store_id
+            WHERE instrument_id = ?
+            """;
+
     // UPDATE
     public static final String SQL_LOANOUT_INSTRUMENT = """
             UPDATE instruments
@@ -149,6 +155,16 @@ public interface SQLQueries {
     public static final String SQL_RETURN_INSTRUMENT = """
             UPDATE instruments
             SET user_id = null
+            WHERE instrument_id = ?
+            """;
+    public static final String SQL_UPDATE_INSTRUMENT = """
+            UPDATE instruments SET
+            instrument_type = ?,
+            brand = ?,
+            model = ?,
+            serial_number = ?,
+            isRepairing = ?,
+            remarks = ?
             WHERE instrument_id = ?
             """;
     public static final String SQL_UPDATE_GOOGLEUSER = """
