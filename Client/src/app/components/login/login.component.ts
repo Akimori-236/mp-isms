@@ -110,7 +110,7 @@ export class LoginComponent implements OnInit {
     const fullPath = this.activatedRoute.snapshot.queryParams['fullPath'];
     let queryParams = { queryParams: { fullPath } }
     this.router.navigate(['/register'], queryParams)
+   // TODO: grey out or show loading circle when loading
   }
 
-  // TODO: grey out or show loading circle when loading
 }

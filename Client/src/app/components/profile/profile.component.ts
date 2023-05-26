@@ -39,6 +39,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
           console.info(this.userProfile)
           this.updateProfileForm.patchValue({
             email: this.userProfile.email
+            // FIXME: values not showing up
           });
         })
         .catch((error) => {

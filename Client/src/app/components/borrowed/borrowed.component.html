@@ -32,7 +32,6 @@
       </tr>
     </thead>
     <tbody>
-      <!-- TODO: ngIf no instruments, show something else -->
       <tr *ngFor="let instr of instrumentList; index as i">
         <th scope="row">{{ i + 1 }}</th>
         <td class="text-wrap">{{ instr.instrument_type | titlecase }}</td>
