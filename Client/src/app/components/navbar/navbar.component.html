@@ -58,10 +58,10 @@
               ngbDropdownToggle
             >
               <img
-              *ngIf="profilePic != undefined; else defaultPFP"
-              class="rounded-circle border border-light me-2"
-              src="{{ profilePic }}"
-              height="50px"
+                *ngIf="profilePic != undefined; else defaultPFP"
+                class="rounded-circle border border-light me-2"
+                src="{{ profilePic }}"
+                height="50px"
               />
               <!-- <span class="mx-3 my-auto fw-bold">{{ givenname | titlecase }}</span> -->
             </button>
@@ -78,7 +78,7 @@
                 class="bg-danger text-light me-3"
                 (click)="logout()"
               >
-                <h4 class="my-auto text-end">Logout</h4>
+                <h4 class="my-auto text-end"><i class="bi bi-box-arrow-left"></i> Logout</h4>
               </button>
             </div>
           </div>
@@ -89,11 +89,12 @@
 </div>
 
 <ng-template #defaultPFP>
-  <img
+  <!-- <img
     class="rounded-circle border border-light me-2"
     src="assets/Default_pfp.png"
     height="35px"
-  />
+  /> -->
+  <h1 class="d-inline-block my-auto"><i class="bi bi-person-circle"></i></h1>
 </ng-template>
 
 <ng-template #Login>

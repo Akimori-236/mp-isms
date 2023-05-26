@@ -52,32 +52,33 @@
   <div class="row my-3">
     <button
       type="button"
-      class="btn btn-primary col-auto m-1"
+      class="btn btn-outline-light col-auto m-1"
       (click)="openPopupAddInstrument()"
     >
-      <h6 class="my-1">+ Instrument</h6>
+      <span class="my-1"><i class="bi bi-plus-circle"></i> Instrument</span>
     </button>
     <button
       type="button"
-      class="btn btn-primary col-auto m-1"
+      class="btn btn-outline-light col-auto m-1"
       (click)="openPopupAddManager(addManager)"
     >
-      <h6 class="my-1">+ Manager</h6>
+      <span class="my-1"><i class="bi bi-person-plus-fill"></i> Manager</span>
     </button>
     <button
       type="button"
-      class="btn btn-primary col-auto m-1 ms-auto"
+      class="btn btn-outline-light col-auto m-1 ms-auto"
       (click)="openPopupStoreLogs()"
     >
-      <h6 class="my-1">Logs</h6>
+      <span class="my-1"><i class="bi bi-file-text"></i> Logs</span>
     </button>
     <button
       type="button"
-      class="btn btn-primary col-auto m-1"
+      class="btn btn-light col-auto m-1"
       (click)="openStoreSettings()"
     >
-
-      <h6 class="my-1">⚙</h6>
+      <span class="my-1">
+        <i class="bi bi-gear-fill"></i>
+      </span>
     </button>
   </div>
 
@@ -89,3 +90,4 @@
   >
   </app-table-instruments>
 </div>
+<!-- ⚙ -->

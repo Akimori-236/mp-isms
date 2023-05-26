@@ -112,13 +112,13 @@ export class InstrumentsComponent implements OnChanges, AfterViewInit {
         this.storeSvc.sendInviteManager(this.currentStoreID, managerEmail)
           .then(response => {
             console.log("sent invite for manager: ", response)
-            let successToast: Toast = { title: "Invite Sent", body: "Successfully added user as manager. \nAn email has been sent to the user." }
+            let successToast: Toast = { classes: "bg-success text-light", title: "Invite Sent", body: "Successfully added user as manager. \nAn email has been sent to the user." }
             this.msgSvc.showToast(successToast)
           })
           .catch(err => {
             console.warn(err)
             if (err.status == 400) {
-              let errorToast: Toast = { title: "Unregistered Email", body: "This email is not registered, please get user to register before adding as manager." }
+              let errorToast: Toast = { classes: "bg-danger text-light", title: "Unregistered Email", body: "This email is not registered, please get user to register before adding as manager." }
               this.msgSvc.showToast(errorToast)
             }
           });

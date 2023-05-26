@@ -7,7 +7,7 @@
 </ng-template>
 
 <div
-  class="card position-absolute top-50 start-50 translate-middle border border-danger rounded-3 w-75"
+  class="card position-absolute top-50 start-50 translate-middle border border-dark rounded-3"
 >
   <div class="card-body">
     <h2 class="text-center">
@@ -75,17 +75,17 @@
       <div class="row">
         <button
           type="button"
-          class="btn btn-primary col-auto me-auto ms-5"
+          class="btn btn-success col-auto me-auto ms-5 py-2"
           (click)="borrow()"
         >
-          <h6 class="my-auto">Borrow</h6>
+          <h4 class="my-auto"><i class="bi bi-check-circle"></i> Borrow</h4>
         </button>
         <button
           type="button"
-          class="btn btn-danger col-auto ms-auto me-5"
+          class="btn btn-danger col-auto ms-auto me-5 py-2"
           [routerLink]="['/']"
         >
-          <h6 class="my-auto">Cancel</h6>
+          <h4 class="my-auto"><i class="bi bi-x-octagon"></i> Cancel</h4>
         </button>
       </div>
     </div>
