@@ -25,6 +25,8 @@ public class StoreService {
     private StoreRepository storeRepo;
     @Autowired
     private JwtService jwtSvc;
+    @Autowired
+    private MongoService mongoSvc;
 
     @Transactional(rollbackFor = SQLException.class)
     public boolean createStore(String jwt, String store_name) throws SQLException {
@@ -74,6 +76,8 @@ public class StoreService {
         String email = jwtSvc.extractUsername(jwt);
         if (storeRepo.isManagerOfStore(email, storeID)) {
             storeRepo.insertStoreManager(inviteEmail, storeID);
+            String logMsg = "(%s) added (%s) as manager".formatted(email, inviteEmail);
+            mongoSvc.logInstrumentActivity(storeID, "Added manager", email, null, logMsg);
         }
     }
 
