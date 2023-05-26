@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -68,12 +69,11 @@ public class StoreService {
         }
     }
 
-    public void addManager(String jwt, String storeID, String inviteEmail) {
+    public void addManager(String jwt, String storeID, String inviteEmail) throws DataIntegrityViolationException {
         // get email from JWT
         String email = jwtSvc.extractUsername(jwt);
         if (storeRepo.isManagerOfStore(email, storeID)) {
-            // TODO:
-            
+            storeRepo.insertStoreManager(inviteEmail, storeID);
         }
     }
 

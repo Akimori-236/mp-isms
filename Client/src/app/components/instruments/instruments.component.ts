@@ -8,6 +8,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { InstrumentService } from 'src/app/services/instrument.service';
 import { TableStorelogsComponent } from './table-storelogs/table-storelogs.component';
 import { StoreSettingsComponent } from '../stores/store-settings/store-settings.component';
+import { ToastsComponent } from '../toasts/toasts.component';
+import { MessagingService } from 'src/app/services/messaging.service';
+import { Toast } from 'src/app/models/toast';
 
 @Component({
   selector: 'app-instruments',
@@ -31,7 +34,8 @@ export class InstrumentsComponent implements OnChanges, AfterViewInit {
     private instruSvc: InstrumentService,
     private modalService: NgbModal,
     private modalConfig: NgbModalConfig,
-    private fb: FormBuilder,) {
+    private fb: FormBuilder,
+    private msgSvc: MessagingService) {
     this.modalConfig.centered = true
   }
 
@@ -108,11 +112,15 @@ export class InstrumentsComponent implements OnChanges, AfterViewInit {
         this.storeSvc.sendInviteManager(this.currentStoreID, managerEmail)
           .then(response => {
             console.log("sent invite for manager: ", response)
-            // modal for confirmation
+            let successToast: Toast = { title: "Invite Sent", body: "Successfully added user as manager. \nAn email has been sent to the user." }
+            this.msgSvc.showToast(successToast)
           })
           .catch(err => {
             console.warn(err)
-            // TODO: Open popup warning for failure
+            if (err.status == 400) {
+              let errorToast: Toast = { title: "Unregistered Email", body: "This email is not registered, please get user to register before adding as manager." }
+              this.msgSvc.showToast(errorToast)
+            }
           });
       })
       .catch((reason) => {

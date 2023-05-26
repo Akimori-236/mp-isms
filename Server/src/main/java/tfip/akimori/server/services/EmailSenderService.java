@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import tfip.akimori.server.models.EmailSchedule;
+import tfip.akimori.server.repositories.StoreRepository;
 import tfip.akimori.server.repositories.UserRepository;
 
 @Service
@@ -28,6 +29,8 @@ public class EmailSenderService {
     private UserRepository userRepo;
     @Autowired
     private JwtService jwtSvc;
+    @Autowired
+    private StoreRepository storeRepo;
 
     public void sendEmail(String toEmail, String subject, String body) {
         SimpleMailMessage message = new SimpleMailMessage();
@@ -56,12 +59,15 @@ public class EmailSenderService {
         }
     }
 
-    public void sendManagerInvite(String toEmail, String jwt, String storeName) throws MessagingException {
+    public void sendManagerInvite(String toEmail, String jwt, String storeID) throws MessagingException {
         // Generate confirmation link
         String confirmationLink = "https://isms.up.railway.app/#/";
         // TODO: need to store this request somehow
 
         String inviterEmail = jwtSvc.extractUsername(jwt);
+        String storeName = storeRepo.getStoreName(storeID);
+        // TODO: still sending id instead of name ^
+        
         // Construct the HTML email body
         String emailBody = """
                 <p>This is an invitation by (%s) to manage an instrument store - %s</p>

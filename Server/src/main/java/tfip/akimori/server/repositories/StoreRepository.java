@@ -6,6 +6,7 @@ import java.sql.Statement;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -41,7 +42,7 @@ public class StoreRepository implements SQLQueries {
         return rowsInserted == 1;
     }
 
-    public boolean insertStoreManager(String email, String store_id) throws SQLException {
+    public boolean insertStoreManager(String email, String store_id) throws DataIntegrityViolationException {
         int rowsInserted = template.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(SQL_INSERT_MANAGER, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, email);
@@ -49,7 +50,7 @@ public class StoreRepository implements SQLQueries {
             return ps;
         });
         if (rowsInserted != 1) {
-            throw new SQLException("Error inserting into managers table");
+            throw new DataIntegrityViolationException("Email is not registered");
         }
         return rowsInserted == 1;
     }
@@ -76,6 +77,10 @@ public class StoreRepository implements SQLQueries {
         return template.query(SQL_GETSTOREMANAGERS,
                 BeanPropertyRowMapper.newInstance(User.class),
                 storeID);
+    }
+
+    public String getStoreName(String storeID) {
+        return template.queryForObject(SQL_GETSTORENAME, BeanPropertyRowMapper.newInstance(String.class), storeID);
     }
 
 }

@@ -80,6 +80,11 @@ public interface SQLQueries {
             FROM users;
             """;
 
+    public static final String SQL_GETSTORENAME = """
+            SELECT store_name FROM stores
+            WHERE store_id = ?
+            """;
+
     // public static final String SQL_GETSTOREMANAGERS = """
     // SELECT s2.store_id, store_name, email, givenname, familyname
     // FROM managers m

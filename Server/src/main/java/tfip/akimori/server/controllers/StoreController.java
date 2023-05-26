@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -105,9 +106,14 @@ public class StoreController {
             @RequestParam String inviteEmail) {
         String jwt = token.substring(7, token.length());
         // add email to managers
-        storeSvc.addManager(jwt, storeID, inviteEmail);
+        try {
+            storeSvc.addManager(jwt, storeID, inviteEmail);
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.badRequest().body("User not registered");
+        }
         System.out.println("SENDING EMAIL TO: " + inviteEmail);
         try {
+            // SEND EMAIL
             emailSvc.sendManagerInvite(inviteEmail, jwt, storeID);
         } catch (MessagingException e) {
             e.printStackTrace();
