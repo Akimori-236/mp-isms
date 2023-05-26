@@ -100,8 +100,9 @@ export class LoginComponent implements OnInit {
       .catch((error: HttpErrorResponse) => {
         if (error.status === 401) {
           window.alert("Incorrect login details")
+          this.fcm.showToast({ body: "Incorrect login details" })
         }
-        // TODO: error popup or msg - user not found
+        this.fcm.showToast({ body: "Server Error" })
         console.error(error)
       })
   }
@@ -110,7 +111,7 @@ export class LoginComponent implements OnInit {
     const fullPath = this.activatedRoute.snapshot.queryParams['fullPath'];
     let queryParams = { queryParams: { fullPath } }
     this.router.navigate(['/register'], queryParams)
-   // TODO: grey out or show loading circle when loading
+    // TODO: grey out or show loading circle when loading
   }
 
 }
