@@ -70,13 +70,18 @@ public class InstrumentController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<String> updateInstrument() {
-        // check if owns instrument
-        // TODO:
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body("");
+    public ResponseEntity<Boolean> updateInstrument(
+            @RequestHeader(name = "Authorization") String token,
+            @RequestBody String dataString) {
+        String jwt = token.substring(7, token.length());
+        JsonReader jr = Json.createReader(new StringReader(dataString));
+        JsonObject jObj = jr.readObject().get("body").asJsonObject();
+        Boolean isUpdated = instruSvc.updateInstrument(jwt, jObj);
+        if (isUpdated) {
+            return ResponseEntity.ok(isUpdated);
+        } else {
+            return ResponseEntity.badRequest().body(isUpdated);
+        }
     }
 
     @PutMapping("/borrow/{instrument_id}")
@@ -84,7 +89,7 @@ public class InstrumentController {
             @RequestHeader(name = "Authorization") String token,
             @PathVariable String instrument_id) {
         String jwt = token.substring(7, token.length());
-        Boolean isSuccess = instruSvc.borrow(jwt, instrument_id);
+        Boolean isSuccess = instruSvc.borrowInstrument(jwt, instrument_id);
         if (isSuccess) {
             return ResponseEntity.ok(isSuccess);
         } else {

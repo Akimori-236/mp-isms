@@ -92,19 +92,24 @@ public class InstrumentService {
         return job.build();
     }
 
-    public boolean updateInstrument(String jwt, Instrument i) {
+    public boolean updateInstrument(String jwt, JsonObject jObj) {
+        Instrument i = jsonToInstrument(jObj);
         // get email from JWT
         String email = jwtSvc.extractUsername(jwt);
-        // TODO:
-        Boolean isUpdated = instruRepo.updateInstrument(i);
-        if (isUpdated) {
-            String logMsg = "%s Updated %s (S/N: %s) ".formatted(email, i.getInstrument_type(), i.getSerial_number());
-            logSvc.logInstrumentActivity(i.getStore_id(), "update", email, i.getInstrument_id(), logMsg);
+        if (!storeRepo.isManagerOfStore(email, i.getStore_id())) {
+            return false;
+        } else {
+            Boolean isUpdated = instruRepo.updateInstrument(i);
+            if (isUpdated) {
+                String logMsg = "%s Updated %s (S/N: %s) ".formatted(email, i.getInstrument_type(),
+                        i.getSerial_number());
+                logSvc.logInstrumentActivity(i.getStore_id(), "update", email, i.getInstrument_id(), logMsg);
+            }
+            return isUpdated;
         }
-        return isUpdated;
     }
 
-    public Boolean borrow(String jwt, String instrument_id) {
+    public Boolean borrowInstrument(String jwt, String instrument_id) {
         // get email from JWT
         String email = jwtSvc.extractUsername(jwt);
         // check for approval if not qr can be reused
@@ -157,5 +162,19 @@ public class InstrumentService {
             msgSvc.returnedNotification(returnerEmail, instrument_id, receiverEmail);
             return true;
         }
+    }
+
+    private Instrument jsonToInstrument(JsonObject jObj) {
+        return Instrument.builder()
+                .instrument_id(jObj.getString("instrument_id"))
+                .instrument_type(jObj.getString("instrument_type"))
+                .brand(jObj.getString("brand"))
+                .model(jObj.getString("model"))
+                .serial_number(jObj.getString("serial_number"))
+                .store_id(jObj.getString("store_id"))
+                .store_name(jObj.getString("store_name"))
+                .isRepairing(jObj.getBoolean("isRepairing"))
+                .remarks(jObj.getString("remarks"))
+                .build();
     }
 }
