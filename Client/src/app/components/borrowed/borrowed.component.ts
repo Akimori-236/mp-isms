@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { InstrumentService } from 'src/app/services/instrument.service';
 import { MapComponent } from '../map/map.component';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-borrowed',
@@ -32,7 +33,7 @@ export class BorrowedComponent implements OnInit {
       .then(response => {
         console.log(response)
         this.instrumentList = response
-      }).catch((err) => {
+      }).catch((err: HttpErrorResponse) => {
         console.error(err)
       })
   }

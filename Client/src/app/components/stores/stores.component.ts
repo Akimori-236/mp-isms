@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -45,7 +46,7 @@ export class StoresComponent implements OnInit {
   loadStores() {
     this.storeSvc.getManagedStores()
       .then(response => { this.storeList = response })
-      .catch((err) => {
+      .catch((err: HttpErrorResponse) => {
         console.warn(err)
       })
   }

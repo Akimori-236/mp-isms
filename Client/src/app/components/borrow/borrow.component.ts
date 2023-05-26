@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Instrument } from 'src/app/models/instrument';
@@ -38,7 +39,7 @@ export class BorrowComponent implements OnInit {
 
   borrow() {
     this.instruSvc.borrow(this.instrumentID).then(response => this.router.navigate(['/borrowed']))
-      .catch((error) => {
+      .catch((error: HttpErrorResponse) => {
         if (error.status == 404) {
           console.warn("QR code might have expired")
         } else {

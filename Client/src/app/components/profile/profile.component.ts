@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -42,7 +43,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
             // FIXME: values not showing up
           });
         })
-        .catch((error) => {
+        .catch((error: HttpErrorResponse) => {
           console.error('Error retrieving user profile:', error);
         });
     } else {
