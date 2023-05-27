@@ -16,7 +16,7 @@ import tfip.akimori.server.repositories.MongoVariables;
 
 @Service
 public class MongoService implements MongoVariables {
-    private static Long QR_DURATION_MINUTES = 15L;
+    private static Long QR_DURATION_MINUTES = 10L;
 
     @Autowired
     private MongoRepository mongoRepo;
@@ -82,6 +82,9 @@ public class MongoService implements MongoVariables {
 
     public String getFCMToken(String approverEmail) {
         Document doc = mongoRepo.getFCMToken(approverEmail);
+        if (doc == null) {
+            return null;
+        }
         return doc.getString(FIELD_FCM_TOKEN);
     }
 
