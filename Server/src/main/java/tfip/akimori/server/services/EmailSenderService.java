@@ -57,8 +57,7 @@ public class EmailSenderService {
         String websiteLink = "https://isms.up.railway.app/#/";
 
         String inviterEmail = jwtSvc.extractUsername(jwt);
-        String storeName = storeRepo.getStoreName(storeID);
-        // FIXME: still sending id instead of name ^
+        String storeName = storeRepo.getStoreName(storeID).getStore_name();
 
         // Construct the HTML email body
         // String plainEmailBody = """
@@ -121,7 +120,7 @@ public class EmailSenderService {
                                     padding-top:20px;
                                     text-align:left">
                             <p>
-                                %s added you as inventory manager of %s at <a href="%s">Instrument Store Management App</a><br>
+                                %s added you as inventory manager of (%s) at <a href="%s">Instrument Store Management App</a><br>
                                 If you don’t recognize this account, it’s likely your email address was added in error.
                             </p>
                         </div>
