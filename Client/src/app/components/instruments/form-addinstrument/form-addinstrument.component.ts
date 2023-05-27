@@ -28,7 +28,6 @@ export class FormAddinstrumentComponent implements OnInit {
     this.addInstrumentForm = this.fb.group({
       instrument_id: this.fb.control<string>(''),
       store_id: this.fb.control<string>(this.currentStoreID),
-      
       instrument_type: this.fb.control<string>('', [Validators.required]),
       brand: this.fb.control<string>('', [Validators.required]),
       model: this.fb.control<string>('', [Validators.required]),

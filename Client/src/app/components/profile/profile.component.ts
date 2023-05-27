@@ -1,3 +1,4 @@
+import { Time } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -27,7 +28,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
       email: this.fb.control<string>("", [Validators.required]),
       givenname: this.fb.control<string>("", [Validators.required]),
       familyname: this.fb.control<string>("", [Validators.required]),
-      schedule: this.fb.control<number | null>(null, [Validators.required]),
+      // schedule: this.fb.control<string>("00:00", [Validators.required]),
     })
   }
 
@@ -38,10 +39,13 @@ export class ProfileComponent implements OnInit, AfterViewInit {
         .then((response) => {
           this.userProfile = response;
           console.debug(this.userProfile)
-          this.updateProfileForm.patchValue({
-            email: this.userProfile.email
-            // FIXME: values not showing up
-          });
+          this.updateProfileForm.patchValue(this.userProfile
+            // {
+            //   email: this.userProfile.email,
+            //   givenname: this.userProfile.givenname,
+            //   familyname: this.userProfile.familyname
+            // }
+          );
         })
         .catch((error: HttpErrorResponse) => {
           console.warn('Error retrieving user profile:', error);
@@ -55,6 +59,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
 
   update() {
     // TODO:
+    console.debug(this.updateProfileForm.value)
   }
 
 }
