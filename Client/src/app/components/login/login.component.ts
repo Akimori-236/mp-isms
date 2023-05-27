@@ -72,12 +72,22 @@ export class LoginComponent implements OnInit {
       .then((response) => {
         console.log(response)
         localStorage.setItem("jwt", response['jwt'])
+        this.fcm.sendFCMToken()
+        const origPath = this.activatedRoute.snapshot.queryParams['fullPath']
         this._ngZone.run(() => {
-          this.router.navigate(['/borrowed']) // send user to whatever page after logged in
+          if (origPath) {
+            const pathArray = origPath.split(',');
+            this.router.navigate(pathArray);
+          } else {
+            this.router.navigate(['/borrowed']);
+          }
         })
       })
       .catch(error => {
         console.error(error)
+        if (error.status === 404) {
+          this.fcm.showToast({ classes: "bg-danger text-light", body: "This email is not registered in our systems." })
+        }
       })
   }
 
@@ -89,7 +99,7 @@ export class LoginComponent implements OnInit {
         console.log(response)
         localStorage.setItem("jwt", response['jwt'])
         this.fcm.sendFCMToken()
-        const origPath = this.activatedRoute.snapshot.queryParams['fullPath'];
+        const origPath = this.activatedRoute.snapshot.queryParams['fullPath']
         if (origPath) {
           const pathArray = origPath.split(',');
           this.router.navigate(pathArray);
@@ -98,12 +108,14 @@ export class LoginComponent implements OnInit {
         }
       })
       .catch((error: HttpErrorResponse) => {
-        if (error.status === 401) {
-          window.alert("Incorrect login details")
+        if (error.status === 400) {
+          // window.alert("Incorrect login details")
           this.fcm.showToast({ classes: "bg-danger text-light", body: "Incorrect login details" })
+        } else {
+          this.fcm.showToast({ classes: "bg-danger text-light", body: "Server Error" })
+          console.error(error)
         }
-        this.fcm.showToast({ classes: "bg-danger text-light", body: "Server Error" })
-        console.error(error)
+
       })
   }
 
@@ -111,7 +123,6 @@ export class LoginComponent implements OnInit {
     const fullPath = this.activatedRoute.snapshot.queryParams['fullPath'];
     let queryParams = { queryParams: { fullPath } }
     this.router.navigate(['/register'], queryParams)
-    // TODO: grey out or show loading circle when loading
   }
 
 }
