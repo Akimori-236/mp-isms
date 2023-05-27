@@ -49,7 +49,7 @@ export class StoreDataService {
 
 
     getStoreLogs(storeID: string): Promise<Log[]> {
-        console.debug("getting logs of store: " + storeID)
+        // console.debug("Getting logs of store: " + storeID)
         const headers = this.authSvc.JWTHeaders.set('Content-Type', 'application/json')
         return firstValueFrom(
             this.http.get<Log[]>(`${this.STORE_URL}/logs/${storeID}`, { headers })

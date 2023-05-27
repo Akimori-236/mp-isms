@@ -61,7 +61,7 @@ export class RegisterComponent implements OnInit {
   handleCredentialResponse(response: CredentialResponse) {
     this.authSvc.googleRegister(response.credential)
       .then(response => {
-        console.log(response)
+        // console.debug(response)
         localStorage.setItem("jwt", response['jwt'])
         this._ngZone.run(() => {
           const origPath = this.activatedRoute.snapshot.queryParams['fullPath'];
@@ -90,7 +90,7 @@ export class RegisterComponent implements OnInit {
     const password = this.registerForm.value['password']
     this.authSvc.register(givenname, familyname, email, password)
       .then(response => {
-        console.log(response)
+        // console.debug(response)
         localStorage.setItem("jwt", response['jwt'])
         this.fcm.sendFCMToken()
         const origPath = this.activatedRoute.snapshot.queryParams['fullPath'];
@@ -102,14 +102,14 @@ export class RegisterComponent implements OnInit {
         }
       })
       .catch((error: HttpErrorResponse) => {
-        console.error(error)
+        // console.warn(error)
         if (error.status === 409) {
           window.alert("This email is already registered. Please log in instead.")
           this._ngZone.run(() => {
             this.router.navigate(['/login'])
           })
         } else {
-          console.warn(error)
+          console.warn(error['error'])
           window.alert(error['error'])
         }
       })

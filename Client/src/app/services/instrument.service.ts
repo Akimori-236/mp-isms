@@ -28,7 +28,7 @@ export class InstrumentService {
   }
 
   addNewInstrument(storeID: string, body: Instrument): Promise<null> {
-    console.info(body)
+    // console.debug(body)
     const headers = this.authSvc.JWTHeaders.set('Content-Type', 'application/json')
     return firstValueFrom(
       this.http.post<null>(`${this.INSTRUMENT_URL}/add/${storeID}`, { body }, { headers })
@@ -36,7 +36,7 @@ export class InstrumentService {
   }
 
   updateInstrument(body: Instrument): Promise<boolean> {
-    console.info(body)
+    // console.debug(body)
     const headers = this.authSvc.JWTHeaders.set('Content-Type', 'application/json')
     return firstValueFrom(
       this.http.put<boolean>(`${this.INSTRUMENT_URL}/update`, { body }, { headers })

@@ -55,9 +55,9 @@ export class InstrumentsComponent implements OnChanges, AfterViewInit {
     this.storeSvc.getStoreDetails(this.currentStoreID).then(
       response => {
         this.instrumentList = response['instruments']
-        console.debug(this.instrumentList)
+        // console.debug(this.instrumentList)
         this.managerList = response['managers']
-        console.debug(this.managerList)
+        // console.debug(this.managerList)
       }
     )
   }
@@ -69,23 +69,23 @@ export class InstrumentsComponent implements OnChanges, AfterViewInit {
       .then((result) => {
         // access formgroup in FormAddinstrumentComponent
         const newInstrument = modalRef.componentInstance.addInstrumentForm.value as Instrument
-        console.log(newInstrument)
+        console.info("Adding: " + newInstrument)
         newInstrument.store_id = this.currentStoreID
         // call SB
         this.instruSvc.addNewInstrument(this.currentStoreID, newInstrument)
           .then(response => {
             this.getStoreDetails()
-            console.log(response)
+            // console.debug(response)
           })
           .catch(error => {
             this.getStoreDetails()
-            console.error(error)
+            console.warn("Error adding instrument: " + error)
           })
       },
         (reason) => {
-          console.log(`Dismissed ${this.getDismissReason(reason)}`)
+          // console.debug(`Dismissed ${this.getDismissReason(reason)}`)
         })
-      .catch(error => console.error(error))
+      .catch(error => console.warn(error))
   }
 
   private getDismissReason(reason: any): string {
@@ -102,20 +102,19 @@ export class InstrumentsComponent implements OnChanges, AfterViewInit {
     const modalRef = this.modalService.open(content, { ariaLabelledBy: 'modal-add-manager' });
     modalRef.result
       .then((result) => {
-        // Handle modal close event
-        console.log(`Closed with: ${result}`)
-
-        // Perform API request and handle the response
+        // > Handle modal close event
+        // console.debug(`Closed with: ${result}`)
+        // > Perform API request and handle the response
         const managerEmail = this.addManagerForm.value['managerEmail']
         console.info("Sending invite to: " + managerEmail)
         this.storeSvc.sendInviteManager(this.currentStoreID, managerEmail)
           .then(response => {
-            console.log("sent invite for manager: ", response)
+            console.info("Sent invite to: ", managerEmail)
             let successToast: Toast = { classes: "bg-success text-light", title: "Invite Sent", body: "Successfully added user as manager. \nAn email has been sent to the user." }
             this.msgSvc.showToast(successToast)
           })
           .catch(err => {
-            console.warn(err)
+            console.warn("Error sending email invite: " + err)
             if (err.status == 400) {
               let errorToast: Toast = { classes: "bg-danger text-light", title: "&#xF33B Unregistered Email", body: "This email is not registered, please get user to register before adding as manager." }
               this.msgSvc.showToast(errorToast)
@@ -124,7 +123,7 @@ export class InstrumentsComponent implements OnChanges, AfterViewInit {
       })
       .catch((reason) => {
         // Handle modal dismiss event
-        console.log(`Dismissed ${this.getDismissReason(reason)}`)
+        // console.log(`Dismissed ${this.getDismissReason(reason)}`)
       });
   }
 
@@ -140,11 +139,11 @@ export class InstrumentsComponent implements OnChanges, AfterViewInit {
     modalRef.result
       .then((result) => {
         // Handle modal close event
-        console.log(`Closed with: ${result}`)
+        // console.log(`Closed with: ${result}`)
       })
       .catch((reason) => {
         // Handle modal dismiss event
-        console.log(`Dismissed ${this.getDismissReason(reason)}`)
+        // console.log(`Dismissed ${this.getDismissReason(reason)}`)
       });
   }
 

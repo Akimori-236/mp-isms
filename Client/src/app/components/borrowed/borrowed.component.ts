@@ -34,7 +34,7 @@ export class BorrowedComponent implements OnInit {
         console.log(response)
         this.instrumentList = response
       }).catch((err: HttpErrorResponse) => {
-        console.error(err)
+        console.warn("Error getting borrowed list: " + err)
       })
   }
 
@@ -42,12 +42,12 @@ export class BorrowedComponent implements OnInit {
     const modalRef = this.modalService.open(MapComponent);
     modalRef.result
       .then((result) => {
-        console.log(result)
+        // console.log(result)
       },
         (reason) => {
-          console.log(`Dismissed ${this.getDismissReason(reason)}`)
+          // console.log(`Dismissed ${this.getDismissReason(reason)}`)
         })
-      .catch(error => console.error(error))
+      .catch(error => console.warn("Error showing map" + error))
   }
 
   private getDismissReason(reason: any): string {

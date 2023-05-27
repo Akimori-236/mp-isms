@@ -81,24 +81,24 @@ export class TableInstrumentsComponent {
       .then((result) => {
         // access formgroup in FormAddinstrumentComponent
         const updatedInstrument = modalRef.componentInstance.addInstrumentForm.value as Instrument
-        console.log(updatedInstrument)
+        console.info("Updating: " + updatedInstrument)
         // call SB
         this.instruSvc.updateInstrument(updatedInstrument)
           .then(response => {
-            console.log(response)
+            // console.debug(response)
             this.onUpdate.next(true)
             // this.getStoreDetails()
           })
           .catch(error => {
-            console.error(error)
+            console.warn("Error updating instrument: " + error)
             this.onUpdate.next(true)
             // this.getStoreDetails()
           })
       },
         (reason) => {
-          console.log(`Dismissed ${this.getDismissReason(reason)}`)
+          // console.log(`Dismissed ${this.getDismissReason(reason)}`)
         })
-      .catch(error => console.error(error))
+      .catch(error => console.warn(error))
   }
 
   private getDismissReason(reason: any): string {

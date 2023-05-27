@@ -23,12 +23,12 @@ export class BorrowComponent implements OnInit {
   ngOnInit(): void {
     this.instrumentID = this.activatedRoute.snapshot.params['instrumentid']
     const fullPath = this.activatedRoute.snapshot.url.toString();
-    console.log(fullPath)
+    // console.log(fullPath)
     if (this.authSvc.isLoggedIn) {
       this.instruSvc.getInstrument(this.instrumentID).then(
         (response) => {
           this.instrument = response
-          console.info(this.instrument)
+          // console.debug(this.instrument)
         }
       )
     } else {
@@ -43,7 +43,7 @@ export class BorrowComponent implements OnInit {
         if (error.status == 404) {
           console.warn("QR code might have expired")
         } else {
-          console.error(error)
+          console.warn("Error borrowing instrument: " + error)
         }
       })
   }

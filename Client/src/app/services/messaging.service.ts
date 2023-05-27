@@ -23,7 +23,7 @@ export class MessagingService {
     this.angularFireMessaging.requestToken.subscribe(
       {
         next: (token) => {
-          console.debug(token)
+          // console.debug("FCM Token: " + token)
           if (token != null) {
             sessionStorage.setItem("fcmToken", token)
             this.sendFCMToken()
@@ -38,7 +38,7 @@ export class MessagingService {
   receiveMessaging() {
     this.angularFireMessaging.messages.subscribe(
       (payload) => {
-        console.debug(payload)
+        // console.debug("Firebase Notification: " + payload)
         console.info("New message received", payload['notification'])
         this.currentMessage.next(payload['notification'])
         if (payload['notification'] != undefined) {

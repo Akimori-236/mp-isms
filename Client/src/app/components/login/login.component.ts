@@ -70,7 +70,7 @@ export class LoginComponent implements OnInit {
   async handleCredentialResponse(response: CredentialResponse) {
     await this.authSvc.googleLogin(response.credential)
       .then((response) => {
-        console.log(response)
+        // console.debug(response)
         localStorage.setItem("jwt", response['jwt'])
         this.fcm.sendFCMToken()
         const origPath = this.activatedRoute.snapshot.queryParams['fullPath']
@@ -84,7 +84,7 @@ export class LoginComponent implements OnInit {
         })
       })
       .catch(error => {
-        console.error(error)
+        console.warn("Google login error: " + error)
         if (error.status === 404) {
           this.fcm.showToast({ classes: "bg-danger text-light", body: "This email is not registered in our systems." })
         }
@@ -96,7 +96,7 @@ export class LoginComponent implements OnInit {
     const password = this.loginForm.value['password']
     this.authSvc.login(email, password)
       .then(response => {
-        console.log(response)
+        // console.debug(response)
         localStorage.setItem("jwt", response['jwt'])
         this.fcm.sendFCMToken()
         const origPath = this.activatedRoute.snapshot.queryParams['fullPath']
@@ -113,7 +113,7 @@ export class LoginComponent implements OnInit {
           this.fcm.showToast({ classes: "bg-danger text-light", body: "Incorrect login details" })
         } else {
           this.fcm.showToast({ classes: "bg-danger text-light", body: "Server Error" })
-          console.error(error)
+          // console.warn(error)
         }
 
       })

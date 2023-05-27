@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from 'src/app/models/store';
 import { AuthService } from 'src/app/services/auth.service';
+import { MessagingService } from 'src/app/services/messaging.service';
 import { StoreDataService } from 'src/app/services/store-data.service';
 
 @Component({
@@ -25,7 +26,8 @@ export class StoresComponent implements OnInit {
     private storeSvc: StoreDataService,
     private modalService: NgbModal,
     private modalConfig: NgbModalConfig,
-    private fb: FormBuilder,) {
+    private fb: FormBuilder,
+    private msgSvc: MessagingService) {
     this.modalConfig.centered = true
   }
 
@@ -47,34 +49,37 @@ export class StoresComponent implements OnInit {
     this.storeSvc.getManagedStores()
       .then(response => { this.storeList = response })
       .catch((err: HttpErrorResponse) => {
-        console.warn(err)
+        console.warn("Error loading store list: " + err)
       })
   }
 
   openPopup(content: any) {
     const modalRef = this.modalService.open(content, { ariaLabelledBy: 'modal-create-store' });
-
     modalRef.result
       .then((result) => {
         // Handle modal close event
-        console.log(`Closed with: ${result}`)
+        // console.log(`Closed with: ${result}`)
 
         // Perform API request and handle the response
         const storeName = this.createStoreForm.value['storeName']
         this.storeSvc.createStore(storeName)
           .then(response => {
-            console.log("create store: ", response)
+            console.info("Created store: ", response)
             // Reload component data
             this.loadStores()
           })
           .catch(err => {
-            console.warn(err)
-            // TODO: Open popup warning for failure
+            console.warn("Error creating store: " + err)
+            this.msgSvc.showToast({
+              title: "Store Creation Error",
+              body: "Could not create store. \nPlease try again.",
+              classes: "bg-danger text-light"
+            })
           });
       })
       .catch((reason) => {
         // Handle modal dismiss event
-        console.log(`Dismissed ${this.getDismissReason(reason)}`)
+        // console.log(`Dismissed ${this.getDismissReason(reason)}`)
       });
   }
 

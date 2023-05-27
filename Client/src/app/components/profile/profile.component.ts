@@ -37,14 +37,14 @@ export class ProfileComponent implements OnInit, AfterViewInit {
       this.profileSvc.getProfile()
         .then((response) => {
           this.userProfile = response;
-          console.info(this.userProfile)
+          console.debug(this.userProfile)
           this.updateProfileForm.patchValue({
             email: this.userProfile.email
             // FIXME: values not showing up
           });
         })
         .catch((error: HttpErrorResponse) => {
-          console.error('Error retrieving user profile:', error);
+          console.warn('Error retrieving user profile:', error);
         });
     } else {
       const fullPath = this.activatedRoute.snapshot.url.toString();

@@ -19,7 +19,7 @@ export class AuthService {
   get JWT() {
     const token = localStorage.getItem(this.JWT_TOKEN_NAME)
     if (token != null && this.jwtHelper.isTokenExpired(token)) {
-      console.warn("JWT expired")
+      console.warn("JWT Expired. \nLogging out...")
       this.logout()
       return null
     } else {
@@ -72,7 +72,7 @@ export class AuthService {
 
   // check if google token is real in backend
   googleRegister(credentials: string): Promise<any> {
-    console.info(credentials)
+    // console.debug(credentials)
     const headers = new HttpHeaders()
       .set("Content-type", "application/json")
     // send google idToken to springboot
