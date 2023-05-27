@@ -109,8 +109,8 @@ public class StoreController {
         try {
             storeSvc.addManager(jwt, storeID, inviteEmail);
         } catch (DataIntegrityViolationException e) {
-            System.err.println("(%s) email address is not registered".formatted(inviteEmail));
-            
+            System.err.println("Failed sending email: (%s) email address is not registered".formatted(inviteEmail));
+
             return ResponseEntity.badRequest().body("User not registered");
         }
         System.out.println("SENDING EMAIL TO: " + inviteEmail);

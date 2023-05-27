@@ -1,21 +1,15 @@
 package tfip.akimori.server.services;
 
-import java.time.LocalTime;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import tfip.akimori.server.models.EmailSchedule;
 import tfip.akimori.server.repositories.StoreRepository;
-import tfip.akimori.server.repositories.UserRepository;
 
 @Service
 public class EmailSenderService {
@@ -25,8 +19,6 @@ public class EmailSenderService {
 
     @Autowired
     private JavaMailSender mailSender;
-    @Autowired
-    private UserRepository userRepo;
     @Autowired
     private JwtService jwtSvc;
     @Autowired
@@ -62,18 +54,18 @@ public class EmailSenderService {
 
     public void sendManagerInvite(String toEmail, String jwt, String storeID) throws MessagingException {
         // Generate confirmation link
-        String confirmationLink = "https://isms.up.railway.app/#/";
-        // TODO: need to store this request somehow
+        String websiteLink = "https://isms.up.railway.app/#/";
 
         String inviterEmail = jwtSvc.extractUsername(jwt);
         String storeName = storeRepo.getStoreName(storeID);
         // FIXME: still sending id instead of name ^
 
         // Construct the HTML email body
-        String emailBody = """
-                <p>This is an invitation by (%s) to manage an instrument store - %s</p>
-                <p>Click <a href=\"%s\">here</a> to join!</p>
-                """.formatted(inviterEmail, storeName, confirmationLink);
+        // String plainEmailBody = """
+        // <p>This is an invitation by (%s) to manage an instrument store - %s</p>
+        // <p>Click <a href=\"%s\">here</a> to join!</p>
+        // """.formatted(inviterEmail, storeName, confirmationLink);
+        String emailBody = formatEmail(inviterEmail, storeName, websiteLink);
         System.out.println("SENDING EMAIL >>> " + emailBody);
         MimeMessage message = mailSender.createMimeMessage();
 
@@ -103,4 +95,40 @@ public class EmailSenderService {
     // mailSender.send(mimeMsg);
     // System.out.println("Email sent to: " + toEmail);
     // }
+
+    private String formatEmail(String senderEmail, String storeName, String websiteLink) {
+        return """
+                <div align="center">
+                    <div style="border: 1px solid black;
+                                border-radius:10px;
+                                padding:40px 20px"
+                         align="center">
+                        <div style="font-family:Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+                                    border-bottom:thin solid #dadce0;
+                                    color:rgba(0,0,0,0.87);
+                                    line-height:32px;
+                                    padding-bottom:24px;
+                                    text-align:center;
+                                    word-break:break-word">
+                            <div style="font-size:24px">
+                                Someone added you as inventory manager
+                            </div>
+                        </div>
+                        <div style="font-family:Roboto-Regular,Helvetica,Arial,sans-serif;
+                                    font-size:14px;
+                                    color:rgba(0,0,0,0.87);
+                                    line-height:20px;
+                                    padding-top:20px;
+                                    text-align:left">
+                            <p>
+                                %s added you as inventory manager of %s at <a href="%s">Instrument Store Management App</a><br>
+                                If you don’t recognize this account, it’s likely your email address was added in error.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                """
+                .formatted(senderEmail, storeName, websiteLink);
+    }
+
 }
