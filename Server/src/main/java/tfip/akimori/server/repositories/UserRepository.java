@@ -63,8 +63,8 @@ public class UserRepository implements SQLQueries {
             ps.setBoolean(2, Boolean.valueOf(payload.getEmailVerified()));
             ps.setString(3, (String) payload.get("name"));
             ps.setString(4, (String) payload.get("picture"));
-            ps.setString(5, (String) payload.get("family_name"));
-            ps.setString(6, (String) payload.get("given_name"));
+            ps.setString(5, (String) payload.getOrDefault("family_name", ""));
+            ps.setString(6, (String) payload.getOrDefault("given_name", ""));
             ps.setString(7, payload.getSubject());
             return ps;
         });

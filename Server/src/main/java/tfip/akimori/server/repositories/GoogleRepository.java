@@ -26,8 +26,8 @@ public class GoogleRepository implements SQLQueries {
                 ps.setBoolean(3, Boolean.valueOf(payload.getEmailVerified()));
                 ps.setString(4, (String) payload.get("name"));
                 ps.setString(5, (String) payload.get("picture"));
-                ps.setString(6, (String) payload.get("family_name"));
-                ps.setString(7, (String) payload.get("given_name"));
+                ps.setString(6, (String) payload.getOrDefault("family_name", ""));
+                ps.setString(7, (String) payload.getOrDefault("given_name", ""));
                 return ps;
             });
         } catch (DataIntegrityViolationException e) {

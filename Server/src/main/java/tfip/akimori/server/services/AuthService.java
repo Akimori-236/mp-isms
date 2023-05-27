@@ -79,8 +79,8 @@ public class AuthService {
                 .add("emailVerified", Boolean.valueOf(payload.getEmailVerified()))
                 .add("name", (String) payload.get("name"))
                 .add("picture", (String) payload.get("picture"))
-                .add("familyname", (String) payload.get("family_name"))
-                .add("givenname", (String) payload.get("given_name"))
+                .add("familyname", (String) payload.getOrDefault("family_name", ""))
+                .add("givenname", (String) payload.getOrDefault("given_name", ""))
                 .add("password", generateRandomPassword(RANDOM_PW_LENGTH))
                 .add("isGoogleLogin", true)
                 .build();
