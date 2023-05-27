@@ -78,8 +78,7 @@ public class InstrumentRepository implements SQLQueries {
     }
 
     public String returnInstrument(String instrument_id) throws SQLWarning {
-        String borrowerEmail = template.queryForObject(SQL_GETBORROWER, BeanPropertyRowMapper.newInstance(String.class),
-                instrument_id);
+        String borrowerEmail = getInstrumentById(instrument_id).getEmail();
         int rowsUpdated = template.update(SQL_RETURN_INSTRUMENT, instrument_id);
         if (rowsUpdated > 0) {
             return borrowerEmail;

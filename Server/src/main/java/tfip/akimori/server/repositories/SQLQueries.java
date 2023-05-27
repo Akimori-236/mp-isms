@@ -49,10 +49,10 @@ public interface SQLQueries {
             WHERE u.email = ?
             """;
     public static final String SQL_GETINSTRUMENTBYID = """
-            SELECT instrument_id, instrument_type, brand, model, serial_number, remarks, i.store_id, store_name, isRepairing
+            SELECT instrument_id, instrument_type, brand, model, serial_number, remarks, i.store_id, store_name, isRepairing, u.email
             FROM instruments i
-            INNER JOIN stores s
-            ON i.store_id = s.store_id
+            INNER JOIN stores s ON i.store_id = s.store_id
+            LEFT JOIN users u ON i.user_id = u.user_id
             WHERE i.instrument_id = ?
             """;
     public static final String SQL_GETBORROWEDBYEMAIL = """

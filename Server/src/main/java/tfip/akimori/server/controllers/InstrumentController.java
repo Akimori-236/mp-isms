@@ -69,7 +69,7 @@ public class InstrumentController {
         }
     }
 
-    @PutMapping("/update")
+    @PutMapping(path = "/update")
     public ResponseEntity<Boolean> updateInstrument(
             @RequestHeader(name = "Authorization") String token,
             @RequestBody String dataString) {
@@ -84,7 +84,7 @@ public class InstrumentController {
         }
     }
 
-    @PutMapping("/borrow/{instrument_id}")
+    @PutMapping(path = "/borrow/{instrument_id}")
     public ResponseEntity<Boolean> borrowInstrument(
             @RequestHeader(name = "Authorization") String token,
             @PathVariable String instrument_id) {
@@ -97,7 +97,7 @@ public class InstrumentController {
         }
     }
 
-    @PutMapping("/return/{store_id}/{instrument_id}")
+    @PutMapping(path = "/return/{store_id}/{instrument_id}")
     public ResponseEntity<Boolean> returnInstrument(
             @RequestHeader(name = "Authorization") String token,
             @PathVariable String store_id,
