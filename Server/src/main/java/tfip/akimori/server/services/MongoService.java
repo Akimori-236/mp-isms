@@ -57,12 +57,15 @@ public class MongoService implements MongoVariables {
     }
 
     private JsonObjectBuilder LogToJOB(Document log) {
-        return Json.createObjectBuilder()
+        JsonObjectBuilder job =  Json.createObjectBuilder()
                 .add(FIELD_STORE_ID, log.getString(FIELD_STORE_ID))
                 .add(FIELD_ACTIVITY, log.getString(FIELD_ACTIVITY))
                 .add(FIELD_EMAIL, log.getString(FIELD_EMAIL))
-                .add(FIELD_INSTRUMENT_ID, log.getString(FIELD_INSTRUMENT_ID))
                 .add(FIELD_MESSAGE, log.getString(FIELD_MESSAGE));
+        if (null != log.getString(FIELD_INSTRUMENT_ID) ){
+            job.add(FIELD_INSTRUMENT_ID, log.getString(FIELD_INSTRUMENT_ID));
+        }
+        return job;
     }
 
     // db.loanapprovals.createIndex( { "expireAt": 1 }, { expireAfterSeconds: 0 } )
