@@ -43,21 +43,21 @@ public class EmailSenderService {
     }
 
     // https://crontab.guru/
-    @Scheduled(cron = "0 0 * * * *", zone = "Asia/Singapore")
-    public void scheduledEmail() {
-        List<EmailSchedule> emailSchedules = userRepo.getAllSchedules(); // Retrieve all user schedules
+    // @Scheduled(cron = "0 0 * * * *", zone = "Asia/Singapore")
+    // public void scheduledEmail() {
+    //     List<EmailSchedule> emailSchedules = userRepo.getAllSchedules(); // Retrieve all user schedules
 
-        int currentHour = LocalTime.now().getHour();
+    //     int currentHour = LocalTime.now().getHour();
 
-        for (EmailSchedule emailSchedule : emailSchedules) {
-            if (emailSchedule.getScheduledHour().equals(currentHour)) {
-                String toEmail = emailSchedule.getUserEmail();
-                String subject = "ISMS: Scheduled Email";
-                String body = "This is a scheduled email for user " + toEmail;
-                sendEmail(toEmail, subject, body);
-            }
-        }
-    }
+    //     for (EmailSchedule emailSchedule : emailSchedules) {
+    //         if (emailSchedule.getScheduledHour().equals(currentHour)) {
+    //             String toEmail = emailSchedule.getUserEmail();
+    //             String subject = "ISMS: Scheduled Email";
+    //             String body = "This is a scheduled email for user " + toEmail;
+    //             sendEmail(toEmail, subject, body);
+    //         }
+    //     }
+    // }
 
     public void sendManagerInvite(String toEmail, String jwt, String storeID) throws MessagingException {
         // Generate confirmation link
@@ -66,8 +66,8 @@ public class EmailSenderService {
 
         String inviterEmail = jwtSvc.extractUsername(jwt);
         String storeName = storeRepo.getStoreName(storeID);
-        // TODO: still sending id instead of name ^
-        
+        // FIXME: still sending id instead of name ^
+
         // Construct the HTML email body
         String emailBody = """
                 <p>This is an invitation by (%s) to manage an instrument store - %s</p>
