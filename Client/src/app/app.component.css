@@ -1,5 +1,5 @@
 .bg-image {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -7,6 +7,7 @@
   background-image: url("src/assets/bg.jpg");
   background-size: cover;
   background-position: center;
+  background-attachment: fixed;
   height: 100vh;
   z-index: -2;
   filter: blur(3px);
