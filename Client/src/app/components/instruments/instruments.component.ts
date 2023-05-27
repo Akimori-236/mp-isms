@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ModalDismissReasons, NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Instrument } from 'src/app/models/instrument';
 import { User } from 'src/app/models/user';
@@ -11,6 +11,8 @@ import { StoreSettingsComponent } from '../stores/store-settings/store-settings.
 import { ToastsComponent } from '../toasts/toasts.component';
 import { MessagingService } from 'src/app/services/messaging.service';
 import { Toast } from 'src/app/models/toast';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-instruments',
@@ -27,7 +29,8 @@ export class InstrumentsComponent implements OnChanges, AfterViewInit {
   isAdding: boolean = false
   addManagerForm!: FormGroup
   logList = []
-
+  @Output()
+  onNewInstrumentList = new Subject<Instrument[]>()
 
   constructor(
     private storeSvc: StoreDataService,
@@ -43,6 +46,7 @@ export class InstrumentsComponent implements OnChanges, AfterViewInit {
     // console.log(changes)
     // call api for data
     this.getStoreDetails()
+
   }
 
   ngAfterViewInit(): void {
@@ -55,9 +59,11 @@ export class InstrumentsComponent implements OnChanges, AfterViewInit {
     this.storeSvc.getStoreDetails(this.currentStoreID).then(
       response => {
         this.instrumentList = response['instruments']
-        // console.debug(this.instrumentList)
+        console.debug(this.instrumentList)
+        this.onNewInstrumentList.next(this.instrumentList)
         this.managerList = response['managers']
         // console.debug(this.managerList)
+        // FIXME: this is working but child component table cant see new data
       }
     )
   }
@@ -113,11 +119,13 @@ export class InstrumentsComponent implements OnChanges, AfterViewInit {
             let successToast: Toast = { classes: "bg-success text-light", title: "Invite Sent", body: "Successfully added user as manager. \nAn email has been sent to the user." }
             this.msgSvc.showToast(successToast)
           })
-          .catch(err => {
-            console.warn("Error sending email invite: " + err)
+          .catch((err: HttpErrorResponse) => {
+            console.warn("Error sending email invite: ", err)
             if (err.status == 400) {
-              let errorToast: Toast = { classes: "bg-danger text-light", title: "&#xF33B Unregistered Email", body: "This email is not registered, please get user to register before adding as manager." }
+              let errorToast: Toast = { classes: "bg-danger text-light", title: "Unregistered Email", body: "This email is not registered, please get user to register before adding as manager." }
               this.msgSvc.showToast(errorToast)
+            } else if (err.status == 500) {
+
             }
           });
       })
@@ -151,6 +159,19 @@ export class InstrumentsComponent implements OnChanges, AfterViewInit {
     const modalRef = this.modalService.open(StoreSettingsComponent);
     modalRef.componentInstance.storeID = this.currentStoreID
     modalRef.componentInstance.storeName = this.currentStoreName
+  }
+
+  updateInstrument(updatedInstrument: any) {
+    // console.debug(updatedInstrument)
+    this.instruSvc.updateInstrument(updatedInstrument)
+      .then(response => {
+        console.debug(response)
+        this.getStoreDetails()
+      })
+      .catch(error => {
+        console.warn("Error updating instrument: " + error)
+        this.getStoreDetails()
+      })
   }
 
 }

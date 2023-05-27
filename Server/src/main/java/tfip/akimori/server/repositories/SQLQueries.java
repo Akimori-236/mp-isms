@@ -118,7 +118,7 @@ public interface SQLQueries {
             """;
 
     public static final String SQL_GETSTOREINSTRUMENTS = """
-            SELECT instrument_id, instrument_type, brand, model, serial_number, remarks, i.store_id, store_name, isRepairing, email, givenname, familyname
+            SELECT instrument_id, instrument_type, brand, model, serial_number, i.remarks, i.store_id, store_name, isRepairing, email, givenname, familyname
             FROM instruments i
             INNER JOIN stores s
             ON i.store_id = s.store_id

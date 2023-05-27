@@ -1,14 +1,15 @@
-import { Component, Input, Output } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ModalDismissReasons, NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { Instrument } from 'src/app/models/instrument';
 import { PopupQrComponent } from '../popup-qr/popup-qr.component';
 import { FormAddinstrumentComponent } from '../form-addinstrument/form-addinstrument.component';
 import { InstrumentService } from 'src/app/services/instrument.service';
 import { BorrowComponent } from '../../borrow/borrow.component';
+import { InstrumentsComponent } from '../instruments.component';
 
 
 
@@ -17,7 +18,7 @@ import { BorrowComponent } from '../../borrow/borrow.component';
   templateUrl: './table-instruments.component.html',
   styleUrls: ['./table-instruments.component.css']
 })
-export class TableInstrumentsComponent {
+export class TableInstrumentsComponent implements OnInit, OnDestroy {
   @Input()
   instrumentList!: Instrument[]
   instruments$: Observable<Instrument[]>
@@ -26,16 +27,28 @@ export class TableInstrumentsComponent {
   filter = new FormControl('', { nonNullable: true });
   @Output()
   onUpdate = new Subject()
+  instrumentList$!: Subscription
 
   constructor(
     private modalService: NgbModal,
     private modalConfig: NgbModalConfig,
-    private instruSvc: InstrumentService) {
+    private instruSvc: InstrumentService,
+    private instr: InstrumentsComponent) {
     this.modalConfig.centered = true
     this.instruments$ = this.filter.valueChanges.pipe(
       startWith(''),
       map((text) => this.search(text)),
     );
+  }
+
+  ngOnInit(): void {
+    this.instrumentList$ = this.instr.onNewInstrumentList.subscribe((list) => {
+      this.instrumentList = list
+    })
+  }
+
+  ngOnDestroy(): void {
+    this.instrumentList$.unsubscribe()
   }
 
   search(text: string): Instrument[] {

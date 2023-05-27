@@ -83,6 +83,9 @@ public class MyUtils {
                 .add("serial_number", i.getSerial_number())
                 .add("store_name", i.getStore_name())
                 .add("isRepairing", i.isRepairing());
+        if (null != i.getRemarks()) {
+            job.add("remarks", i.getRemarks());
+        }
         if (null != i.getEmail()) {
             // if not loaned out
             job.add("email", i.getEmail())

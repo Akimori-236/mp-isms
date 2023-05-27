@@ -36,7 +36,7 @@ export class InstrumentService {
   }
 
   updateInstrument(body: Instrument): Promise<boolean> {
-    // console.debug(body)
+    console.debug(body)
     const headers = this.authSvc.JWTHeaders.set('Content-Type', 'application/json')
     return firstValueFrom(
       this.http.put<boolean>(`${this.INSTRUMENT_URL}/update`, { body }, { headers })
