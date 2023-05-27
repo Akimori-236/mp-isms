@@ -81,7 +81,7 @@ public interface SQLQueries {
             """;
 
     public static final String SQL_GETSTORENAME = """
-            SELECT store_name FROM stores
+            SELECT * FROM stores
             WHERE store_id = ?
             """;
 
