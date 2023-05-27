@@ -76,7 +76,6 @@ export class InstrumentsComponent implements OnChanges, AfterViewInit {
           .then(response => {
             this.getStoreDetails()
             console.log(response)
-            window.location.reload() // just in case
           })
           .catch(error => {
             this.getStoreDetails()
@@ -118,7 +117,7 @@ export class InstrumentsComponent implements OnChanges, AfterViewInit {
           .catch(err => {
             console.warn(err)
             if (err.status == 400) {
-              let errorToast: Toast = { classes: "bg-danger text-light", title: "Unregistered Email", body: "This email is not registered, please get user to register before adding as manager." }
+              let errorToast: Toast = { classes: "bg-danger text-light", title: "&#xF33B Unregistered Email", body: "This email is not registered, please get user to register before adding as manager." }
               this.msgSvc.showToast(errorToast)
             }
           });

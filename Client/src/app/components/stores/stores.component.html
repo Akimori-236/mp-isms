@@ -70,11 +70,11 @@
     <ul class="nav nav-tabs" style="overflow-x: auto">
       <li class="nav-item" *ngFor="let store of storeList; let i = index">
         <button
-          class="nav-link bg-dark"
+          class="nav-link bg-light"
           href="#"
           (click)="getStoreDetails(store.store_id, store.store_name)"
         >
-          <h6 class="mt-auto text-light">{{ store.store_name }}</h6>
+          <h6 class="mt-auto text-dark">{{ store.store_name }}</h6>
         </button>
       </li>
     </ul>
@@ -85,7 +85,6 @@
       [currentStoreID]="currentStoreID"
       [currentStoreName]="currentStoreName"
     >
-      <!-- use input to pass in storeid -->
     </app-instruments>
   </div>
 </div>
