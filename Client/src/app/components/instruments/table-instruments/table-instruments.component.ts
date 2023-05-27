@@ -63,11 +63,14 @@ export class TableInstrumentsComponent {
     modalRef.componentInstance.storeID = this.storeID
   }
 
-  return(instrument_id: string, instrument_type: string, serial_number: string) {
+  returnInstrument(instrument_id: string, instrument_type: string, serial_number: string) {
     let confirmText: string = `Confirm returning of ${instrument_type} (S/N: ${serial_number})`
     if (window.confirm(confirmText) == true) {
       this.instruSvc.returnInstrument(this.storeID, instrument_id)
-        .then(response => window.alert(response))
+        .then(isReturned => {
+          // window.alert(isReturned)
+          this.onUpdate.next(isReturned)
+        })
         .catch(error => window.alert(error))
     } else { window.alert("Transaction cancelled") }
   }
@@ -81,19 +84,20 @@ export class TableInstrumentsComponent {
       .then((result) => {
         // access formgroup in FormAddinstrumentComponent
         const updatedInstrument = modalRef.componentInstance.addInstrumentForm.value as Instrument
-        console.info("Updating: " + updatedInstrument)
+        // console.info("Updating: ", updatedInstrument)
+        this.onUpdate.next(updatedInstrument)
         // call SB
-        this.instruSvc.updateInstrument(updatedInstrument)
-          .then(response => {
-            // console.debug(response)
-            this.onUpdate.next(true)
-            // this.getStoreDetails()
-          })
-          .catch(error => {
-            console.warn("Error updating instrument: " + error)
-            this.onUpdate.next(true)
-            // this.getStoreDetails()
-          })
+        // this.instruSvc.updateInstrument(updatedInstrument)
+        //   .then(response => {
+        //     // console.debug(response)
+        //     this.onUpdate.next(true)
+        //     // this.getStoreDetails()
+        //   })
+        //   .catch(error => {
+        //     console.warn("Error updating instrument: " + error)
+        //     this.onUpdate.next(true)
+        //     // this.getStoreDetails()
+        //   })
       },
         (reason) => {
           // console.log(`Dismissed ${this.getDismissReason(reason)}`)

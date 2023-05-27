@@ -43,7 +43,7 @@ export class InstrumentService {
     )
   }
 
-  borrow(instrument_id: string): Promise<boolean> {
+  borrowInstrument(instrument_id: string): Promise<boolean> {
     const headers = this.authSvc.JWTHeaders
     return firstValueFrom(
       this.http.put<boolean>(`${this.INSTRUMENT_URL}/borrow/${instrument_id}`, { headers })

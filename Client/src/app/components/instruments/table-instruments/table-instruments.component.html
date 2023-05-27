@@ -62,7 +62,7 @@
             <button
               type="button"
               class="btn btn-danger m-1"
-              (click)="return(instru.instrument_id, instru.instrument_type, instru.serial_number)"
+              (click)="returnInstrument(instru.instrument_id, instru.instrument_type, instru.serial_number)"
               [disabled]="!instru.givenname"
             >
               <span class="my-auto fw-bold"><i class="bi bi-box-arrow-in-right"></i> Return</span>
