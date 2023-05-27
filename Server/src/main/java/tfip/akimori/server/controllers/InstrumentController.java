@@ -75,7 +75,7 @@ public class InstrumentController {
             @RequestBody String dataString) {
         String jwt = token.substring(7, token.length());
         JsonReader jr = Json.createReader(new StringReader(dataString));
-        JsonObject jObj = jr.readObject().get("body").asJsonObject();
+        JsonObject jObj = jr.readObject().getJsonObject("body");
         Boolean isUpdated = instruSvc.updateInstrument(jwt, jObj);
         if (isUpdated) {
             return ResponseEntity.ok(isUpdated);
