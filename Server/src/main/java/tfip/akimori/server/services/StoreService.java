@@ -75,9 +75,15 @@ public class StoreService {
         // get email from JWT
         String email = jwtSvc.extractUsername(jwt);
         if (storeRepo.isManagerOfStore(email, storeID)) {
-            storeRepo.insertStoreManager(inviteEmail, storeID);
-            String logMsg = "(%s) added (%s) as manager".formatted(email, inviteEmail);
-            mongoSvc.logInstrumentActivity(storeID, "Added manager", email, null, logMsg);
+            // check authorised
+            if (storeRepo.isManagerOfStore(inviteEmail, storeID)) {
+                // check duplicates
+                return;
+            } else {
+                storeRepo.insertStoreManager(inviteEmail, storeID);
+                String logMsg = "(%s) added (%s) as manager".formatted(email, inviteEmail);
+                mongoSvc.logInstrumentActivity(storeID, "Added manager", email, null, logMsg);
+            }
         }
     }
 
