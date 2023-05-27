@@ -1,5 +1,6 @@
 package tfip.akimori.server.services;
 
+import java.io.StringReader;
 import java.net.URI;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
+import jakarta.json.JsonReader;
 import tfip.akimori.server.models.Instrument;
 import tfip.akimori.server.repositories.InstrumentRepository;
 
@@ -29,7 +31,7 @@ public class MessagingService {
     @Autowired
     private InstrumentRepository instruRepo;
 
-    private ResponseEntity<JsonObject> sendNotification(String toToken, String title, String message) {
+    private JsonObject sendNotification(String toToken, String title, String message) {
         RestTemplate template = new RestTemplate();
         // SET Headers
         HttpHeaders headers = new HttpHeaders();
@@ -46,8 +48,11 @@ public class MessagingService {
                 .toString();
         RequestEntity<String> requestEntity = new RequestEntity<>(body, headers, HttpMethod.POST, URI.create(FCM_URL));
         // SEND GET REQUEST
-        ResponseEntity<JsonObject> response = template.exchange(requestEntity, JsonObject.class); // ERROR 12392
-        return response;
+        ResponseEntity<String> response = template.exchange(requestEntity, String.class); // ERROR 12392
+        System.out.println(response);
+        JsonReader jr = Json.createReader(new StringReader(response.getBody()));
+        JsonObject jObj = jr.readObject();
+        return jObj;
     }
 
     public void borrowNotification(String borrowerEmail, String instrument_id, String approverEmail) {
