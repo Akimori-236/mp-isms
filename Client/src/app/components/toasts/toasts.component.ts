@@ -7,5 +7,7 @@ import { MessagingService } from 'src/app/services/messaging.service';
   styleUrls: ['./toasts.component.css']
 })
 export class ToastsComponent {
+  delay = 10000 // 10 secs
+
   constructor(public msgSvc: MessagingService) { }
 }

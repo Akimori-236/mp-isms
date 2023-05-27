@@ -159,6 +159,7 @@ export class InstrumentsComponent implements OnChanges, AfterViewInit {
     const modalRef = this.modalService.open(StoreSettingsComponent);
     modalRef.componentInstance.storeID = this.currentStoreID
     modalRef.componentInstance.storeName = this.currentStoreName
+    modalRef.componentInstance.managerList = this.managerList
   }
 
   updateInstrument(updatedInstrument: any) {

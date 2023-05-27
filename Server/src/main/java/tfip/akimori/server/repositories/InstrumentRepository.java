@@ -102,9 +102,14 @@ public class InstrumentRepository implements SQLQueries {
         return rowsUpdated > 0;
     }
 
+    public Boolean deleteInstrument(Instrument i) {
+        int rowsDeleted = template.update(SQL_DELETE_INSTRUMENT, i.getInstrument_id());
+        return rowsDeleted > 0;
+    }
+
     // public String getStoreNameByInstrumentId(String instrument_id) {
-    //     return template.queryForObject(SQL_GETSTORENAME_BYINSTRUMENTID,
-    //             BeanPropertyRowMapper.newInstance(String.class),
-    //             instrument_id);
+    // return template.queryForObject(SQL_GETSTORENAME_BYINSTRUMENTID,
+    // BeanPropertyRowMapper.newInstance(String.class),
+    // instrument_id);
     // }
 }

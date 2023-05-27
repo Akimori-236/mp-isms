@@ -118,6 +118,10 @@ export class TableInstrumentsComponent implements OnInit, OnDestroy {
       .catch(error => console.warn(error))
   }
 
+  public delete(instrument_id: string) {
+    this.instruSvc.deleteInstrument(instrument_id)
+  }
+
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';

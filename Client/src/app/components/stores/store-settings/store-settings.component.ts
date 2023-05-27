@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { User } from 'src/app/models/user';
 import { StoreDataService } from 'src/app/services/store-data.service';
 
 @Component({
@@ -13,6 +14,8 @@ export class StoreSettingsComponent implements OnInit {
   storeID!: string
   @Input()
   storeName!: string
+  @Input()
+  managerList!: User[]
   storeDetailsForm!: FormGroup
 
   constructor(

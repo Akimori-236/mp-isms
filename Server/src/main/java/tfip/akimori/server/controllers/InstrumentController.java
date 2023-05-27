@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -111,4 +112,16 @@ public class InstrumentController {
         }
     }
 
+    @DeleteMapping(path = "/delete/{instrument_id}")
+    public ResponseEntity<Boolean> deleteInstrument(
+            @RequestHeader(name = "Authorization") String token,
+            @PathVariable String instrument_id) {
+        String jwt = token.substring(7, token.length());
+        Boolean isSuccess = instruSvc.deleteInstrument(jwt, instrument_id);
+        if (isSuccess) {
+            return ResponseEntity.ok(isSuccess);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

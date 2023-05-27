@@ -177,4 +177,23 @@ public class InstrumentService {
                 .remarks(jObj.getString("remarks"))
                 .build();
     }
+
+    public Boolean deleteInstrument(String jwt, String instrument_id) {
+        // get email from JWT
+        String email = jwtSvc.extractUsername(jwt);
+        Instrument i = instruRepo.getInstrumentById(instrument_id);
+        if (!storeRepo.isManagerOfStore(email, i.getStore_id())) {
+            return false;
+        } else {
+            Boolean isDeleted = instruRepo.deleteInstrument(i);
+            if (isDeleted) {
+                System.out.println("DELETED INSTRUMENT: " + i.getInstrument_id());
+                String logMsg = "%s Updated %s (S/N: %s) ".formatted(email, i.getInstrument_type(),
+                        i.getSerial_number());
+                logSvc.logInstrumentActivity(i.getStore_id(), "delete", email, i.getInstrument_id(), logMsg);
+                System.out.println("UPDATED INSTRUMENT: " + i.getInstrument_id());
+            }
+            return isDeleted;
+        }
+    }
 }

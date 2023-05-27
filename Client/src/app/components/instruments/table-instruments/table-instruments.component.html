@@ -44,6 +44,7 @@
           <th scope="col">Repairing</th>
           <th scope="col">Remarks</th>
           <th scope="col">Loaned To</th>
+          <th scope="col">Delete</th>
         </tr>
       </thead>
       <tbody>
@@ -56,16 +57,26 @@
               (click)="getQR(instru.instrument_id)"
               [disabled]="instru.isRepairing || !!instru.givenname"
             >
-              <span class="my-auto fw-bold"><i class="bi bi-box-arrow-left"></i> Loan</span>
+              <span class="my-auto fw-bold"
+                ><i class="bi bi-box-arrow-left"></i> Loan</span
+              >
             </button>
 
             <button
               type="button"
               class="btn btn-danger m-1"
-              (click)="returnInstrument(instru.instrument_id, instru.instrument_type, instru.serial_number)"
+              (click)="
+                returnInstrument(
+                  instru.instrument_id,
+                  instru.instrument_type,
+                  instru.serial_number
+                )
+              "
               [disabled]="!instru.givenname"
             >
-              <span class="my-auto fw-bold"><i class="bi bi-box-arrow-in-right"></i> Return</span>
+              <span class="my-auto fw-bold"
+                ><i class="bi bi-box-arrow-in-right"></i> Return</span
+              >
             </button>
 
             <button
@@ -74,7 +85,9 @@
               (click)="openPopupUpdateInstrument(instru)"
               [disabled]="instru.isRepairing || !!instru.givenname"
             >
-              <span class="my-auto fw-bold"><i class="bi bi-pencil"></i> Edit</span>
+              <span class="my-auto fw-bold"
+                ><i class="bi bi-pencil"></i> Edit</span
+              >
             </button>
           </th>
 
@@ -119,6 +132,16 @@
               [result]="instru.email | titlecase"
               [term]="filter.value"
             ></ngb-highlight>
+          </td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-danger"
+              (click)="delete(instru.instrument_id)"
+              [disabled]="instru.isRepairing || !!instru.givenname"
+            >
+              <i class="bi bi-trash3"></i>
+            </button>
           </td>
         </tr>
       </tbody>

@@ -3,7 +3,7 @@
   [class]="toast.classes"
   [header]="toast.title || '' | titlecase"
   [autohide]="true"
-  [delay]="5000"
+  [delay]="delay"
   (hiddden)="msgSvc.removeToast(toast)"
 >
   {{ toast.body | titlecase }}

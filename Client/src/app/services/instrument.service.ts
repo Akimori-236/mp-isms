@@ -57,4 +57,10 @@ export class InstrumentService {
     )
   }
 
+  deleteInstrument(instrument_id: string): Promise<boolean> {
+    const headers = this.authSvc.JWTHeaders
+    return firstValueFrom(
+      this.http.delete<boolean>(`${this.INSTRUMENT_URL}/delete/${instrument_id}`, { headers })
+    )
+  }
 }
