@@ -18,6 +18,7 @@ import jakarta.json.JsonObject;
 import jakarta.json.JsonReader;
 import tfip.akimori.server.models.Instrument;
 import tfip.akimori.server.repositories.InstrumentRepository;
+import tfip.akimori.server.repositories.StoreRepository;
 
 @Service
 public class MessagingService {
@@ -30,6 +31,8 @@ public class MessagingService {
     private MongoService mongoSvc;
     @Autowired
     private InstrumentRepository instruRepo;
+    @Autowired
+    private StoreRepository storeRepo;
 
     private JsonObject sendNotification(String toToken, String title, String message) {
         RestTemplate template = new RestTemplate();
@@ -64,7 +67,7 @@ public class MessagingService {
         }
         // get instrument details
         Instrument instrument = instruRepo.getInstrumentById(instrument_id);
-        String store_name = instruRepo.getStoreNameByInstrumentId(instrument_id);
+        String store_name = storeRepo.getStore(instrument.getStore_id()).getStore_name();
         String title = "ISMS: %s".formatted(store_name);
         String message = "%s (S/N: %s) borrowed by: %s".formatted(instrument.getInstrument_type(),
                 instrument.getSerial_number(), borrowerEmail);
@@ -80,7 +83,7 @@ public class MessagingService {
         }
         // get instrument details
         Instrument instrument = instruRepo.getInstrumentById(instrument_id);
-        String store_name = instruRepo.getStoreNameByInstrumentId(instrument_id);
+        String store_name = storeRepo.getStore(instrument.getStore_id()).getStore_name();
         String title = "ISMS: %s".formatted(store_name);
         String message = "%s (S/N: %s) return received by: %s".formatted(instrument.getInstrument_type(),
                 instrument.getSerial_number(), receiverEmail);

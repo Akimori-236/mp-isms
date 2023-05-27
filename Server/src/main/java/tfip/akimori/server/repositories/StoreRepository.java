@@ -79,7 +79,7 @@ public class StoreRepository implements SQLQueries {
                 storeID);
     }
 
-    public Store getStoreName(String storeID) {
+    public Store getStore(String storeID) {
         return template.queryForObject(SQL_GETSTORENAME, BeanPropertyRowMapper.newInstance(Store.class), storeID);
     }
 

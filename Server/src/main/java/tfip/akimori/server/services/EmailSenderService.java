@@ -57,7 +57,7 @@ public class EmailSenderService {
         String websiteLink = "https://isms.up.railway.app/#/";
 
         String inviterEmail = jwtSvc.extractUsername(jwt);
-        String storeName = storeRepo.getStoreName(storeID).getStore_name();
+        String storeName = storeRepo.getStore(storeID).getStore_name();
 
         // Construct the HTML email body
         // String plainEmailBody = """

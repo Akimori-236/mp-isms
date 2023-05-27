@@ -102,9 +102,9 @@ public class InstrumentRepository implements SQLQueries {
         return rowsUpdated > 0;
     }
 
-    public String getStoreNameByInstrumentId(String instrument_id) {
-        return template.queryForObject(SQL_GETSTORENAME_BYINSTRUMENTID,
-                BeanPropertyRowMapper.newInstance(String.class),
-                instrument_id);
-    }
+    // public String getStoreNameByInstrumentId(String instrument_id) {
+    //     return template.queryForObject(SQL_GETSTORENAME_BYINSTRUMENTID,
+    //             BeanPropertyRowMapper.newInstance(String.class),
+    //             instrument_id);
+    // }
 }

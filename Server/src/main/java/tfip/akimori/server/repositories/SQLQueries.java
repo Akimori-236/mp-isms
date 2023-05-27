@@ -140,11 +140,11 @@ public interface SQLQueries {
             WHERE instrument_id = ?
             """;
 
-    public static final String SQL_GETSTORENAME_BYINSTRUMENTID = """
-            SELECT store_name FROM instruments i
-            INNER JOIN stores s ON i.store_id = s.store_id
-            WHERE instrument_id = ?
-            """;
+//     public static final String SQL_GETSTORENAME_BYINSTRUMENTID = """
+//             SELECT store_name FROM instruments i
+//             INNER JOIN stores s ON i.store_id = s.store_id
+//             WHERE instrument_id = ?
+//             """;
 
     // UPDATE
     public static final String SQL_LOANOUT_INSTRUMENT = """
