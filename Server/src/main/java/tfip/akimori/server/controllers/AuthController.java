@@ -2,9 +2,11 @@ package tfip.akimori.server.controllers;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.NoSuchElementException;
 
 import org.glassfish.json.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -37,14 +39,13 @@ public class AuthController {
         try {
             // save new user & get jwt
             jwt = authSvc.register(jsonRequest);
-        } catch (DuplicateEmailException e) {
-            System.err.println(e);
+        } catch (DuplicateEmailException dee) {
+            System.err.println(dee);
             return ResponseEntity
                     .status(HttpStatus.CONFLICT)
                     .body("User already registered, please log in");
         }
-        return ResponseEntity
-                .status(HttpStatus.OK)
+        return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(jwt.toString());
     }
@@ -57,11 +58,12 @@ public class AuthController {
         JsonObject jwt;
         try {
             jwt = authSvc.login(jsonRequest);
+        } catch (NoSuchElementException nsee) {
+            return ResponseEntity.notFound().build();
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity
-                .status(HttpStatus.OK)
+        return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(jwt.toString());
     }
@@ -75,8 +77,7 @@ public class AuthController {
                 Payload payload = idToken.getPayload();
                 // Generate JWT token and return it
                 JsonObject jwt = authSvc.registerGoogleUser(payload);
-                return ResponseEntity
-                        .status(HttpStatus.OK)
+                return ResponseEntity.ok()
                         .contentType(MediaType.APPLICATION_JSON)
                         .body(jwt.toString());
             }
@@ -85,12 +86,10 @@ public class AuthController {
                     .status(HttpStatus.CONFLICT)
                     .body("User already registered, please log in");
         } catch (GeneralSecurityException | IOException e) {
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+            return ResponseEntity.internalServerError()
                     .body("An error occurred while processing the google token");
         }
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
+        return ResponseEntity.badRequest()
                 .body("Invalid google login");
     }
 
@@ -108,13 +107,13 @@ public class AuthController {
                         .contentType(MediaType.APPLICATION_JSON)
                         .body(jwt.toString());
             }
+        } catch (EmptyResultDataAccessException erdae) {
+            return ResponseEntity.notFound().build();
         } catch (GeneralSecurityException | IOException e) {
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+            return ResponseEntity.internalServerError()
                     .body("An error occurred while processing the google token");
         }
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
+        return ResponseEntity.badRequest()
                 .body("Invalid google login");
     }
 
