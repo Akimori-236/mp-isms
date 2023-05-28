@@ -45,7 +45,7 @@ public class EmailSenderService {
     // for (EmailSchedule emailSchedule : emailSchedules) {
     // if (emailSchedule.getScheduledHour().equals(currentHour)) {
     // String toEmail = emailSchedule.getUserEmail();
-    // String subject = "ISM: Scheduled Email";
+    // String subject = "ISMS: Scheduled Email";
     // String body = "This is a scheduled email for user " + toEmail;
     // sendEmail(toEmail, subject, body);
     // }
@@ -54,7 +54,7 @@ public class EmailSenderService {
 
     public void sendManagerInvite(String toEmail, String jwt, String storeID) throws MessagingException {
         // Generate confirmation link
-        String websiteLink = "https://ism.up.railway.app/#/";
+        String websiteLink = "https://isms.up.railway.app/#/";
 
         String inviterEmail = jwtSvc.extractUsername(jwt);
         String storeName = storeRepo.getStore(storeID).getStore_name();
