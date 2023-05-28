@@ -10,6 +10,7 @@ import { FormAddinstrumentComponent } from '../form-addinstrument/form-addinstru
 import { InstrumentService } from 'src/app/services/instrument.service';
 import { BorrowComponent } from '../../borrow/borrow.component';
 import { InstrumentsComponent } from '../instruments.component';
+import { StoreDataService } from 'src/app/services/store-data.service';
 
 
 
@@ -27,13 +28,12 @@ export class TableInstrumentsComponent implements OnInit, OnDestroy {
   filter = new FormControl('', { nonNullable: true });
   @Output()
   onUpdate = new Subject()
-  instrumentList$!: Subscription
 
   constructor(
     private modalService: NgbModal,
     private modalConfig: NgbModalConfig,
     private instruSvc: InstrumentService,
-    private instr: InstrumentsComponent) {
+    private storeSvc: StoreDataService) {
     this.modalConfig.centered = true
     this.instruments$ = this.filter.valueChanges.pipe(
       startWith(''),
@@ -42,13 +42,10 @@ export class TableInstrumentsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.instrumentList$ = this.instr.onNewInstrumentList.subscribe((list) => {
-      this.instrumentList = list
-    })
+    this.getStoreDetails()
   }
 
   ngOnDestroy(): void {
-    this.instrumentList$.unsubscribe()
   }
 
   search(text: string): Instrument[] {
@@ -64,6 +61,19 @@ export class TableInstrumentsComponent implements OnInit, OnDestroy {
         // pipe.transform(instrument.population).includes(term)
       );
     });
+  }
+
+  getStoreDetails() {
+    this.storeSvc.getStoreDetails(this.storeID).then(
+      response => {
+        this.instrumentList = response['instruments']
+        console.debug(this.instrumentList)
+        // this.onNewInstrumentList.next(this.instrumentList)
+        // this.managerList = response['managers']
+        // console.debug(this.managerList)
+        // FIXME: this is working but child component table cant see new data
+      }
+    )
   }
 
   onNewList(event: Instrument[]) {
@@ -120,6 +130,9 @@ export class TableInstrumentsComponent implements OnInit, OnDestroy {
 
   public delete(instrument_id: string) {
     this.instruSvc.deleteInstrument(instrument_id)
+      .then(
+
+    )
   }
 
   private getDismissReason(reason: any): string {
