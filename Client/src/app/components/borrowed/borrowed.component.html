@@ -19,9 +19,7 @@
 <div class="container" *ngIf="instrumentList; else Loading">
   <h1 class="text-center text-light">Instruments You Borrowed</h1>
 
-  <table
-    class="table table-light table-striped mw-100"
-  >
+  <table class="table table-light table-striped mw-100">
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -37,8 +35,11 @@
         <td class="text-wrap">{{ instr.instrument_type | titlecase }}</td>
         <td class="text-wrap">{{ instr.model | uppercase }}</td>
         <td class="text-wrap">{{ instr.serial_number | lowercase }}</td>
-        <td class="text-wrap" (click)="showMap()">
-          {{ instr.store_name | titlecase }}
+        <td class="text-wrap">
+          <button class="btn btn-light" type="button" (click)="showMap()">
+            <i class="bi bi-geo-alt-fill"></i>
+            {{ instr.store_name | titlecase }}
+          </button>
         </td>
         <!-- <td>
           <button

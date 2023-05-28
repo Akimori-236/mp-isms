@@ -84,7 +84,7 @@
               type="button"
               class="btn btn-light m-1"
               (click)="openPopupUpdateInstrument(instru)"
-              [disabled]="instru.isRepairing || !!instru.givenname"
+              [disabled]="!!instru.givenname"
             >
               <span class="my-auto fw-bold"><i class="bi bi-pencil"></i></span>
             </button>
@@ -115,7 +115,7 @@
           </td>
           <td>
             <ngb-highlight
-              [result]="instru.isRepairing ? 'Yes' : 'No'"
+              [result]="instru.isRepairing ? 'Yes🔧' : 'No'"
               [term]="filter.value"
             ></ngb-highlight>
           </td>
