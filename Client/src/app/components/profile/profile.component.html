@@ -1,3 +1,9 @@
+<ng-template #placeholder>
+  <td class="form-group form-floating placeholder-glow">
+    <input type="email" class="form-control my-1 placeholder" readonly />
+  </td>
+</ng-template>
+
 <div
   class="card position-absolute top-50 start-50 translate-middle border border-dark rounded-3"
 >
@@ -12,7 +18,10 @@
       <table>
         <tbody>
           <tr>
-            <td class="form-group form-floating">
+            <td
+              class="form-group form-floating"
+              *ngIf="userProfile; else placeholder"
+            >
               <input
                 type="email"
                 class="form-control my-1"
@@ -26,7 +35,7 @@
             </td>
           </tr>
           <tr>
-            <td class="form-group form-floating">
+            <td class="form-group form-floating" *ngIf="userProfile; else placeholder">
               <input
                 type="text"
                 class="form-control my-1"
@@ -38,7 +47,7 @@
             </td>
           </tr>
           <tr>
-            <td class="form-group form-floating">
+            <td class="form-group form-floating" *ngIf="userProfile; else placeholder">
               <input
                 type="text"
                 class="form-control my-1"
@@ -49,8 +58,8 @@
               <label for="familynameID">Family Name</label>
             </td>
           </tr>
-          <tr>
-            <td class="form-group form-floating">
+          <!-- <tr>
+            <td class="form-group form-floating" *ngIf="userProfile; else placeholder">
               <input
                 type="time"
                 class="form-control form-control-time my-1"
@@ -61,23 +70,17 @@
               />
               <label for="scheduleID">Schedule Email </label>
             </td>
-          </tr>
+          </tr> -->
           <tr>
             <td class="text-center">
               <button
                 type="submit"
                 class="w-100 btn btn-primary mt-3"
                 [disabled]="updateProfileForm.invalid"
+                ngbTooltip="Not working yet"
               >
                 Update Profile
               </button>
-            </td>
-          </tr>
-          <tr>
-            <td class="d-flex justify-content-center">
-              <div id="googleBtn" class="my-2">
-                <!-- google sign up button -->
-              </div>
             </td>
           </tr>
         </tbody>
