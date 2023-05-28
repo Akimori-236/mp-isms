@@ -15,8 +15,8 @@ import tfip.akimori.server.repositories.StoreRepository;
 
 @Service
 public class QrService {
-    // https://quickchart.io/qr?text=https%3A%2F%2Fisms.up.railway.app%2F%23%2Fborrow%2F367377a1&size=200
-    private static final String ANGULAR_BORROW_URL = "https%3A%2F%2Fisms.up.railway.app%2F%23%2Fborrow%2F";
+    // https://quickchart.io/qr?text=https%3A%2F%2Fism.up.railway.app%2F%23%2Fborrow%2F367377a1&size=200
+    private static final String ANGULAR_BORROW_URL = "https%3A%2F%2Fism.up.railway.app%2F%23%2Fborrow%2F";
     private static final String QR_API_URL = "https://quickchart.io/qr";
     @Autowired
     private JwtService jwtSvc;

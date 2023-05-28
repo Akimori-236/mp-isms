@@ -1,4 +1,5 @@
 
+import { AsyncPipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -33,9 +34,9 @@ export class TableStorelogsComponent {
         log.email.toLowerCase().includes(term) ||
         log.instrument_id.toLowerCase().includes(term) ||
         log.message.toLowerCase().includes(term)
-        // pipe.transform(log.area).includes(term) ||
+        // pipe.transform(log.activity).includes(term) ||
         // pipe.transform(log.population).includes(term)
       );
-    });
-  }
+  });
+}
 }

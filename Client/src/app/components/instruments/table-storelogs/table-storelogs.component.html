@@ -16,6 +16,7 @@
         class="col-xs-3 col-sm-auto col-form-label"
         >Full text search:</label
       >
+      <!-- FIXME: should i remove search? -->
       <div class="col-xs-3 col-sm-auto">
         <input
           id="table-filtering-search"
@@ -40,6 +41,7 @@
       <tbody>
         <tr *ngFor="let log of logs">
           <th scope="row">{{ log.time }}</th>
+          <!-- FIXME: time not showing -->
           <td>
             <ngb-highlight
               [result]="log.activity"

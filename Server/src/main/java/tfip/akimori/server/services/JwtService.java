@@ -31,7 +31,7 @@ public class JwtService {
         // create JWT
         String jwt = Jwts.builder()
                 .setHeaderParam("typ", "JWT")
-                .setIssuer("ISMS")
+                .setIssuer("ISM")
                 .setSubject(user.getEmail())
                 .claim("givenname", user.getGivenname())
                 .claim("familyname", user.getFamilyname())
