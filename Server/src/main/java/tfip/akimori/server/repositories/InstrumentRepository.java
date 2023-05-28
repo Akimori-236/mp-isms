@@ -57,8 +57,7 @@ public class InstrumentRepository implements SQLQueries {
             ps.setBoolean(8, i.isRepairing());
             return ps;
         });
-        return rowsInserted > 0;
-        // NO REPLY?!?!
+        return rowsInserted > 0; // FIXME: NO REPLY?!?!
     }
 
     public Instrument getInstrumentById(String id) {

@@ -55,7 +55,7 @@ public class InstrumentService {
                 .model(jObj.getString("model"))
                 .serial_number(jObj.getString("serial_number"))
                 .store_id(storeID)
-                .isRepairing(false)
+                .isRepairing(jObj.getBoolean("isRepairing", false))
                 .email(email)
                 .build();
         System.out.println(i);

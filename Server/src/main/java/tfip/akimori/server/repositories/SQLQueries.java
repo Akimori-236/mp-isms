@@ -80,7 +80,7 @@ public interface SQLQueries {
                         FROM users;
                         """;
 
-        public static final String SQL_GETSTORENAME = """
+        public static final String SQL_GETSTORE = """
                         SELECT * FROM stores
                         WHERE store_id = ?
                         """;
@@ -118,7 +118,7 @@ public interface SQLQueries {
                         """;
 
         public static final String SQL_GETSTOREINSTRUMENTS = """
-                        SELECT instrument_id, instrument_type, brand, model, serial_number, i.remarks, i.store_id, store_name, isRepairing, email, givenname, familyname
+                        SELECT i.instrument_id, i.instrument_type, i.brand, i.model, i.serial_number, i.remarks, i.store_id, s.store_name, i.isRepairing, u.email, u.givenname, u.familyname
                         FROM instruments i
                         INNER JOIN stores s
                         ON i.store_id = s.store_id

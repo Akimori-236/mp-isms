@@ -80,7 +80,7 @@ public class StoreRepository implements SQLQueries {
     }
 
     public Store getStore(String storeID) {
-        return template.queryForObject(SQL_GETSTORENAME, BeanPropertyRowMapper.newInstance(Store.class), storeID);
+        return template.queryForObject(SQL_GETSTORE, BeanPropertyRowMapper.newInstance(Store.class), storeID);
     }
 
 }
