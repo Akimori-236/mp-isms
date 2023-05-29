@@ -1,15 +1,13 @@
-import { Component, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ModalDismissReasons, NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 
-import { Observable, Subject, Subscription } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { Instrument } from 'src/app/models/instrument';
 import { PopupQrComponent } from '../popup-qr/popup-qr.component';
 import { FormAddinstrumentComponent } from '../form-addinstrument/form-addinstrument.component';
 import { InstrumentService } from 'src/app/services/instrument.service';
-import { BorrowComponent } from '../../borrow/borrow.component';
-import { InstrumentsComponent } from '../instruments.component';
 import { StoreDataService } from 'src/app/services/store-data.service';
 
 
@@ -19,7 +17,7 @@ import { StoreDataService } from 'src/app/services/store-data.service';
   templateUrl: './table-instruments.component.html',
   styleUrls: ['./table-instruments.component.css']
 })
-export class TableInstrumentsComponent implements OnInit, OnDestroy {
+export class TableInstrumentsComponent implements OnInit {
   @Input()
   instrumentList!: Instrument[]
   instruments$: Observable<Instrument[]>
@@ -32,8 +30,8 @@ export class TableInstrumentsComponent implements OnInit, OnDestroy {
   constructor(
     private modalService: NgbModal,
     private modalConfig: NgbModalConfig,
-    private instruSvc: InstrumentService,
-    private storeSvc: StoreDataService) {
+    private instruSvc: InstrumentService) {
+
     this.modalConfig.centered = true
     this.instruments$ = this.filter.valueChanges.pipe(
       startWith(''),
@@ -42,10 +40,6 @@ export class TableInstrumentsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.getStoreDetails()
-  }
-
-  ngOnDestroy(): void {
   }
 
   search(text: string): Instrument[] {
@@ -55,29 +49,11 @@ export class TableInstrumentsComponent implements OnInit, OnDestroy {
         instrument.instrument_type.toLowerCase().includes(term) ||
         instrument.brand.toLowerCase().includes(term) ||
         instrument.model.toLowerCase().includes(term) ||
-        instrument.serial_number.toLowerCase().includes(term) ||
-        instrument.remarks.toLowerCase().includes(term)
+        instrument.serial_number.toLowerCase().includes(term)
         // pipe.transform(instrument.area).includes(term) ||
         // pipe.transform(instrument.population).includes(term)
       );
     });
-  }
-
-  getStoreDetails() {
-    this.storeSvc.getStoreDetails(this.storeID).then(
-      response => {
-        this.instrumentList = response['instruments']
-        console.debug(this.instrumentList)
-        // this.onNewInstrumentList.next(this.instrumentList)
-        // this.managerList = response['managers']
-        // console.debug(this.managerList)
-        // FIXME: this is working but child component table cant see new data
-      }
-    )
-  }
-
-  onNewList(event: Instrument[]) {
-    this.instrumentList = event
   }
 
   getQR(instrument_id: string) {
@@ -108,19 +84,8 @@ export class TableInstrumentsComponent implements OnInit, OnDestroy {
         // access formgroup in FormAddinstrumentComponent
         const updatedInstrument = modalRef.componentInstance.addInstrumentForm.value as Instrument
         // console.info("Updating: ", updatedInstrument)
+        // call SB on parent
         this.onUpdate.next(updatedInstrument)
-        // call SB
-        // this.instruSvc.updateInstrument(updatedInstrument)
-        //   .then(response => {
-        //     // console.debug(response)
-        //     this.onUpdate.next(true)
-        //     // this.getStoreDetails()
-        //   })
-        //   .catch(error => {
-        //     console.warn("Error updating instrument: " + error)
-        //     this.onUpdate.next(true)
-        //     // this.getStoreDetails()
-        //   })
       },
         (reason) => {
           // console.log(`Dismissed ${this.getDismissReason(reason)}`)
