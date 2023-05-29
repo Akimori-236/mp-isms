@@ -89,7 +89,7 @@ public class EmailSenderService {
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
         helper.setFrom(fromEmail);
         helper.setTo(toEmail);
-        helper.setSubject("Invitation to Manage Instrument Store");
+        helper.setSubject("Welcome to the Instrument Store Management App!");
         helper.setText(emailBody, true); // Set the email body as HTML
 
         mailSender.send(message);
@@ -138,7 +138,8 @@ public class EmailSenderService {
                                     padding-top:20px;
                                     text-align:left">
                             <p>
-                                %s added you as inventory manager of (%s) at <a href="%s">Instrument Store Management App</a><br>
+                                %s added you as inventory manager of (%s) at <a href="%s">Instrument Store Management App</a>
+                                <br>
                                 If you don’t recognize this account, it’s likely your email address was added in error.
                             </p>
                         </div>
@@ -163,7 +164,7 @@ public class EmailSenderService {
                                     text-align:center;
                                     word-break:break-word">
                             <div style="font-size:24px">
-                                Someone added you as inventory manager
+                                Welcome to the Instrument Store Management App!
                             </div>
                         </div>
                         <div style="font-family:Roboto-Regular,Helvetica,Arial,sans-serif;
@@ -173,16 +174,17 @@ public class EmailSenderService {
                                     padding-top:20px;
                                     text-align:left">
                             <p>
-                            Hello %s,
-
-                            Thank you for registering with our <a href=\"%s\">platform</a>!
-                            We are committed to providing you with a seamless and rewarding experience.
-                            Should you have any questions or need assistance, our friendly support team is always here to help.
-
-                            Once again, welcome aboard!
-
-                            Best regards,
-                            Wee Seng
+                                Hello %s,
+                                <br><br>
+                                Thank you for registering with our <a href=\"%s\">platform</a>!
+                                <br><br>
+                                We are committed to providing you with a seamless and rewarding experience.
+                                Should you have any questions or need assistance, our friendly support team is always here to help.
+                                <br><br>
+                                Once again, welcome aboard!
+                                <br><br>
+                                Best regards,
+                                Wee Seng
                             </p>
                         </div>
                     </div>
