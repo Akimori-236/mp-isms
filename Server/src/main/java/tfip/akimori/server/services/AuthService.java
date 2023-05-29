@@ -15,6 +15,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
+import jakarta.mail.MessagingException;
 import tfip.akimori.server.exceptions.DuplicateEmailException;
 import tfip.akimori.server.models.Role;
 import tfip.akimori.server.models.User;
@@ -38,6 +39,8 @@ public class AuthService {
     private MongoService logSvc;
     @Autowired
     private GoogleRepository googleRepo;
+    @Autowired
+    private EmailSenderService emailSvc;
 
     public JsonObject register(JsonObject request) throws DuplicateEmailException {
         System.out.println("REGISTERING: " + request.getString("email"));
@@ -53,6 +56,12 @@ public class AuthService {
         userRepo.insertUser(newUser);
         // LOGGING
         logSvc.logUserActivity("register", newUser.getEmail());
+        // send email
+        try {
+            emailSvc.sendWelcomeEmail(newUser.getEmail(), newUser.getGivenname());
+        } catch (MessagingException e) {
+            System.err.println("EMAIL ERROR >>> " + e);
+        }
         // give new user JWT
         return jwtSvc.generateJWT(newUser);
     }
@@ -89,6 +98,8 @@ public class AuthService {
         logSvc.logUserActivity("google register", googleUser.getString("email"));
         JsonObject jwt = this.register(googleUser);
         googleRepo.insertUser(payload);
+        emailSvc.sendWelcomeEmail(payload.getEmail(),
+                googleUser.getOrDefault("givenname", googleUser.getJsonString("familyname")).toString());
         return jwt;
     }
 

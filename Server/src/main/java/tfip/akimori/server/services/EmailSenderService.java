@@ -13,7 +13,7 @@ import tfip.akimori.server.repositories.StoreRepository;
 
 @Service
 public class EmailSenderService {
-
+    private static String websiteLink = "https://isms.up.railway.app/";
     @Value("${spring.mail.username}")
     private String fromEmail;
 
@@ -54,7 +54,6 @@ public class EmailSenderService {
 
     public void sendManagerInvite(String toEmail, String jwt, String storeID) throws MessagingException {
         // Generate confirmation link
-        String websiteLink = "https://isms.up.railway.app/#/";
 
         String inviterEmail = jwtSvc.extractUsername(jwt);
         String storeName = storeRepo.getStore(storeID).getStore_name();
@@ -64,7 +63,26 @@ public class EmailSenderService {
         // <p>This is an invitation by (%s) to manage an instrument store - %s</p>
         // <p>Click <a href=\"%s\">here</a> to join!</p>
         // """.formatted(inviterEmail, storeName, confirmationLink);
-        String emailBody = formatEmail(inviterEmail, storeName, websiteLink);
+        String emailBody = formatInviteEmail(inviterEmail, storeName, websiteLink);
+        System.out.println("SENDING EMAIL >>> " + emailBody);
+        MimeMessage message = mailSender.createMimeMessage();
+
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+        helper.setFrom(fromEmail);
+        helper.setTo(toEmail);
+        helper.setSubject("Invitation to Manage Instrument Store");
+        helper.setText(emailBody, true); // Set the email body as HTML
+
+        mailSender.send(message);
+        System.out.println("Email sent to: " + toEmail);
+    }
+
+    public void sendWelcomeEmail(String toEmail, String givenname) throws MessagingException {
+        // Generate confirmation link
+        String websiteLink = "https://isms.up.railway.app/#/";
+
+        // Construct the HTML email body
+        String emailBody = formatWelcomeEmail(givenname, websiteLink);
         System.out.println("SENDING EMAIL >>> " + emailBody);
         MimeMessage message = mailSender.createMimeMessage();
 
@@ -95,7 +113,7 @@ public class EmailSenderService {
     // System.out.println("Email sent to: " + toEmail);
     // }
 
-    private String formatEmail(String senderEmail, String storeName, String websiteLink) {
+    private String formatInviteEmail(String senderEmail, String storeName, String websiteLink) {
         return """
                 <div align="center">
                     <div style="border: 1px solid black;
@@ -130,4 +148,46 @@ public class EmailSenderService {
                 .formatted(senderEmail, storeName, websiteLink);
     }
 
+    private String formatWelcomeEmail(String givenname, String websiteLink) {
+        return """
+                <div align="center">
+                    <div style="border: 1px solid black;
+                                border-radius:10px;
+                                padding:40px 20px"
+                         align="center">
+                        <div style="font-family:Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+                                    border-bottom:thin solid #dadce0;
+                                    color:rgba(0,0,0,0.87);
+                                    line-height:32px;
+                                    padding-bottom:24px;
+                                    text-align:center;
+                                    word-break:break-word">
+                            <div style="font-size:24px">
+                                Someone added you as inventory manager
+                            </div>
+                        </div>
+                        <div style="font-family:Roboto-Regular,Helvetica,Arial,sans-serif;
+                                    font-size:14px;
+                                    color:rgba(0,0,0,0.87);
+                                    line-height:20px;
+                                    padding-top:20px;
+                                    text-align:left">
+                            <p>
+                            Hello %s,
+
+                            Thank you for registering with our <a href=\"%s\">platform</a>!
+                            We are committed to providing you with a seamless and rewarding experience.
+                            Should you have any questions or need assistance, our friendly support team is always here to help.
+
+                            Once again, welcome aboard!
+
+                            Best regards,
+                            Wee Seng
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                """
+                .formatted(givenname, websiteLink);
+    }
 }
