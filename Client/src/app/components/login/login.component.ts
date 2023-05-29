@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup
   isLoggedIn: boolean = false
   origPath: string = ""
+  errorString!: string
 
   constructor(
     private fb: FormBuilder,
@@ -109,7 +110,7 @@ export class LoginComponent implements OnInit {
       })
       .catch((error: HttpErrorResponse) => {
         if (error.status === 400) {
-          // window.alert("Incorrect login details")
+          window.alert("Incorrect login details")
           this.fcm.showToast({ classes: "bg-danger text-light", body: "Incorrect login details" })
         } else {
           this.fcm.showToast({ classes: "bg-danger text-light", body: "Server Error" })
