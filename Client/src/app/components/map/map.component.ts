@@ -24,8 +24,8 @@ export class MapComponent implements OnInit {
   constructor(public activeModal: NgbActiveModal) { }
 
   ngOnInit(): void {
-    let lat = 1.3596865
-    let lng = 103.818
+    let lat = 1.2921816
+    let lng = 103.7766
     this.center = { lat, lng }
     this.markerOptions = {
       position: { lat, lng },
